@@ -12,7 +12,7 @@ from scipy.fft import fft
 def main():
     path=os.getcwd()+"/Focused.csv"
     #record_muse(60,path)
-    
+    #sxolio
     dataset = pd.read_csv(path)
     dataset=dataset.values# np array with dataset 9-40 hz
     TP9=dataset[:,0]
