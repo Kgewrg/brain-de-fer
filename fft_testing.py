@@ -87,7 +87,7 @@ if __name__ == "__main__":
     plt.legend()
 
 
-    # o palegkas einai gay
+    
 
     windowsCount = 60
     timeVector = [i for i in range(windowsCount)]
