@@ -64,7 +64,7 @@ if __name__ == "__main__":
     
     columnsNames = data[0]
     # timestampts = data[:, 0]
-    data = data[300:-1]
+    data = data[1:-1]
     data = data.astype(float)
     TP9 = data[1:-1, 1]
     AF7 = data[1:-1, 2]
@@ -85,9 +85,6 @@ if __name__ == "__main__":
     plt.plot(sensorTimeVector, AF7, label="AF7")
     plt.plot(sensorTimeVector, AF8, label="AF8")
     plt.legend()
-
-
-    
 
     windowsCount = 60
     timeVector = [i for i in range(windowsCount)]
@@ -117,12 +114,19 @@ if __name__ == "__main__":
     DURATION = 60 # seconds
     N = SAMPLE_RATE * DURATION
 
-    yf = scipy.fft.fft(gamma_all)
+
+    alpha_fft = scipy.fft.fft(alpha_all)
+    beta_fft = scipy.fft.fft(beta_all)
+    gamma_fft = scipy.fft.fft(gamma_all)
+
     xf = scipy.fft.fftfreq(N, 1 / SAMPLE_RATE)
-    print(len(xf), len(yf))
 
     plt.subplot(2,1,2)
-    plt.plot(xf, np.abs(yf[0:13800]))
+    plt.plot(xf, np.abs(alpha_fft[0:len(xf)]), label="alpha")
+    plt.plot(xf, np.abs(beta_fft[0:len(xf)]), label="beta")
+    plt.plot(xf, np.abs(gamma_fft[0:len(xf)]), label="gamma")
+    plt.legend()
+
     
 
 
