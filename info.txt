@@ -3,3 +3,6 @@
 
 βρίσκει spectral power σε κάθε band  
 https://raphaelvallat.com/bandpower.html
+
+
+git testing
