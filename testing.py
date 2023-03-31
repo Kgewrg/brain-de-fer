@@ -10,7 +10,7 @@ def bandPassFilter(signal, lowcut, highpass):
     low = lowcut / nyq
     high = highpass / nyq
 
-    order = 8
+    order = 2
 
     b, a = scipy.signal.butter(order, [low, high], 'bandpass', analog=False)
     y = scipy.signal.filtfilt(b, a, signal, axis=0)
@@ -23,7 +23,7 @@ def highPassFilter(signal, hz):
     nyq = 0.5 * sfreq
     high = hz / nyq
 
-    order = 8
+    order = 2
 
     b, a = scipy.signal.butter(order, high, 'highpass', analog=False)
     y = scipy.signal.filtfilt(b, a, signal, axis=0)
@@ -36,7 +36,7 @@ def lowPassFilter(signal, hz):
     nyq = 0.5 * sfreq
     low = hz / nyq
 
-    order = 8
+    order = 2
 
     b, a = scipy.signal.butter(order, low, 'lowpass', analog=False)
     y = scipy.signal.filtfilt(b, a, signal, axis=0)
@@ -58,24 +58,34 @@ def powerPerWindow(signal, windowCount):
         results[i] = wPower
     return(results)
 
+def get_fft(traces, sampling_frequency):
+    # Return the power spectrum of the positive fft
+    N = len(traces)
+    yf = np.fft.fft(traces)
+    # Get only positive freqs
+    xf = np.fft.fftfreq(N, 1/sampling_frequency)[:N//2]
+    nyf = 2.0/N * np.abs(yf)[:N//2]
+    return xf, nyf
+
 if __name__ == "__main__":
-    data = np.loadtxt("my_unfocused_closed.csv", delimiter=",", dtype=str)
+    data = np.loadtxt("Notfocused.csv", delimiter=",", dtype=str)
     
     columnsNames = data[0]
     # timestampts = data[:, 0]
-    data = data[300:-1]
+    data = data[1:-1]
     data = data.astype(float)
-    TP9 = data[1:-1, 1]
-    AF7 = data[1:-1, 2]
-    AF8 = data[1:-1, 3]
-    TP10 = data[1:-1, 4] 
+    TP9 = data[1:-1, 0]
+    AF7 = data[1:-1, 1]
+    AF8 = data[1:-1, 2]
+    TP10 = data[1:-1, 3] 
+    s = TP9 + AF7 + AF8 + TP10
 
 
     # 14133 samples over 60 seconds  
     # 235 samples per second 
     # 2350 sample per 10 seconds window
 
-    plt.subplot(2,1,1)
+    plt.subplot(3,1,1)
     sensorTimeVector = [i for i in range(len(TP9))]
     plt.title("Sensors Data")
     plt.plot(sensorTimeVector, TP9, label="TP9")
@@ -120,8 +130,13 @@ if __name__ == "__main__":
     power_beta_all = powerPerWindow(beta_all, windowsCount)
     power_gamma_all = powerPerWindow(gamma_all, windowsCount)
 
+    plt.subplot(3,1,2)
+    xf, s_fft  = get_fft(s, 255)
+    plt.plot(xf, s_fft)
 
-    plt.subplot(2,1,2)
+
+
+    plt.subplot(3,1,3)
     plt.title("Power")
     plt.plot(timeVector, power_alpha_all, "b", label="power_alpha_all")
     plt.plot(timeVector, power_beta_all, "g", label="power_beta_all")
