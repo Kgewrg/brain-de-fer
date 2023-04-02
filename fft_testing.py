@@ -59,7 +59,7 @@ def powerPerWindow(signal, windowCount):
     return(results)
 
 if __name__ == "__main__":
-    fileName = "my_focused_open.csv"
+    fileName = "tsaros_unfocused.csv"
     data = np.loadtxt(fileName, delimiter=",", dtype=str)
     
     columnsNames = data[0]
