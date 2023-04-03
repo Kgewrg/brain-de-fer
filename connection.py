@@ -7,10 +7,8 @@ import scipy
 from scipy.fft import fft
 
 
-
-
 def main():
-    path=os.getcwd()+"\sfak_unfocused.csv"
+    path=os.getcwd()+"\\sia_unfocused.csv"
     #record_muse(60,path)
     
     dataset = pd.read_csv(path)
@@ -26,12 +24,15 @@ def main():
 
     Alpha,Beta,Gamma=computeRythms(dataset)
 
-    removeOddValues(Beta)
+    Alpha=removeOddValues(Alpha)
+    Beta=removeOddValues(Beta)
+    Gamma=removeOddValues(Gamma)
 
+    spectrumΕnergy(Alpha)
+    spectrumΕnergy(Beta)
+    spectrumΕnergy(Gamma)
 
-    
-   
-
+    plotSpecEnergy(Alpha,Beta,Gamma)
 
 def computeRythms(dataset):
 
@@ -76,17 +77,29 @@ def spectrumΕnergy(rythm):
     length=len(rythm)
     sumconj=rythm*np.conj(rythm)
     specEn=sum([sumconj[i] for i in range(length)])
-    specEn=specEn * 1/length
+    specEn=specEn/length
     print("The energy is :" ,specEn)
 
 def removeOddValues(rythm):
     length=len(rythm)
     rythm=fft(rythm)
-    rythm=np.abs(rythm)
+    conjrythm=np.conj(rythm)
+    rythm=rythm * conjrythm
     meanofrythm=np.mean(rythm)
-    print(meanofrythm)
+    sum=0
+    counter=0
+    for i in range(len(rythm)):
+        if(rythm[i] > meanofrythm):
+            sum+=rythm[i]
+            counter+=1
+    mymean=sum/counter
+    for i in range(length):
+        if rythm[i] > 3*mymean:
+            rythm[i]=mymean
 
-
+    rythm=rythm/conjrythm
+    rythm=scipy.fft.ifft(rythm)
+    return rythm
 
 def plotSpecEnergy(Alpha,Beta,Gamma):
     length=len(Alpha)
@@ -95,13 +108,11 @@ def plotSpecEnergy(Alpha,Beta,Gamma):
     Beta=fft(Beta)
     Gamma=fft(Gamma)
     
-
     f = fs * np.arange(0, int(length/2)) / length
     Alpha=Alpha[0:int(length/2)]
     Beta=Beta[0:int(length/2)]
     Gamma=Gamma[0:int(length/2)]
 
-        
     fig,ax= plt.subplots(2,2)
 
     ax[0,0].plot(f,(np.abs(Alpha)**2)/length)
@@ -119,45 +130,6 @@ def plotSpecEnergy(Alpha,Beta,Gamma):
     ax[1,0].legend(["Gamma"],loc="upper right")
     ax[1,0].set_xlabel('(Hz)',fontweight='bold'),
     ax[1,0].set_ylabel('(Joules)',fontweight='bold')
-    plt.show()
-
-def plot(dataset):#plots each sensor reading in the frequency dimension
-    
-    fs=256
-    TP9=dataset[:,0]
-    AF7=dataset[:,1]
-    AF8=dataset[:,2]
-    TP10=dataset[:,3]
-    length= len(TP9)
-
-    TP9=fft(TP9)
-    TP10=fft(TP10)
-    AF7=fft(AF7)
-    AF8=fft(AF8)
-    f = fs * np.arange(0, int(length/2)) / length
-   
-    TP9= TP9[0:int(length/2)]
-    TP10= TP10[0:int(length/2)]
-    AF8= AF8[0:int(length/2)]
-    AF7= AF7[0:int(length/2)]
-    
-    Null,ax= plt.subplots(2,2)
-    
-    ax[0,0].plot(f,abs(TP9)**2/length,label="TP9")
-    ax[0,0].grid()
-    ax[0,0].legend(loc="upper right")
-    ax[0,1].plot(f,abs(TP10)**2/length,label="TP10")
-    ax[0,1].grid()
-    ax[0,1].legend(loc="upper right")
-    ax[1,0].plot(f,abs(AF8)**2/length,label="AF8")
-    ax[1,0].grid()
-    ax[1,0].legend(loc="upper right")
-    ax[1,1].plot(f,abs(AF7)**2/length,label="AF7")
-    ax[1,1].grid()
-    ax[1,1].legend(loc="upper right")
-
-    
-
     plt.show()
 
 def record_muse(time,path):#function that records with muse
@@ -178,7 +150,6 @@ def record_muse(time,path):#function that records with muse
 
     df=pd.DataFrame(y,columns=['TP9','AF7','AF8','TP10'])
     df.to_csv(filename,index=False)
-
 
 def bandPassFilter(signal, lowcut, highpass):
     sfreq = 256.0 #Sampling freq
