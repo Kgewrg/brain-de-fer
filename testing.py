@@ -3,40 +3,38 @@ import scipy
 import matplotlib.pyplot as plt
 import time
 
-def bandPassFilter(signal, lowcut, highpass):
-    sfreq = 256.0 #Sampling freq
+def bandPassFilter(signal, lowcut, highpass, sample_frequency=256.5, order = 8):
+    sfreq = sample_frequency #Sampling freq
 
     nyq = 0.5 * sfreq
     low = lowcut / nyq
     high = highpass / nyq
 
-    order = 2
+
 
     b, a = scipy.signal.butter(order, [low, high], 'bandpass', analog=False)
     y = scipy.signal.filtfilt(b, a, signal, axis=0)
 
     return y
 
-def highPassFilter(signal, hz):
-    sfreq = 256.0 #Sampling freq
+def highPassFilter(signal, hz, sample_frequency=256.5, order = 8):
+    sfreq = sample_frequency #Sampling freq
 
     nyq = 0.5 * sfreq
     high = hz / nyq
 
-    order = 2
 
     b, a = scipy.signal.butter(order, high, 'highpass', analog=False)
     y = scipy.signal.filtfilt(b, a, signal, axis=0)
 
     return y
 
-def lowPassFilter(signal, hz):
-    sfreq = 256.0 #Sampling freq
+def lowPassFilter(signal, hz, sample_frequency=256.5, order = 8):
+    sfreq = sample_frequency #Sampling freq
 
     nyq = 0.5 * sfreq
     low = hz / nyq
 
-    order = 2
 
     b, a = scipy.signal.butter(order, low, 'lowpass', analog=False)
     y = scipy.signal.filtfilt(b, a, signal, axis=0)
@@ -68,17 +66,66 @@ def get_fft(traces, sampling_frequency):
     return xf, nyf
 
 if __name__ == "__main__":
-    data = np.loadtxt("Notfocused.csv", delimiter=",", dtype=str)
+    filename = "theodora_focused.csv"
+    data = np.loadtxt(filename, delimiter=",", dtype=str)
     
     columnsNames = data[0]
     # timestampts = data[:, 0]
     data = data[1:-1]
     data = data.astype(float)
-    TP9 = data[1:-1, 0]
-    AF7 = data[1:-1, 1]
-    AF8 = data[1:-1, 2]
-    TP10 = data[1:-1, 3] 
+    TP9 = data[1:-1, 1]
+    AF7 = data[1:-1, 2]
+    AF8 = data[1:-1, 3]
+    TP10 = data[1:-1, 4] 
     s = TP9 + AF7 + AF8 + TP10
+
+    plt.figure(filename)
+
+    sampleRate = int(len(s)/60)
+    timeVector = [i for i in range(len(s))]
+    plt.subplot(311)
+    plt.plot(timeVector, s)
+
+
+    alpha = lowPassFilter(s, 12, sample_frequency=sampleRate)
+    beta = bandPassFilter(s, 13, 30, sample_frequency=sampleRate)
+    gamma = highPassFilter(s, 32, sample_frequency=sampleRate)
+
+
+
+    windowCount = 60
+    w_timeVector = [i for i in range(windowCount)]
+    p_alpha = powerPerWindow(alpha, windowCount)
+    p_beta = powerPerWindow(beta, windowCount)
+    p_gamma = powerPerWindow(gamma, windowCount)
+
+    plt.subplot(312)
+    plt.title("power per window")
+    plt.plot(w_timeVector, p_alpha, "b", label="alpha")
+    plt.plot(w_timeVector, p_beta, "r", label="beta")
+    plt.plot(w_timeVector, p_gamma, "g", label="gamma")
+    plt.legend()
+
+    plt.subplot(3,1,3)
+    xf, s_fft  = get_fft(s, sampleRate)
+    plt.plot(xf, s_fft)
+    print(s_fft)
+    plt.xlim([0, 40])
+
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+    exit()
 
 
     # 14133 samples over 60 seconds  
@@ -93,8 +140,6 @@ if __name__ == "__main__":
     plt.plot(sensorTimeVector, AF7, label="AF7")
     plt.plot(sensorTimeVector, AF8, label="AF8")
     plt.legend()
-
-
 
 
     windowsCount = 1000
