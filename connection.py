@@ -8,7 +8,7 @@ from scipy.fft import fft
 
 
 def main():
-    path=os.getcwd()+"\\sia_unfocused.csv"
+    path=os.getcwd()+"\sfak_focused.csv"
     #record_muse(60,path)
     
     dataset = pd.read_csv(path)
