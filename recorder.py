@@ -10,14 +10,14 @@ print(f'Writing to {filename}')
  
 
 print('Connecting to Mindwave...')
-headset = mindwave.Headset('COM4')
+headset = mindwave.Headset('COM9')
 
-print('Connected, waiting 4 seconds for data to start streaming')
-time.sleep(4)
+print('Connected, waiting 10 seconds for data to start streaming')
+time.sleep(10)
 
 now = time.time()
 future = now + 60
-with open("focused.csv", "w") as f :
+with open("data.csv", "w") as f :
     # writer = csv.writer(f)
     # writer.writerow(['Timestamp','Raw','Attention','Meditation','delta','theta','low-alpha','high-alpha','low-beta','high-beta','low-gamma','mid-gamma'])
     f.write("poor_signal,raw,attention,meditation\n")
