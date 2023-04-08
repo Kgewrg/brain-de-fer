@@ -8,30 +8,25 @@ import os
 def main():
     pathfoc=os.getcwd()+"\mindwavedataset/tsaros_focused.csv"
     pathnotfoc=os.getcwd()+"\mindwavedataset/tsaros_unfocused.csv"
-    poor,raw,palfoc,palmed=getData(pathfoc)
-    poor,raw,palfoc,palmed=getData(pathnotfoc)
+    poor,raw,foc,med=getData(pathfoc)
+    poor,raw,notfoc,notmed=getData(pathnotfoc)
 
     plotData(pathfoc,pathnotfoc,60)
 
-    
-    
+    focused_avg_atte = np.mean(foc)
+    focused_avg_med = np.mean(med)
 
-    
+    unfocused_avg_atte = np.mean(notfoc)
+    unfocused_avg_med = np.mean(notmed)
 
-# focused_avg_atte = np.mean(focused_attention)
-# focused_avg_med = np.mean(focused_meditation)
-
-# unfocused_avg_atte = np.mean(unfocused_attention)
-# unfocused_avg_med = np.mean(unfocused_meditation)
-
-# print("focused avg: att %f, med %f"%(focused_avg_atte, focused_avg_med))
-# print("unfocused avg: att %f, med %f"%(unfocused_avg_atte, unfocused_avg_med))
+    print("focused avg: focus %f, med %f"%(focused_avg_atte, focused_avg_med))
+    print("unfocused avg: focus %f, med %f"%(unfocused_avg_atte, unfocused_avg_med))
 
 
 def getData(path):
     dataset = pd.read_csv(path)
     dataset=dataset.values
-
+    
     poor = dataset[:,0]
     raw = dataset[:, 1]
     focused_attention = dataset[:, 2]
