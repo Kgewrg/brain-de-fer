@@ -265,7 +265,7 @@ class Headset(object):
     def serial_open(self):
         """Open the serial connection and begin listening for data."""
         if not self.dongle or not self.dongle.isOpen():
-            self.dongle = serial.Serial(self.device, 115200)
+            self.dongle = serial.Serial(self.device, 115200)# serial.serial(something,baudrate(bits per sec))460800/115200 initial     
 
         if not self.listener or not self.listener.isAlive():
             self.listener = self.DongleListener(self)

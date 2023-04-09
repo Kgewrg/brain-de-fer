@@ -1,5 +1,7 @@
 Εδώ θα βάζω λινκς που νομίζω θα  είναι χρήσιμα 
 
+https://onlinelibrary.wiley.com/doi/full/10.1111/ejn.12589
+Διαβασε παράγραφο Data  acquisition  and  analysis
 
 βρίσκει spectral power σε κάθε band  
 https://raphaelvallat.com/bandpower.html
@@ -50,4 +52,5 @@ tsaros_focused:
     tp: 8-10
     Κλιστά τα μάτια, ξαπλωμένος, πολλαπλασιασμοί, υπήρχε λίγη κίνηση στο πρώσοπο 
     και χέρια
+    
     
