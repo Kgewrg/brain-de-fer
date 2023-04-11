@@ -7,22 +7,23 @@ using UnityEngine;
 public class pointerScript : MonoBehaviour
 {
     Renderer rend;
-    public int degrees;
+    public float degrees;
     string filePath;
 
     void Start(){
         rend = GetComponent<Renderer>();
         rend.material.SetColor("_Color ", Random.ColorHSV());     
-        filePath = Application.dataPath + "/value.txt";
+        //filePath = Application.dataPath + "/value.txt";
+        filePath="C:/Users/Nikos/Desktop/brain-de-fair/data.csv";//βάλτο σε σχόλιο όταν το χρησιμοποιείς
+        
 
     }   
 
     void Update() {
-        
         try{
             string[] lines = File.ReadAllLines(filePath);
-            degrees = int.Parse(lines[lines.Length-1]);
-            degrees = degrees * -1;  
+            degrees = float.Parse(lines[lines.Length-1]);
+            degrees = degrees * -1.8f;  
             // Το αντιστρέφω γιατι κάτι έχω γαμήσει όταν έφτιαξα το sprite και κτλ 
         }
         catch (IOException){
