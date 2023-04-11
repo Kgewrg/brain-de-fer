@@ -8,32 +8,44 @@ from scipy.fft import fft
 
 
 def main():
-    path=os.getcwd()+"\data.csv"
-    #record_muse(60,path)
-    
-    dataset = pd.read_csv(path)
-    dataset=dataset.values# np array with dataset 9-40 hz
-    dataset=np.delete(dataset,0,1)
-    dataset=np.delete(dataset,-1,1)
+    path1=os.path.dirname(__file__)+"\muse_dataset\sfak_unfocused.csv"
+    path2=os.path.dirname(__file__)+"\muse_dataset\sfak_focused.csv"
+    pathArray=[path1,path2]
+    for i in pathArray:
+        name= ""
+        for j in i[::-1]:
+            if j=="\\":
+                break
+            name=name + j
+        name=name[::-1]
+        print("--------------------")
+        print("Dataset : ",name)
+        print("--------------------")
+        #record_muse(60,path)
+        
+        dataset = pd.read_csv(i)
+        dataset=dataset.values# np array with dataset 9-40 hz
+        dataset=np.delete(dataset,0,1)
+        dataset=np.delete(dataset,-1,1)
 
-    # fs=256  #sampling frequency
-    
-    # Alpha=lowpass_filter(dataset,13)#9-13
-    # Beta=bandPassFilter(dataset,13,30)#13-30
-    # Gamma=bandPassFilter(dataset,30,40)#30-40
+        # fs=256  #sampling frequency
+        
+        # Alpha=lowpass_filter(dataset,13)#9-13
+        # Beta=bandPassFilter(dataset,13,30)#13-30
+        # Gamma=bandPassFilter(dataset,30,40)#30-40
 
-    Alpha,Beta,Gamma=computeRythms(dataset)
+        Alpha,Beta,Gamma=computeRythms(dataset)
 
-    Alpha=removeOddValues(Alpha)
-    Beta=removeOddValues(Beta)
-    Gamma=removeOddValues(Gamma)
+        Alpha=removeOddValues(Alpha)
+        Beta=removeOddValues(Beta)
+        Gamma=removeOddValues(Gamma)
 
-    spectrumΕnergy(Alpha)
-    spectrumΕnergy(Beta)
-    spectrumΕnergy(Gamma)
+        # spectrumΕnergy(Alpha)
+        # spectrumΕnergy(Beta)
+        # spectrumΕnergy(Gamma)
 
-    plotSpecEnergy(Alpha,Beta,Gamma)
-
+        plotSpecEnergy(Alpha,Beta,Gamma)
+        
 def computeRythms(dataset):
 
     TP9=dataset[:,0]
@@ -41,25 +53,45 @@ def computeRythms(dataset):
     AF8=dataset[:,2]
     TP10=dataset[:,3]
 
-    TP9=bandPassFilter(TP9,9,40)
-    AF7=bandPassFilter(AF7,9,40)
-    AF8=bandPassFilter(AF8,9,40)
-    TP10=bandPassFilter(TP10,9,40)
+    TP9=bandPassFilter(TP9,9,45)
+    AF7=bandPassFilter(AF7,9,45)
+    AF8=bandPassFilter(AF8,9,45)
+    TP10=bandPassFilter(TP10,9,45)
 
     Alpha1=lowpass_filter(TP9,13)
     Alpha2=lowpass_filter(AF7,13)
     Alpha3=lowpass_filter(AF8,13)
     Alpha4=lowpass_filter(TP10,13)
 
+    AlphaArray=[Alpha1,Alpha2,Alpha3,Alpha4]
+    arrayofmean=[]
+    for i in range(len(AlphaArray[:])):
+        arrayofmean.append(findMeanOfChannel(AlphaArray[i]))
+    print("Alpha ",arrayofmean)
+        
+    
     Beta1=bandPassFilter(TP9,13,30)
     Beta2=bandPassFilter(AF7,13,30)
     Beta3=bandPassFilter(AF8,13,30)
     Beta4=bandPassFilter(TP10,13,30)
+    BetaArray=[Beta1,Beta2,Beta3,Beta4]
+    arrayofmean=[]
+    for i in range(len(AlphaArray[:])):
+        arrayofmean.append(findMeanOfChannel(BetaArray[i]))
+    print("Beta ",arrayofmean)
 
-    Gamma1=bandPassFilter(TP9,30,40)#30-40
-    Gamma2=bandPassFilter(AF7,30,40)#30-40
-    Gamma3=bandPassFilter(AF8,30,40)#30-40
-    Gamma4=bandPassFilter(TP10,30,40)#30-40
+    
+    Gamma1=bandPassFilter(TP9,30,45)#30-40
+    Gamma2=bandPassFilter(AF7,30,45)#30-40
+    Gamma3=bandPassFilter(AF8,30,45)#30-40
+    Gamma4=bandPassFilter(TP10,30,45)#30-40
+    GammaArray=[Gamma1,Gamma2,Gamma3,Gamma4]
+    arrayofmean=[]
+    for i in range(len(AlphaArray[:])):
+        arrayofmean.append(findMeanOfChannel(GammaArray[i]))
+    print("Gamma ",arrayofmean)
+
+    
 
     Alpha=(Alpha1+Alpha2+Alpha3+Alpha4)/4
     Beta=(Beta1+Beta2+Beta3+Beta4)/4
@@ -80,8 +112,22 @@ def spectrumΕnergy(rythm):
     specEn=specEn/length
     print("The energy is :" ,specEn)
 
-def removeOddValues(rythm):
-    length=len(rythm)
+def findMeanOfChannel(rythm):
+    rythm=fft(rythm)
+    # conjrythm=np.conj(rythm)
+    # rythm=rythm * conjrythm
+    rythm=np.abs(rythm)
+    meanofrythm=np.mean(rythm)
+    sum=0
+    counter=0
+    for i in range(len(rythm)):
+        if(rythm[i] > meanofrythm):
+            sum+=rythm[i]
+            counter+=1
+    mymean=sum/counter
+    return mymean
+
+def findMeanOfChannel2(rythm):
     rythm=fft(rythm)
     conjrythm=np.conj(rythm)
     rythm=rythm * conjrythm
@@ -93,10 +139,20 @@ def removeOddValues(rythm):
             sum+=rythm[i]
             counter+=1
     mymean=sum/counter
-    for i in range(length):
-        if rythm[i] > 3*mymean:
-            rythm[i]=mymean
+    return mymean
 
+def removeOddValues(rythm):
+    mymean=findMeanOfChannel(rythm)**2
+    mymean2=findMeanOfChannel2(rythm)
+    print(mymean)
+    print(mymean2)
+    print("-----------")
+    rythm=fft(rythm)
+    conjrythm=np.conj(rythm)
+    rythm=rythm * conjrythm
+    for i in range(len(rythm)):
+        if rythm[i] > 13*mymean:
+            rythm[i]=mymean
     rythm=rythm/conjrythm
     rythm=scipy.fft.ifft(rythm)
     return rythm
