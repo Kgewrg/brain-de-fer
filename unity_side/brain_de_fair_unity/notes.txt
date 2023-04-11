@@ -10,3 +10,8 @@
     Τωρα μάλλον θα πρέπει να μπεί ένα "πάτωμα" για κάθε σειρά.
 
     και μετα τυχαία οι μερικοί active χαρακτήρες να πηδάνε τυχαία.    
+	
+Για τα animations: 
+	βρήκες έτοιμο rigged body: https://free3d.com/3d-model/base-character-ready-to-animate-453899.html
+	το animation έγινε στο blender με αυτό το tut:  https://www.youtube.com/watch?v=4z7G4TyKE9g
+	export σε fbx και αναπαραγωγή στο unity ακολουθόντας: https://youtu.be/uWexElqDcaA
