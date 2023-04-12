@@ -8,9 +8,12 @@ from scipy.fft import fft
 
 
 def main():
-    path1=os.path.dirname(__file__)+"\muse_dataset\sfak_unfocused.csv"
-    path2=os.path.dirname(__file__)+"\muse_dataset\sfak_focused.csv"
-    pathArray=[path1,path2]
+    path1=os.path.dirname(__file__)+"\data.csv"
+    path1=os.path.dirname(__file__)+"\muse_dataset\\tsaros_focused.csv"
+    path2=os.path.dirname(__file__)+"\muse_dataset\\tsaros_unfocused.csv"
+    path3=os.path.dirname(__file__)+"\muse_dataset\\my_focused_open.csv"
+    path4=os.path.dirname(__file__)+"\muse_dataset\\my_unfocused_closed.csv"
+    pathArray=[path1,path2,path3,path4]
     for i in pathArray:
         name= ""
         for j in i[::-1]:
@@ -28,23 +31,26 @@ def main():
         dataset=np.delete(dataset,0,1)
         dataset=np.delete(dataset,-1,1)
 
-        # fs=256  #sampling frequency
-        
-        # Alpha=lowpass_filter(dataset,13)#9-13
-        # Beta=bandPassFilter(dataset,13,30)#13-30
-        # Gamma=bandPassFilter(dataset,30,40)#30-40
-
         Alpha,Beta,Gamma=computeRythms(dataset)
 
         Alpha=removeOddValues(Alpha)
         Beta=removeOddValues(Beta)
         Gamma=removeOddValues(Gamma)
 
+        a=int(np.sqrt(findMeanOfChannel(Alpha)))
+        b=int(np.sqrt(findMeanOfChannel(Beta)))
+        g=int(np.sqrt(findMeanOfChannel(Gamma)))
+        ena=a/b
+        duo=a/g
+        #print("-----------------")
+        print("%.3f" % ena)
+        print("%.3f" % duo)
+
         # spectrumΕnergy(Alpha)
         # spectrumΕnergy(Beta)
         # spectrumΕnergy(Gamma)
 
-        plotSpecEnergy(Alpha,Beta,Gamma)
+        #plotSpecEnergy(Alpha,Beta,Gamma,name)
         
 def computeRythms(dataset):
 
@@ -65,9 +71,9 @@ def computeRythms(dataset):
 
     AlphaArray=[Alpha1,Alpha2,Alpha3,Alpha4]
     arrayofmean=[]
-    for i in range(len(AlphaArray[:])):
-        arrayofmean.append(findMeanOfChannel(AlphaArray[i]))
-    print("Alpha ",arrayofmean)
+    # for i in range(len(AlphaArray[:])):
+    #     arrayofmean.append(int(np.sqrt(findMeanOfChannel(AlphaArray[i]))))
+    # print("Alpha ",arrayofmean)
         
     
     Beta1=bandPassFilter(TP9,13,30)
@@ -76,9 +82,9 @@ def computeRythms(dataset):
     Beta4=bandPassFilter(TP10,13,30)
     BetaArray=[Beta1,Beta2,Beta3,Beta4]
     arrayofmean=[]
-    for i in range(len(AlphaArray[:])):
-        arrayofmean.append(findMeanOfChannel(BetaArray[i]))
-    print("Beta ",arrayofmean)
+    # for i in range(len(AlphaArray[:])):
+    #     arrayofmean.append(int(np.sqrt(findMeanOfChannel(BetaArray[i]))))
+    # print("Beta ",arrayofmean)
 
     
     Gamma1=bandPassFilter(TP9,30,45)#30-40
@@ -87,15 +93,16 @@ def computeRythms(dataset):
     Gamma4=bandPassFilter(TP10,30,45)#30-40
     GammaArray=[Gamma1,Gamma2,Gamma3,Gamma4]
     arrayofmean=[]
-    for i in range(len(AlphaArray[:])):
-        arrayofmean.append(findMeanOfChannel(GammaArray[i]))
-    print("Gamma ",arrayofmean)
+    # for i in range(len(AlphaArray[:])):
+    #     arrayofmean.append(int(np.sqrt(findMeanOfChannel(GammaArray[i]))))
+    # print("Gamma ",arrayofmean)
 
     
 
     Alpha=(Alpha1+Alpha2+Alpha3+Alpha4)/4
     Beta=(Beta1+Beta2+Beta3+Beta4)/4
     Gamma=(Gamma1+Gamma2+Gamma3+Gamma4)/4
+    
 
     
     return Alpha,Beta,Gamma
@@ -114,39 +121,19 @@ def spectrumΕnergy(rythm):
 
 def findMeanOfChannel(rythm):
     rythm=fft(rythm)
-    # conjrythm=np.conj(rythm)
-    # rythm=rythm * conjrythm
-    rythm=np.abs(rythm)
+    rythm=np.abs(rythm)**2
     meanofrythm=np.mean(rythm)
     sum=0
     counter=0
     for i in range(len(rythm)):
-        if(rythm[i] > meanofrythm):
-            sum+=rythm[i]
-            counter+=1
-    mymean=sum/counter
-    return mymean
-
-def findMeanOfChannel2(rythm):
-    rythm=fft(rythm)
-    conjrythm=np.conj(rythm)
-    rythm=rythm * conjrythm
-    meanofrythm=np.mean(rythm)
-    sum=0
-    counter=0
-    for i in range(len(rythm)):
-        if(rythm[i] > meanofrythm):
+        if(rythm[i] > 10000):
             sum+=rythm[i]
             counter+=1
     mymean=sum/counter
     return mymean
 
 def removeOddValues(rythm):
-    mymean=findMeanOfChannel(rythm)**2
-    mymean2=findMeanOfChannel2(rythm)
-    print(mymean)
-    print(mymean2)
-    print("-----------")
+    mymean=findMeanOfChannel(rythm)
     rythm=fft(rythm)
     conjrythm=np.conj(rythm)
     rythm=rythm * conjrythm
@@ -157,7 +144,7 @@ def removeOddValues(rythm):
     rythm=scipy.fft.ifft(rythm)
     return rythm
 
-def plotSpecEnergy(Alpha,Beta,Gamma):
+def plotSpecEnergy(Alpha,Beta,Gamma,name):
     length=len(Alpha)
     fs=256
     Alpha=fft(Alpha)
@@ -170,7 +157,7 @@ def plotSpecEnergy(Alpha,Beta,Gamma):
     Gamma=Gamma[0:int(length/2)]
 
     fig,ax= plt.subplots(2,2)
-
+    fig.suptitle(name)
     ax[0,0].plot(f,(np.abs(Alpha)**2)/length)
     ax[0,0].grid()
     ax[0,0].legend(["Alpha"],loc="upper right")
