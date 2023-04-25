@@ -6,8 +6,8 @@ import os
 
 # focused
 def main():
-    pathfoc=os.getcwd()+"\mindwavedataset/tsaros_focused.csv"
-    pathnotfoc=os.getcwd()+"\mindwavedataset/tsaros_unfocused.csv"
+    pathfoc=os.getcwd()+"\python_side\mindwave_dataset/pal_focused.csv"
+    pathnotfoc=os.getcwd()+"\python_side\mindwave_dataset/pal_unfocused.csv"
     poor,raw,foc,med=getData(pathfoc)
     poor,raw,notfoc,notmed=getData(pathnotfoc)
 
@@ -41,14 +41,12 @@ def plotData(focused,notfocused,duration):#duration-->record time (sec)
     plt.subplot(211)
     plt.title("Focused")
     plt.plot(timeVector, att1, "b", label="attention")
-    plt.plot(timeVector, med1, "k", label="meditation")
     plt.legend()
 
     timeVector = np.linspace(0,duration,len(att2))# 1 minute
     plt.subplot(212)
     plt.title("NotFocused")
     plt.plot(timeVector, att2, "b", label="attention")
-    plt.plot(timeVector, med2, "k", label="meditation")
     plt.legend()
     plt.show()
 
