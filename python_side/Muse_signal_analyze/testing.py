@@ -3,6 +3,9 @@ import scipy
 import matplotlib.pyplot as plt
 import time
 
+from scipy.fft import fft
+
+
 def bandPassFilter(signal, lowcut, highpass, sample_frequency=256.5, order = 8):
     sfreq = sample_frequency #Sampling freq
 
@@ -65,134 +68,128 @@ def get_fft(traces, sampling_frequency):
     nyf = 2.0/N * np.abs(yf)[:N//2]
     return xf, nyf
 
+
+
+def removeOddValues(rythm):
+    mymean=findMeanOfChannel(rythm)
+    rythm=fft(rythm)
+    conjrythm=np.conj(rythm)
+    rythm=rythm * conjrythm
+    for i in range(len(rythm)):
+        if rythm[i] > 13*mymean:
+            rythm[i]=mymean
+    rythm=rythm/conjrythm
+    rythm=scipy.fft.ifft(rythm)
+    return rythm
+
+
+def findMeanOfChannel(rythm):
+    rythm=fft(rythm)
+    rythm=np.abs(rythm)**2
+    meanofrythm=np.mean(rythm)
+    sum=0
+    counter=0
+    for i in range(len(rythm)):
+        if(rythm[i] > 10000):
+            sum+=rythm[i]
+            counter+=1
+    mymean=sum/counter
+    return mymean
+
+
+
 if __name__ == "__main__":
-    filename = "theodora_focused.csv"
-    data = np.loadtxt(filename, delimiter=",", dtype=str)
     
-    columnsNames = data[0]
-    # timestampts = data[:, 0]
-    data = data[1:-1]
-    data = data.astype(float)
-    TP9 = data[1:-1, 1]
-    AF7 = data[1:-1, 2]
-    AF8 = data[1:-1, 3]
-    TP10 = data[1:-1, 4] 
-    s = TP9 + AF7 + AF8 + TP10
+    
+    focused_fn = "theodora_focused.csv"
+    unfocused_fn = "tsaros_unfocused.csv"
+    # focused_fn = "my_focused_open.csv"
+    # unfocused_fn = "my_unfocused_closed.csv"
+    
+    unfocused = np.loadtxt("muse_dataset/"+unfocused_fn, delimiter=",", dtype=str)
+    focused = np.loadtxt("muse_dataset/"+focused_fn, delimiter=",", dtype=str)
 
-    plt.figure(filename)
-
-    sampleRate = int(len(s)/60)
-    timeVector = [i for i in range(len(s))]
-    plt.subplot(311)
-    plt.plot(timeVector, s)
-
-
-    alpha = lowPassFilter(s, 12, sample_frequency=sampleRate)
-    beta = bandPassFilter(s, 13, 30, sample_frequency=sampleRate)
-    gamma = highPassFilter(s, 32, sample_frequency=sampleRate)
-
-
-
-    windowCount = 60
-    w_timeVector = [i for i in range(windowCount)]
-    p_alpha = powerPerWindow(alpha, windowCount)
-    p_beta = powerPerWindow(beta, windowCount)
-    p_gamma = powerPerWindow(gamma, windowCount)
-
-    plt.subplot(312)
-    plt.title("power per window")
-    plt.plot(w_timeVector, p_alpha, "b", label="alpha")
-    plt.plot(w_timeVector, p_beta, "r", label="beta")
-    plt.plot(w_timeVector, p_gamma, "g", label="gamma")
-    plt.legend()
-
-    plt.subplot(3,1,3)
-    xf, s_fft  = get_fft(s, sampleRate)
-    plt.plot(xf, s_fft)
-    print(s_fft)
-    plt.xlim([0, 40])
-
-    plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-    exit()
-
-
-    # 14133 samples over 60 seconds  
-    # 235 samples per second 
-    # 2350 sample per 10 seconds window
-
-    plt.subplot(3,1,1)
-    sensorTimeVector = [i for i in range(len(TP9))]
-    plt.title("Sensors Data")
-    plt.plot(sensorTimeVector, TP9, label="TP9")
-    plt.plot(sensorTimeVector, TP10, label="TP10")
-    plt.plot(sensorTimeVector, AF7, label="AF7")
-    plt.plot(sensorTimeVector, AF8, label="AF8")
-    plt.legend()
-
-
-    windowsCount = 1000
-    timeVector = [i for i in range(windowsCount)]
-
-    af7_alpha = lowPassFilter(AF7, 12)
-    af7_beta = bandPassFilter(AF7, 13, 30)
-    af7_gamma = highPassFilter(AF7, 32)
-
-    af8_alpha = lowPassFilter(AF8, 12)
-    af8_beta = bandPassFilter(AF8, 13, 30)
-    af8_gamma = highPassFilter(AF8, 32)
-
-    tp9_alpha = lowPassFilter(TP9, 12)
-    tp9_beta = bandPassFilter(TP9, 13, 30)
-    tp9_gamma = highPassFilter(TP9, 32)
-
-    tp10_alpha = lowPassFilter(TP10, 12)
-    tp10_beta = bandPassFilter(TP10, 13, 30)
-    tp10_gamma = highPassFilter(TP10, 32)
-
-    alpha_all = (af7_alpha + af8_alpha + tp9_alpha + tp10_alpha)  
-    beta_all = (af7_beta + af8_beta + tp9_beta + tp10_beta) 
-    gamma_all = (af7_gamma + af8_gamma + tp9_gamma + tp10_gamma) 
+    unfocused = unfocused[1:]
+    unfocused = unfocused.astype(float)
+    
+    focused = focused[1:]
+    focused = focused.astype(float)
+    
+    
+    
+    start_focused = focused[:, 1] + focused[:, 2] + focused[:, 3] + focused[:, 4]
+    start_unfocused = unfocused[:, 1] + unfocused[:, 2] + unfocused[:, 3] + unfocused[:, 4]
+    
+    
+    timeVector = [i for i in range(len(focused))]
+    sampleRate = int(len(focused)/60)
+    
+    
+    focused = start_focused.copy()
+    unfocused = start_unfocused.copy()
+    
+    # # normalize the 2 signals
+    # focused = focused / np.linalg.norm(focused)
+    # unfocused = unfocused / np.linalg.norm(unfocused)
+    
    
-    alpha_mean = np.mean(alpha_all)
-    beta_mean = np.mean(beta_all)
-    gamma_mean = np.mean(gamma_all)
+    
+    f_mean = np.average(focused)
+    un_mean  = np.average(unfocused)
+    
+    focused = focused - f_mean
+    unfocused = unfocused - un_mean
+    
+   
 
-    print("alpha %f, beta %f, gamma %f"%(alpha_mean, beta_mean, gamma_mean))
+    focused = focused - lowPassFilter(focused, 4, sampleRate)
+    unfocused = unfocused - lowPassFilter(unfocused, 4, sampleRate)
 
-    power_alpha_all = powerPerWindow(alpha_all, windowsCount)
-    power_beta_all = powerPerWindow(beta_all, windowsCount)
-    power_gamma_all = powerPerWindow(gamma_all, windowsCount)
-
-    plt.subplot(3,1,2)
-    xf, s_fft  = get_fft(s, 255)
-    plt.plot(xf, s_fft)
-
-
-
-    plt.subplot(3,1,3)
-    plt.title("Power")
-    plt.plot(timeVector, power_alpha_all, "b", label="power_alpha_all")
-    plt.plot(timeVector, power_beta_all, "g", label="power_beta_all")
-    plt.plot(timeVector, power_gamma_all, "r", label="power_gamma_all")
+    f_alpha = lowPassFilter(focused, 12, sampleRate)
+    f_beta = bandPassFilter(focused, 13, 30, sampleRate)
+    f_gamma = bandPassFilter(focused, 32, 40, sampleRate)
+    
+    
+    un_alpha = lowPassFilter(unfocused, 12, sampleRate)
+    un_beta = bandPassFilter(unfocused, 13, 30, sampleRate)
+    un_gamma = bandPassFilter(unfocused, 32, 40, sampleRate)
+    
+    
+    windowCount = 20
+    f_b_power = powerPerWindow(f_beta, windowCount)
+    f_g_power = powerPerWindow(f_gamma, windowCount)
+    
+    un_b_power = powerPerWindow(un_beta, windowCount)
+    un_g_power = powerPerWindow(un_gamma, windowCount)
+    
+    # print("focused   | g=%.2f, b=%.2f"%(np.average(f_g_power), np.average(f_b_power)))
+    # print("unfocused | g=%.2f, b=%.2f"%(np.average(un_g_power), np.average(un_b_power)))
+    
+    # plt.subplot(121)
+    # plt.title("gamma")
+    # plt.plot(f_g_power, "r", label="focused")
+    # plt.plot(un_g_power, "b", label="unfocused")
+    # plt.legend()
+    
+    # plt.subplot(122)
+    # plt.title("beta")
+    # plt.plot(f_b_power, "r", label="focused")
+    # plt.plot(un_b_power, "b", label="unfocused")
+    # plt.legend()
+    # plt.show()
+    
+    a = 0.3
+    b = 0.7
+    
+    f_comb = np.add(np.dot(a, f_b_power), np.dot(b, f_g_power))
+    un_comb = np.add(np.dot(a, un_b_power), np.dot(b, un_g_power))
+    
+    print("a=%.1f b=%.1f"%(a, b))
+    print("focused   : %.2f"%(np.average(f_comb)))
+    print("unfocused : %.2f"%(np.average(un_comb)))
+    
+    plt.plot(f_comb, "r", label="focused")
+    plt.plot(un_comb, "b", label="unfocused")
     plt.legend()
     plt.show()
-
-
-
-
-
-
-
-
+   
