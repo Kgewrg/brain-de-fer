@@ -17,7 +17,7 @@ public class Sliderscript : MonoBehaviour
     {
        maxValue=mainslider.maxValue;
        mainslider.value=maxValue/2;
-       filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fer\\data.csv";//βάλτο σε σχόλιο όταν το χρησιμοποιείς
+       filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν το χρησιμοποιείς
     }
 
     // Update is called once per frame
