@@ -8,11 +8,10 @@ from scipy.fft import fft
 
 
 def main():
-    path1=os.path.dirname(__file__)+"\data.csv"
-    path1=os.path.dirname(__file__)+"\muse_dataset\\tsaros_focused.csv"
-    path2=os.path.dirname(__file__)+"\muse_dataset\\tsaros_unfocused.csv"
-    path3=os.path.dirname(__file__)+"\muse_dataset\\my_focused_open.csv"
-    path4=os.path.dirname(__file__)+"\muse_dataset\\my_unfocused_closed.csv"
+    path1=os.path.dirname(__file__)+"\muse_dataset\\subject3_focused.csv"
+    path2=os.path.dirname(__file__)+"\muse_dataset\\subject3_relaxed.csv"
+    path3=os.path.dirname(__file__)+"\muse_dataset\\subject4_focused.csv"
+    path4=os.path.dirname(__file__)+"\muse_dataset\\subject4_relaxed.csv"
     pathArray=[path1,path2,path3,path4]
     for i in pathArray:
         name= ""
@@ -24,12 +23,10 @@ def main():
         print("--------------------")
         print("Dataset : ",name)
         print("--------------------")
-        #record_muse(60,path)
-        
         dataset = pd.read_csv(i)
         dataset=dataset.values# np array with dataset 9-40 hz
         dataset=np.delete(dataset,0,1)
-        dataset=np.delete(dataset,-1,1)
+        
 
         Alpha,Beta,Gamma=computeRythms(dataset)
 
@@ -50,7 +47,7 @@ def main():
         # spectrumΕnergy(Beta)
         # spectrumΕnergy(Gamma)
 
-        #plotSpecEnergy(Alpha,Beta,Gamma,name)
+        plotSpecEnergy(Alpha,Beta,Gamma,name)
         
 def computeRythms(dataset):
 
@@ -99,9 +96,9 @@ def computeRythms(dataset):
 
     
 
-    Alpha=(Alpha1+Alpha2+Alpha3+Alpha4)/4
-    Beta=(Beta1+Beta2+Beta3+Beta4)/4
-    Gamma=(Gamma1+Gamma2+Gamma3+Gamma4)/4
+    Alpha=(Alpha1+Alpha2+Alpha3+Alpha4)
+    Beta=(Beta1+Beta2+Beta3+Beta4)
+    Gamma=(Gamma1+Gamma2+Gamma3+Gamma4)
     
 
     
@@ -139,7 +136,7 @@ def removeOddValues(rythm):
     rythm=rythm * conjrythm
     for i in range(len(rythm)):
         if rythm[i] > 13*mymean:
-            rythm[i]=mymean
+            rythm[i]=0
     rythm=rythm/conjrythm
     rythm=scipy.fft.ifft(rythm)
     return rythm
@@ -174,25 +171,6 @@ def plotSpecEnergy(Alpha,Beta,Gamma,name):
     ax[1,0].set_xlabel('(Hz)',fontweight='bold'),
     ax[1,0].set_ylabel('(Joules)',fontweight='bold')
     plt.show()
-
-def record_muse(time,path):#function that records with muse
-    #clean the csv file
-    filename = path
-    f = open(filename, "w+")
-    f.close()
-
-    #record EEG signal from muse
-    record(time,path)
-
-    dataset = pd.read_csv(path)
-    dataset=dataset.values
-    dataset=np.delete(dataset,0,1)
-
-    f = open(path, "w+")
-    f.close()
-
-    df=pd.DataFrame(y,columns=['TP9','AF7','AF8','TP10'])
-    df.to_csv(filename,index=False)
 
 def bandPassFilter(signal, lowcut, highpass):
     sfreq = 256.0 #Sampling freq
