@@ -101,13 +101,13 @@ def findMeanOfChannel(rythm):
 if __name__ == "__main__":
     
     
-    focused_fn = "theodora_focused.csv"
-    unfocused_fn = "tsaros_unfocused.csv"
+    focused_fn = "subject5_focused.csv"
+    unfocused_fn = "subject5_relaxed.csv"
     # focused_fn = "my_focused_open.csv"
     # unfocused_fn = "my_unfocused_closed.csv"
     
-    unfocused = np.loadtxt("muse_dataset/"+unfocused_fn, delimiter=",", dtype=str)
-    focused = np.loadtxt("muse_dataset/"+focused_fn, delimiter=",", dtype=str)
+    unfocused = np.loadtxt("C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\python_side\\Muse_signal_analyze\\muse_dataset\\"+unfocused_fn, delimiter=",", dtype=str)
+    focused = np.loadtxt("C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\python_side\\Muse_signal_analyze\\muse_dataset\\"+focused_fn, delimiter=",", dtype=str)
 
     unfocused = unfocused[1:]
     unfocused = unfocused.astype(float)
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     un_gamma = bandPassFilter(unfocused, 32, 40, sampleRate)
     
     
-    windowCount = 20
+    windowCount = 30    
     f_b_power = powerPerWindow(f_beta, windowCount)
     f_g_power = powerPerWindow(f_gamma, windowCount)
     
@@ -178,15 +178,15 @@ if __name__ == "__main__":
     # plt.legend()
     # plt.show()
     
-    a = 0.3
-    b = 0.7
+    a = 1
+    b = 1
     
     f_comb = np.add(np.dot(a, f_b_power), np.dot(b, f_g_power))
     un_comb = np.add(np.dot(a, un_b_power), np.dot(b, un_g_power))
     
     print("a=%.1f b=%.1f"%(a, b))
-    print("focused   : %.2f"%(np.average(f_comb)))
-    print("unfocused : %.2f"%(np.average(un_comb)))
+    print("focused   : %.2f"%(np.median(f_comb)))
+    print("unfocused : %.2f"%(np.median(un_comb)))
     
     plt.plot(f_comb, "r", label="focused")
     plt.plot(un_comb, "b", label="unfocused")
