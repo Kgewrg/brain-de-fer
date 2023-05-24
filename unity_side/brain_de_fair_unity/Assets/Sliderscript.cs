@@ -4,20 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
+
 public class Sliderscript : MonoBehaviour
 {
     public Slider mainslider;
-    private float maxValue;
-    private string filePath;
-    private float player1;
-    private float player2;
-    private string row;
+    public LogicScript logic;
+    private float player1,starttime,endtime,Finaltime,player2,maxValue;
+    private string row,filePath;
+    private bool gameover;
+    
     // Start is called before the first frame update
     void Start()
     {
+       starttime=Time.time;
+       gameover=false;
        maxValue=mainslider.maxValue;
        mainslider.value=maxValue/2;
-       filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν το χρησιμοποιείς
+       filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
     }
 
     // Update is called once per frame
@@ -30,14 +33,16 @@ public class Sliderscript : MonoBehaviour
             player1 = float.Parse(lines[0]);
             player2=float.Parse(lines[1]);
             Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
-            
-            if( player1 > player2 )
+            if(gameover == false)
             {
-                mainslider.value=mainslider.value+Time.deltaTime;
-            }
-            else if(player1 < player2)
-            {
-                mainslider.value=mainslider.value-Time.deltaTime;
+                if( player1 > player2 )
+                {
+                    mainslider.value=mainslider.value+Time.deltaTime;
+                }
+                else if(player1 < player2)
+                {
+                    mainslider.value=mainslider.value-Time.deltaTime;
+                }
             }
 
         
@@ -45,6 +50,21 @@ public class Sliderscript : MonoBehaviour
         catch (IOException){
             Debug.Log("File was opened, skipping");
         }
+        if( mainslider.value == mainslider.maxValue )
+        {
+            gameover = logic.GameOverPlayer("Player 1 wins");
+            endtime=Time.time;
+            Finaltime=starttime-endtime;
+            
+        }
+        else if ( mainslider.value == mainslider.minValue)
+        {
+            gameover = logic.GameOverPlayer("Player 2 wins");
+            endtime=Time.time;
+            Finaltime=starttime-endtime;
+        }
+
     }
+    
 }
 

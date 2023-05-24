@@ -5,13 +5,12 @@ headset = mindwave.Headset('COM9')
 
 print('Connected, waiting 10 seconds for data to start streaming')
 time.sleep(10)
-#time for recording
+
 testtime=10 #minutes
 
 now = time.time()
 future = now + 60 * testtime
-    # text = str(headset.poor_signal) + "," + str(headset.raw_value) + "," + str(headset.attention) + "," + str(headset.meditation) 
-    #f.write("poor_signal , raw,attention , meditation\n")
+    
 while time.time() < future:
     number = random.randint(30, 100)#bot player
     text= str(headset.attention)+","+str(number)

@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+#ΤΑ PATHS ΓΑΜΩ ΤΑ PATHS
 def main():
     focusarray,unfocusarray=merge_ALL()
     mergedfile=[[0,0,0,0,0,0,0,0,0,0,0,0]]
