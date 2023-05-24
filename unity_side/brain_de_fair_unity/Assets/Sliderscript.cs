@@ -20,7 +20,8 @@ public class Sliderscript : MonoBehaviour
        gameover=false;
        maxValue=mainslider.maxValue;
        mainslider.value=maxValue/2;
-       filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
+       filePath="C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv";
+        // filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
     }
 
     // Update is called once per frame
