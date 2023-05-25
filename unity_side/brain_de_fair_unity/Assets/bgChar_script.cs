@@ -9,17 +9,24 @@ public class bgChar_script : MonoBehaviour
     private float ySpeed;
 
     public int activeAnim = 0; 
+
+    [SerializeField] private Animator airPunchAnim; 
+    [SerializeField] private string anim = "airPunch" ;
+    
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() { 
+        airPunchAnim.Play("idle", 0, 0.0f);        
     }
 
     // Update is called once per frame
     void Update() {
-       if (Input.GetKeyDown(KeyCode.Space)){
-        jump();
-       }
+        if (activeAnim == 1){
+            if (Input.GetKeyDown(KeyCode.Space)){   // θα γίνεται σε random
+                // Debug.Log("Playing amin");
+                airPunchAnim.Play(anim, 0, 0.0f);
+            }           
+        }
+       
     }
 
     private void jump(){

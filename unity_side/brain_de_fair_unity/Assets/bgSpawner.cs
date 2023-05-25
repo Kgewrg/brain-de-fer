@@ -14,8 +14,11 @@ public class bgSpawner : MonoBehaviour
         float heightOffset;
         int n_chars = 8;
 
+        // TODO: Να τοποθετιθούν σε κατάλληλα σημεία
+
         // First line (bot to top)
         for (int i = 0; i < n_chars; i++) {
+            Debug.Log("spawing line 1");
             heightOffset = Random.Range(-1.0f, 1.0f);
             GameObject clone = Instantiate(charPrefab, new Vector3((float)(-4.5 + (i*sideDist)), -2+heightOffset, 0), Quaternion.identity);
             int t = Random.Range(0,2);
@@ -25,6 +28,7 @@ public class bgSpawner : MonoBehaviour
         }
 
         for (int i = 0; i < n_chars+1; i++) {
+            Debug.Log("spawing line 2");
             heightOffset = Random.Range(-1.0f, 1.0f);
             GameObject clone = Instantiate(charPrefab, new Vector3((float)(-5.5 + (i*sideDist)), 0+heightOffset, 0), Quaternion.identity);
             int t = Random.Range(0,2);
@@ -34,6 +38,7 @@ public class bgSpawner : MonoBehaviour
         }
 
         for (int i = 0; i < n_chars; i++) {
+            Debug.Log("spawing line 3");
             heightOffset = Random.Range(-1.0f, 1.0f);
             GameObject clone = Instantiate(charPrefab, new Vector3((float)(-4.5 + (i*sideDist)), 2+heightOffset, 0), Quaternion.identity);
             int t = Random.Range(0,2);
@@ -44,6 +49,7 @@ public class bgSpawner : MonoBehaviour
 
 
         for (int i = 0; i < n_chars+1; i++) {
+            Debug.Log("spawing line 4");
             heightOffset = Random.Range(-1.0f, 1.0f);
             GameObject clone = Instantiate(charPrefab, new Vector3((float)(-5.5 + (i*sideDist)), 4+heightOffset, 0), Quaternion.identity);
             int t = Random.Range(0,2);

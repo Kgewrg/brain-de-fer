@@ -33,7 +33,7 @@ public class Sliderscript : MonoBehaviour
 
             player1 = float.Parse(lines[0]);
             player2=float.Parse(lines[1]);
-            Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
+            // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
             if(gameover == false)
             {
                 if( player1 > player2 )
