@@ -2,22 +2,32 @@ import pandas as pd
 import numpy as np
 #ΤΑ PATHS ΓΑΜΩ ΤΑ PATHS
 def main():
-    focusarray,unfocusarray=merge_ALL()
-    mergedfile=[[0,0,0,0,0,0,0,0,0,0,0,0]]
+    path="C:/Users/Dounas P/Desktop/brain-de-fair"
+    focus=path+"/Pal_focused.csv"
+    relaxed=path+"/Pal_relaxed.csv"
 
-    for i in focusarray:
-        i=i.iloc[:,:].values
-        #i=np.delete(i,0,1)
-        column_one=np.full((len(i), 1) ,1)
-        i= np.column_stack((i, column_one))
-        mergedfile=np.concatenate((mergedfile,i),axis=0)
+    datasetfocused = pd.read_csv (focus)
+    datasetfocused=datasetfocused.iloc[:,:].values
 
-    for i in unfocusarray:
-        i=i.iloc[:,:].values
-        #i=np.delete(i,0,1)
-        column_zero=np.full((len(i), 1), 0)
-        i= np.column_stack((i, column_zero))
-        mergedfile=np.concatenate((mergedfile,i),axis=0)
+    datasetrelaxed = pd.read_csv (relaxed)
+    datasetrelaxed=datasetrelaxed.iloc[:,:].values
+
+    #focusarray,unfocusarray=merge_ALL()
+    #mergedfile=[[0,0,0,0,0,0,0,0,0,0,0,0]]
+
+    # for i in focusarray:
+    #     i=i.iloc[:,:].values
+    #     #i=np.delete(i,0,1)
+    #     column_one=np.full((len(i), 1) ,1)
+    #     i= np.column_stack((i, column_one))
+    #     mergedfile=np.concatenate((mergedfile,i),axis=0)
+
+    # for i in unfocusarray:
+    #     i=i.iloc[:,:].values
+    #     #i=np.delete(i,0,1)
+    #     column_zero=np.full((len(i), 1), 0)
+    #     i= np.column_stack((i, column_zero))
+    #     mergedfile=np.concatenate((mergedfile,i),axis=0)
     # focused=focused.iloc[:,:].values
     # unfocused=unfocused.iloc[:,:].values
     # focused=np.delete(focused,0,1)
@@ -26,20 +36,20 @@ def main():
     
 
     #create a sizeofarray column  filled with 1 for focused and 0 for unfocused
-    # column_one=np.full((len(focused), 1) ,1)
-    # column_zero=np.full((len(unfocused), 1), 0)
+    column_one=np.full((len(datasetfocused), 1) ,1)
+    column_zero=np.full((len(datasetrelaxed), 1), 0)
     
 
     #add column 1 to focused and column 2 to unfocused
-    # focused= np.column_stack((focused, column_one))
-    # unfocused= np.column_stack((unfocused, column_zero))
-
-    # merged_file=np.concatenate((focused,unfocused),axis=0)
-    mergedfile=pd.DataFrame(mergedfile)
-
-    mergedfile.to_csv("C:/Users/Nikos/Desktop/KNN/mindwavealldata.csv", index=False)
+    datasetfocused= np.column_stack((datasetfocused, column_one))
+    datasetrelaxed= np.column_stack((datasetrelaxed, column_zero))
+    merged_file=[]
+    merged_file=np.concatenate((datasetfocused,datasetrelaxed),axis=0)
+    merged_file=pd.DataFrame(merged_file)
     
-    print(len(mergedfile))
+    merged_file.to_csv("C:/Users/Dounas P/Desktop/brain-de-fair/mindwaveTest.csv", index=False)
+    
+    print(len(merged_file))
 
 
 
