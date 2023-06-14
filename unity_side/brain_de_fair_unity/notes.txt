@@ -15,3 +15,13 @@
 	βρήκες έτοιμο rigged body: https://free3d.com/3d-model/base-character-ready-to-animate-453899.html
 	το animation έγινε στο blender με αυτό το tut:  https://www.youtube.com/watch?v=4z7G4TyKE9g
 	export σε fbx και αναπαραγωγή στο unity ακολουθόντας: https://youtu.be/uWexElqDcaA
+
+Για να βάλεις animations στα prefab:
+	κάνεις το animation στα .blend αρχεία που έχεις για τον κάθε χαρακτήρα, και κάνεις export στο αντίστοιχο fbx (ονόμασέτα orig)
+	μετά στο prefab βάζεις animator controller και σε αυτό μπορείς να βάλεις το animation για να παίζει στο start up (πχ)
+	Θέλει να ψάξεις πως να κάνεις το animation να παίζει τυχαία (για αρχή με το space).
+		Το οποίο έχεις τουτόριαλ εδώ https://www.youtube.com/watch?v=J-S1Lk7ZQdU
+		
+	Ετοιμα: 
+		unarmed idle 01 
+	
