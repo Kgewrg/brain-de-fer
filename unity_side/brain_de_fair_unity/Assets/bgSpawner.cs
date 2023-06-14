@@ -110,7 +110,6 @@ public class bgSpawner : MonoBehaviour
 
             // Select random model to spawn
             int randomModel =  Random.Range(0, charPrefab_array.Length);
-            Debug.Log(charPrefab_array.Length);
 
             // Spawn the character
             GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity);
