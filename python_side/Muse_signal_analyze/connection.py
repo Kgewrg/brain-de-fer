@@ -30,9 +30,9 @@ def main():
 
         Alpha,Beta,Gamma=computeRythms(dataset)
 
-        Alpha=removeOddValues(Alpha)
-        Beta=removeOddValues(Beta)
-        Gamma=removeOddValues(Gamma)
+        # Alpha=removeOddValues(Alpha)
+        # Beta=removeOddValues(Beta)
+        # Gamma=removeOddValues(Gamma)
 
         a=int(np.sqrt(findMeanOfChannel(Alpha)))
         b=int(np.sqrt(findMeanOfChannel(Beta)))
