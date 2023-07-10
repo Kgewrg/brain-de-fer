@@ -11,12 +11,9 @@
 
     και μετα τυχαία οι μερικοί active χαρακτήρες να πηδάνε τυχαία.    
 	
-Για τα animations: 
-	βρήκες έτοιμο rigged body: https://free3d.com/3d-model/base-character-ready-to-animate-453899.html
-	το animation έγινε στο blender με αυτό το tut:  https://www.youtube.com/watch?v=4z7G4TyKE9g
-	export σε fbx και αναπαραγωγή στο unity ακολουθόντας: https://youtu.be/uWexElqDcaA
 
-Για να βάλεις animations στα prefab:
+
+(old) Για να βάλεις animations στα prefab:
 	κάνεις το animation στα .blend αρχεία που έχεις για τον κάθε χαρακτήρα, και κάνεις export στο αντίστοιχο fbx (ονόμασέτα orig)
 	μετά στο prefab βάζεις animator controller και σε αυτό μπορείς να βάλεις το animation για να παίζει στο start up (πχ)
 	Θέλει να ψάξεις πως να κάνεις το animation να παίζει τυχαία (για αρχή με το space).
@@ -25,3 +22,35 @@
 	Ετοιμα: 
 		unarmed idle 01 
 	
+
+Για τα animations: 
+	Βάζεις animator controller για κάθε bgChar και βάζεις 2 states στο καθένα (3 και το empty)
+	πρώτο state: anim1, και στο motion βάζεις το animation απο το .blend αρχείο
+	δεύτερο state:  anim1, βάζεις αντίστοιχα κάποιο animation (ή και κανένα)
+
+	βάζεις και το script σε κάθε χαρακτήρα 
+
+θέλει να βάλεις και animations ωστε να μην κάθονται απλά ακίνητα
+	(λίγο δεξια - αριστερά)
+
+
+
+(Thread) βάλε idle animations στους bg, κατέβασε απο το Mixamo
+
+
+λεπόν....... τώρα κάνεις humanoid τους χαρακτήρες και τα animations
+https://www.youtube.com/watch?v=BEZHVYk6Fa4&list=PLwyUzJb_FNeTQwyGujWRLqnfKpV-cj-eO&index=6
+(μάλλον πάλι απο την αρχή)
+
+
+Ξανα κατέβασες όλους τους χαρακτήρες απο το Mixamo, τους έκανες humanoid
+	και επίσης κατέβασες αρκετά animations επίσης, τώρα θέλειε να φτιάξεις
+	τα AC για τον καθένα τους και επίσης να στήσεις τον κώδικα.
+	
+	Ideas για τον κώδικα
+		Να διαλέγει τυχαία πια idle animations θα παίζει σαν default 
+		Να ξεκινάνε ασύγχρωνα όλοι οι χαρακτήρες
+		Να διαλέγει τυχαία πια animations να παίζει 
+		Κοντά στο τέλος οι μισοί να κλαίνε και οι άλλοι μισοί να χαίρονται
+
+	Επίσης κατέβασε κανα 2 winning animations 

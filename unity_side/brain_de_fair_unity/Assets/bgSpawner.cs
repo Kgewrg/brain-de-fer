@@ -15,15 +15,11 @@ public class bgSpawner : MonoBehaviour
         
 
         
-
-        Debug.Log(centerPoint.transform.position);
-        Debug.Log(centerPoint.transform.rotation);
-
         // Define general spawn position (line behind main characters)
         float spawnZ_line = centerPoint.transform.position.z + 60;
         float spawnLeftOffset = centerPoint.transform.position.x - 130;
         float spawnRightOffset = centerPoint.transform.position.x + 100;
-        float spawnY = centerPoint.transform.position.y - 50;
+        float spawnY = centerPoint.transform.position.y - 49;
         float charSpace = 25;    // Space between characters
         
 
@@ -49,7 +45,7 @@ public class bgSpawner : MonoBehaviour
             int randomModel =  Random.Range(0, charPrefab_array.Length);
 
             // Spawn the character
-            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity);
+            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity, centerPoint.transform);
 
             // Get the angle between current character and center point
             var rot = Mathf.Atan2(spawnX - centerPoint.transform.position.x, spawnZ-centerPoint.transform.position.z) * Mathf.Rad2Deg;
@@ -81,7 +77,7 @@ public class bgSpawner : MonoBehaviour
             int randomModel =  Random.Range(0, charPrefab_array.Length);
 
             // Spawn the character
-            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity);
+            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity, centerPoint.transform);
 
             // Get the angle between current character and center point
             var rot = Mathf.Atan2(spawnX - centerPoint.transform.position.x, spawnZ-centerPoint.transform.position.z) * Mathf.Rad2Deg;
@@ -112,7 +108,7 @@ public class bgSpawner : MonoBehaviour
             int randomModel =  Random.Range(0, charPrefab_array.Length);
 
             // Spawn the character
-            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity);
+            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity, centerPoint.transform);
 
             // Get the angle between current character and center point
             var rot = Mathf.Atan2(spawnX - centerPoint.transform.position.x, spawnZ-centerPoint.transform.position.z) * Mathf.Rad2Deg;
