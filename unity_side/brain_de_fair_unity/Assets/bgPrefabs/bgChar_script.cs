@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class bgChar_script : MonoBehaviour
 {
     public int totalRandomAnimations = 3;
-    public int activeAnim = 0; 
+    public int activeAnim = 0; // Καθορίζει αν θα κάνει κάποιο animation
+    public bool teamA;  // Καθορίζει σε ποια ομάδα θα είναι
+    public bool teamB;
     public float minInterval = 5;
     public float maxInterval = 10;   
     private Animator mAnimator;
@@ -54,6 +57,8 @@ public class bgChar_script : MonoBehaviour
             // Debug.Log("playing Anim");
             mAnimator.SetBool(selectRandomAnimation(), true);
         } 
+
+
     }
 
     int selectRandomAnimation(){
