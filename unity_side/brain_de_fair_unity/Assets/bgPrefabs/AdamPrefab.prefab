@@ -1690,7 +1690,7 @@ Transform:
   m_GameObject: {fileID: 5909899823619719588}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 17.71504, y: 281.80768, z: -140.24}
-  m_LocalScale: {x: 40, y: 40, z: 40}
+  m_LocalScale: {x: 12, y: 12, z: 12}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2060652335609152412}
@@ -1736,6 +1736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbaaab6006e48b49877238b2fd2a447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalRandomAnimations: 3
   activeAnim: 0
   minInterval: 5
   maxInterval: 10

@@ -7,8 +7,8 @@ public class bgSpawner : MonoBehaviour
 
     public GameObject[] charPrefab_array;
     public GameObject centerPoint; 
-    public float frontBackVariance; 
-    public float leftRightVariance;
+    public int frontBackVariance; 
+    public int leftRightVariance;
  
     // Start is called before the first frame update
     void Start() {
@@ -16,11 +16,11 @@ public class bgSpawner : MonoBehaviour
 
         
         // Define general spawn position (line behind main characters)
-        float spawnZ_line = centerPoint.transform.position.z + 60;
-        float spawnLeftOffset = centerPoint.transform.position.x - 130;
-        float spawnRightOffset = centerPoint.transform.position.x + 100;
-        float spawnY = centerPoint.transform.position.y - 49;
-        float charSpace = 25;    // Space between characters
+        float spawnZ_line = centerPoint.transform.position.z + 30;
+        float spawnLeftOffset = centerPoint.transform.position.x - 60;
+        // float spawnRightOffset = centerPoint.transform.position.x + 0;  
+        float spawnY = centerPoint.transform.position.y - 13;
+        float charSpace = 10;    // Space between characters
         
 
         int n_chars = 12;
