@@ -12,7 +12,10 @@ public class Sliderscript : MonoBehaviour
     private float player1,starttime,endtime,Finaltime,player2,maxValue;
     private string row,filePath;
     private bool gameover;
-    
+
+    static public float publicSliderValue;    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,24 +35,24 @@ public class Sliderscript : MonoBehaviour
             lines=lines[0].Split(',');                  
 
             player1 = float.Parse(lines[0]);
-            player2=float.Parse(lines[1]);
+            player2 = float.Parse(lines[1]);
             // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
             if(gameover == false)
             {
                 if( player1 > player2 )
                 {
-                    mainslider.value=mainslider.value+Time.deltaTime;
+                    mainslider.value = mainslider.value + Time.deltaTime;
+                    publicSliderValue = mainslider.value + Time.deltaTime;
                 }
                 else if(player1 < player2)
                 {
-                    mainslider.value=mainslider.value-Time.deltaTime;
+                    mainslider.value = mainslider.value - Time.deltaTime;
+                    publicSliderValue = mainslider.value - Time.deltaTime;
                 }
             }
-
-        
         }
         catch (IOException){
-            Debug.Log("File was opened, skipping");
+            // Debug.Log("File was opened, skipping");
         }
         if( mainslider.value == mainslider.maxValue )
         {

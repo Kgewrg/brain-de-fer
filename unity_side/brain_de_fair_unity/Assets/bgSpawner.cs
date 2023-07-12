@@ -74,9 +74,9 @@ public class bgSpawner : MonoBehaviour
 
                 int team = Random.Range(0,2);
                 if (team == 1){
-                    clone.GetComponent<bgChar_script>().teamA = true;
+                    clone.GetComponent<bgChar_script>().teamLeft = true;
                 }else{
-                    clone.GetComponent<bgChar_script>().teamB = false;
+                    clone.GetComponent<bgChar_script>().teamRight = true;
                 }
             }
         }
