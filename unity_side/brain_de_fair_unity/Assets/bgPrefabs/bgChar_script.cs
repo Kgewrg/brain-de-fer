@@ -44,14 +44,14 @@ public class bgChar_script : MonoBehaviour
         // https://www.youtube.com/watch?v=a76azKiNsYM
         float randInterval = Random.Range(minInterval, maxInterval);
         Invoke("randomlyInvokeAnim", randInterval);
-        Debug.Log("Calling anim");
+        // Debug.Log("Calling anim");
         playAnim();
     }
     
     void playAnim(){
         // Ελέγχει αν είναι active χαρακτήρας και αν παίζει ήδη κάποιο animation
         if ((activeAnim == 1)){
-            Debug.Log("playing Anim");
+            // Debug.Log("playing Anim");
             mAnimator.SetBool(selectRandomAnimation(), true);
         } 
     }

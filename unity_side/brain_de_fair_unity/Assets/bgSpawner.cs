@@ -38,7 +38,7 @@ public class bgSpawner : MonoBehaviour
 
             // Figure out spawn positions
             float spawnX = (float)(spawnLeftOffset + (i*charSpace));
-            float spawnZ = spawnZ_line + tmp_frontBackOffset - 10; // -10 για να είναι η πιο κοντά γραμμή
+            float spawnZ = spawnZ_line + tmp_frontBackOffset; 
             Vector3 spawnPos = new Vector3(spawnX, spawnY, spawnZ);
 
             // Select random model to spawn
@@ -70,7 +70,7 @@ public class bgSpawner : MonoBehaviour
 
             // Figure out spawn positions
             float spawnX = (float)(spawnLeftOffset + (i*charSpace));
-            float spawnZ = spawnZ_line + tmp_frontBackOffset;           // μεσέα γραμμή
+            float spawnZ = spawnZ_line + tmp_frontBackOffset + 10;
             Vector3 spawnPos = new Vector3(spawnX, spawnY, spawnZ);
 
             // Select random model to spawn
@@ -101,7 +101,7 @@ public class bgSpawner : MonoBehaviour
 
             // Figure out spawn positions
             float spawnX = (float)(spawnLeftOffset + (i*charSpace));
-            float spawnZ = spawnZ_line + tmp_frontBackOffset + 10; // +10 για να είναι η πιο μακριά γραμμή
+            float spawnZ = spawnZ_line + tmp_frontBackOffset + 20; 
             Vector3 spawnPos = new Vector3(spawnX, spawnY, spawnZ);
 
             // Select random model to spawn
@@ -124,17 +124,36 @@ public class bgSpawner : MonoBehaviour
         }
 
 
-        // for (int i = 0; i < n_chars+1; i++) {
-        //     // Debug.Log("spawing line 4");
-        //     frontBackOffset = Random.Range(-variance, variance);
-        //     leftRightOffset = Random.Range(-leftRightVariance, leftRightVariance);
-        //     GameObject clone = Instantiate(charPrefab, new Vector3((float)(spawnLeftOffset + (i*sideDist)), spawnY, spawnZ+frontBackOffset), Quaternion.identity);
-        //     int t = Random.Range(0,2);
-        //     if (t == 1){
-        //        clone.GetComponent<bgChar_script>().activeAnim = 1;
-        //     }
-        // }
-        
+          for (int i = 0; i < n_chars; i++) {
+            // Debug.Log("spawing line 3");
+
+            // Get the randoms
+            tmp_frontBackOffset = Random.Range(-frontBackVariance, frontBackVariance);
+            tmp_leftRightOffset = Random.Range(-leftRightVariance, leftRightVariance);
+
+            // Figure out spawn positions
+            float spawnX = (float)(spawnLeftOffset + (i*charSpace));
+            float spawnZ = spawnZ_line + tmp_frontBackOffset + 30; 
+            Vector3 spawnPos = new Vector3(spawnX, spawnY, spawnZ);
+
+            // Select random model to spawn
+            int randomModel =  Random.Range(0, charPrefab_array.Length);
+
+            // Spawn the character
+            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity, centerPoint.transform);
+
+            // Get the angle between current character and center point
+            var rot = Mathf.Atan2(spawnX - centerPoint.transform.position.x, spawnZ-centerPoint.transform.position.z) * Mathf.Rad2Deg;
+
+            // Rotate the character
+            clone.transform.Rotate(0f, rot+180, 0f);
+
+            // Decide if the character will be animated or not
+            int t = Random.Range(0,2);
+            if (t == 1){
+               clone.GetComponent<bgChar_script>().activeAnim = 1;
+            }
+        }      
     }
 
     // Update is called once per frame

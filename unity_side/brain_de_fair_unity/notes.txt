@@ -54,3 +54,8 @@ https://www.youtube.com/watch?v=BEZHVYk6Fa4&list=PLwyUzJb_FNeTQwyGujWRLqnfKpV-cj
 		Κοντά στο τέλος οι μισοί να κλαίνε και οι άλλοι μισοί να χαίρονται
 
 	Επίσης κατέβασε κανα 2 winning animations 
+
+
+Spawner todo:
+	Να μπορείς να βάλεις τα πόσες γραμμές θέλεις	
+	Προσπάθησε να μειώσεις το clipping
