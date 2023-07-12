@@ -4,25 +4,38 @@ using UnityEngine;
 
 public class bgChar_script : MonoBehaviour
 {
-
+    public int totalRandomAnimations = 3;
     public int activeAnim = 0; 
     public float minInterval = 5;
     public float maxInterval = 10;   
     private Animator mAnimator;
 
-    private bool firstStage = true;
 
-    // Start is called before the first frame update
+    // Πίνακας που περιέχει τα triggers των animations
+    private List<int> hashAvailableAnims = new List<int>(); 
+
     void Start() { 
         mAnimator = GetComponent<Animator>();
+
+        // Προσθήκη των hash (id) των trigger στον πίνακα)
+        for (int i = 0; i < totalRandomAnimations; i++) {
+            hashAvailableAnims.Add(Animator.StringToHash(i.ToString()));
+            // Κάνει το index σε string, έτσι ώστε να αντιστοιχεί στο 
+            // trigger για κάποιο animation
+        }
+        
+        // Ενα αρχικό random ξεκίνημα έτσι ώστε να μην ξεκινάνε όλα τα idle ταυτόχρονα
         float randInterval = Random.Range(minInterval, maxInterval);
         Invoke("randomlyInvokeAnim", randInterval);
       
     }
 
-    // Update is called once per frame
     void Update() {
-                 
+
+        // Κάνει false όλα τα triggers ωστε να μην παίζουν επαναληπτικά
+        foreach (int triggerHash in hashAvailableAnims) {
+           mAnimator.SetBool(triggerHash, false);
+        }
     }
 
     void randomlyInvokeAnim(){
@@ -31,26 +44,22 @@ public class bgChar_script : MonoBehaviour
         // https://www.youtube.com/watch?v=a76azKiNsYM
         float randInterval = Random.Range(minInterval, maxInterval);
         Invoke("randomlyInvokeAnim", randInterval);
+        Debug.Log("Calling anim");
         playAnim();
     }
     
     void playAnim(){
-        var state = mAnimator.GetCurrentAnimatorStateInfo(0);
         // Ελέγχει αν είναι active χαρακτήρας και αν παίζει ήδη κάποιο animation
         if ((activeAnim == 1)){
-            // Αλλάζει κατάσταση όποτε παίζει animation
-            if (firstStage){
-                // Παίζει το πρώτο anim, και αλλάζει το flag για να πάει στο δευτερο
-                // Debug.Log("playing anim1");
-                mAnimator.Play("0", 0);
-                firstStage = false;
-            }
-            else {
-                // Αντίστοιχα με το πρώτο
-                // Debug.Log("playing anim2");
-                mAnimator.Play("1", 0);
-                firstStage = true;
-            }
+            Debug.Log("playing Anim");
+            mAnimator.SetBool(selectRandomAnimation(), true);
         } 
+    }
+
+    int selectRandomAnimation(){
+        // Επιστρέφει τυχαία ένα απο τα id που υπάρχουν στον πίνακα
+        int rIndex = Random.Range(0, totalRandomAnimations);
+        int randomHash = hashAvailableAnims[rIndex];
+        return randomHash;
     }
 }
