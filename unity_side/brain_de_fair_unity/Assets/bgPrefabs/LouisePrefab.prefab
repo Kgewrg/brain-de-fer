@@ -1025,7 +1025,7 @@ Animator:
   m_GameObject: {fileID: 3703042637391692454}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5403bb747188b9249af3909b9c82f552, type: 3}
-  m_Controller: {fileID: 9100000, guid: 360fa4e5471ae704a844cf3f69aff87b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3c9ca7a89d2eca1489cb0e752867af18, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1049,6 +1049,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalRandomAnimations: 3
   activeAnim: 0
+  teamLeft: 0
+  teamRight: 0
   minInterval: 5
   maxInterval: 10
 --- !u!1 &3749066230823517127
