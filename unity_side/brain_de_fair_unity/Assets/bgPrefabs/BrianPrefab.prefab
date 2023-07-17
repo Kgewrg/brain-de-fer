@@ -1520,7 +1520,7 @@ Transform:
   m_GameObject: {fileID: 5472203878521211314}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -38.121807, y: 281.80768, z: -104.09273}
-  m_LocalScale: {x: 12, y: 12, z: 12}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1188388829203770818}
@@ -1566,6 +1566,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalRandomAnimations: 3
   activeAnim: 0
+  teamLeft: 0
+  teamRight: 0
   minInterval: 5
   maxInterval: 10
 --- !u!1 &5513087577901775417

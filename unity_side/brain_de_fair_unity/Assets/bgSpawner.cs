@@ -7,34 +7,34 @@ public class bgSpawner : MonoBehaviour
 
     public GameObject[] charPrefab_array;
     public GameObject centerPoint; 
-    public int frontBackVariance; 
-    public int leftRightVariance;
+    public float frontBackVariance; 
+    public float leftRightVariance;
 
 
 
     // Define general spawn position (line behind main characters)
-    private float spawnZ_line;   // Πόσο πίσω να είναι η πιο κοντινή γραμμή
-    private float spawnLeftOffset; // ποσο αριστερά να ξεκινήσεις να spawnarei
-    private float spawnY;   // Σε τι ύψος
-    private float charSpace = 10;    // Space between characters
+    private float spawnZ_line;   
+    private float spawnLeftOffset;
+    private float spawnY;   
+    private float charSpace = 0.55f;    // Space between characters
     
 
-    public int n_chars = 12;
+    public int n_chars = 20;
     private float tmp_frontBackOffset; 
     private float tmp_leftRightOffset;
  
  
     // Start is called before the first frame update
     void Start() {
-        spawnZ_line = centerPoint.transform.position.z + 30;
-        spawnLeftOffset = centerPoint.transform.position.x - 60;
-        spawnY = centerPoint.transform.position.y - 13;
+        spawnZ_line = centerPoint.transform.position.z + 2.5f;      // Πόσο πίσω να είναι η πιο κοντινή γραμμή
+        spawnLeftOffset = centerPoint.transform.position.x - 3.5f;  // Ποσο αριστερα να ξεκινάνε οι χαρακτήρες
+        spawnY = centerPoint.transform.position.y - 1.1f;           // Σε τι ύψος
 
                 
         spawnLine(0);
-        spawnLine(10);
-        spawnLine(20);
-        spawnLine(30);
+        spawnLine(2);
+        // spawnLine(4);
+        // spawnLine(6);
 
     }
 
