@@ -5,17 +5,36 @@ using UnityEngine;
 public class WrestleTargetScript : MonoBehaviour
 {
     public GameObject pivotPoint;
-    float rotAngle;
+    // public GameObject target; 
+    [Range(-80, 80)]
+    public float angle; // [-90, 90]
 
-    // Start is called before the first frame update
+    private float radius;
+    private float pY, pZ;
+    private float x, y, z;
+
     void Start() {
+        pY = pivotPoint.transform.position.y;
+        pZ = pivotPoint.transform.position.z;
+        
+        radius = Vector3.Distance(pivotPoint.transform.position, transform.position);
+        
+        
         
     }
 
-    // Update is called once per frame
     void Update() {
-        
-        transform.RotateAround(pivotPoint.transform.position, new Vector3(1, 0, 0), 90);
+        x = transform.position.x;
+        y = pY + (radius * Mathf.Cos(Mathf.Deg2Rad * angle));
+        z = pZ + (radius * Mathf.Sin(Mathf.Deg2Rad * angle));
+
+        transform.position = new Vector3(x, y, z);
+
+
+
+
+
+        // transform.RotateAround(pivotPoint.transform.position, new Vector3(1, 0, 0), 90);
 
     }
 }
