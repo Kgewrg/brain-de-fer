@@ -12,7 +12,10 @@ public class Sliderscript : MonoBehaviour
     private float player1,starttime,endtime,Finaltime,player2,maxValue;
     private string row,filePath;
     private bool gameover;
-    
+
+    static public float publicSliderValue;    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,44 +30,46 @@ public class Sliderscript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        try{
-            string[] lines = File.ReadAllLines(filePath);//χωρίζω το csv σε ενα πίνακα που κάθε στήλη είναι ένας αριθμός(ποσοστό)
-            lines=lines[0].Split(',');                  
-
-            player1 = float.Parse(lines[0]);
-            player2=float.Parse(lines[1]);
-            // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
-            if(gameover == false)
+        if(gameover == false) 
+        {
+            try
             {
+                string[] lines = File.ReadAllLines(filePath);//χωρίζω το csv σε ενα πίνακα που κάθε στήλη είναι ένας αριθμός(ποσοστό)
+                lines=lines[0].Split(',');                  
+
+                player1 = float.Parse(lines[0]);
+                player2 = float.Parse(lines[1]);
+                // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
+                
                 if( player1 > player2 )
                 {
-                    mainslider.value=mainslider.value+Time.deltaTime;
+                    mainslider.value = mainslider.value + Time.deltaTime;
+                    publicSliderValue = mainslider.value;
                 }
                 else if(player1 < player2)
                 {
-                    mainslider.value=mainslider.value-Time.deltaTime;
+                    mainslider.value = mainslider.value - Time.deltaTime;
+                    publicSliderValue = mainslider.value;
                 }
             }
+            catch (IOException){
+                // Debug.Log("File was opened, skipping");
+            }
+            if( mainslider.value == mainslider.maxValue )
+            {
+                gameover = logic.GameOverPlayer("Player 1 wins");
+                endtime=Time.time;
+                Finaltime=starttime-endtime;
+                
+            }
+            else if ( mainslider.value == mainslider.minValue)
+            {
+                gameover = logic.GameOverPlayer("Player 2 wins");
+                endtime=Time.time;
+                Finaltime=starttime-endtime;
+            }
 
-        
         }
-        catch (IOException){
-            Debug.Log("File was opened, skipping");
-        }
-        if( mainslider.value == mainslider.maxValue )
-        {
-            gameover = logic.GameOverPlayer("Player 1 wins");
-            endtime=Time.time;
-            Finaltime=starttime-endtime;
-            
-        }
-        else if ( mainslider.value == mainslider.minValue)
-        {
-            gameover = logic.GameOverPlayer("Player 2 wins");
-            endtime=Time.time;
-            Finaltime=starttime-endtime;
-        }
-
     }
     
 }
