@@ -19,11 +19,12 @@ public class Sliderscript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       starttime=Time.time;
-       gameover=false;
-       maxValue=mainslider.maxValue;
-       mainslider.value=maxValue/2;
-       filePath="C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv";
+        starttime=Time.time;
+        gameover=false;
+        maxValue=mainslider.maxValue;
+        mainslider.value=maxValue/2;
+        publicSliderValue = mainslider.value;
+        filePath="C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv";
         // filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
     }
 

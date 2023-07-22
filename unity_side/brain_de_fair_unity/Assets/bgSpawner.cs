@@ -7,16 +7,17 @@ public class bgSpawner : MonoBehaviour
 
     public GameObject[] charPrefab_array;
     public GameObject centerPoint; 
+
+    [Range(0, 180)]
+    public float spawnStart;  // Απο τι μοίρες να ξεκινήσει να spawnarei
     public float frontBackVariance; 
     public float leftRightVariance;
+    public float charSpace;    // Space between characters in deg
 
 
 
     // Define general spawn position (line behind main characters)
-    private float spawnZ_line;   
-    private float spawnLeftOffset;
     private float spawnY;   
-    private float charSpace = 0.55f;    // Space between characters
     
 
     public int n_chars = 20;
@@ -25,14 +26,13 @@ public class bgSpawner : MonoBehaviour
  
  
     // Start is called before the first frame update
-    void Start() {
-        spawnZ_line = centerPoint.transform.position.z + 2.5f;      // Πόσο πίσω να είναι η πιο κοντινή γραμμή
-        spawnLeftOffset = centerPoint.transform.position.x - 3.5f;  // Ποσο αριστερα να ξεκινάνε οι χαρακτήρες
+    void Start() { 
         spawnY = centerPoint.transform.position.y - 1.1f;           // Σε τι ύψος
-
                 
-        spawnLine(0);
-        spawnLine(2);
+        spawnCirc(1.8f);
+        spawnCirc(2.2f);
+        spawnCirc(3f);
+
         // spawnLine(4);
         // spawnLine(6);
 
@@ -43,23 +43,23 @@ public class bgSpawner : MonoBehaviour
         
     }
 
-    void spawnLine(int lineOffset){
+    void spawnCirc(float radius){
         for (int i = 0; i < n_chars; i++) {
 
             // Get the randoms
             tmp_frontBackOffset = Random.Range(-frontBackVariance, frontBackVariance);
             tmp_leftRightOffset = Random.Range(-leftRightVariance, leftRightVariance);
 
-            // Figure out spawn positions
-            float spawnX = (float)(spawnLeftOffset + (i*charSpace));
-            float spawnZ = (float)(spawnZ_line + tmp_frontBackOffset + lineOffset); 
+            // Calculate spawn position
+            float spawnX = - (float) ( radius * Mathf.Cos(Mathf.Deg2Rad * (spawnStart + i*charSpace )) + tmp_leftRightOffset);
+            float spawnZ = (float) ( radius * Mathf.Sin(Mathf.Deg2Rad * (spawnStart + i*charSpace )) + tmp_frontBackOffset);
             Vector3 spawnPos = new Vector3(spawnX, spawnY, spawnZ);
 
             // Select random model to spawn
             int randomModel =  Random.Range(0, charPrefab_array.Length);
 
             // Spawn the character
-            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity, centerPoint.transform);
+            GameObject clone = Instantiate(charPrefab_array[randomModel], spawnPos, Quaternion.identity, transform);
 
             // Get the angle between current character and center point
             var rot = Mathf.Atan2(spawnX - centerPoint.transform.position.x, spawnZ-centerPoint.transform.position.z) * Mathf.Rad2Deg;

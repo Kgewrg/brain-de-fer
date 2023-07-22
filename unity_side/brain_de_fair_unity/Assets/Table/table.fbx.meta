@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: bc278e53a08c2a64695e847cf4c61216
+guid: c88c91292077b814b913987a2410697f
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pillow Material
+    second: {fileID: 2100000, guid: 1c1b02d16f71d474ebae78b3cd7e302c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Table Base
+    second: {fileID: 2100000, guid: c01e1654ccc7d5142885507871f6c19b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metalMaterial
+    second: {fileID: 2100000, guid: c581b6d5f19a7a84497d51488fb18ce5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -47,7 +62,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1

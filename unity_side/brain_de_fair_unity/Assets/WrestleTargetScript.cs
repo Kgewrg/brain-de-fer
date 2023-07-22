@@ -6,11 +6,7 @@ public class WrestleTargetScript : MonoBehaviour
 {
     public GameObject pivotPoint;
     // public GameObject target; 
-<<<<<<< HEAD
-    [Range(-60, 60)]
-=======
     [Range(-80, 80)]
->>>>>>> ba8de21916320738785328920982708667b64a6e
     public float angle; // [-90, 90]
 
     private float radius;
@@ -34,14 +30,6 @@ public class WrestleTargetScript : MonoBehaviour
 
         transform.position = new Vector3(x, y, z);
 
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> ba8de21916320738785328920982708667b64a6e
-        // transform.RotateAround(pivotPoint.transform.position, new Vector3(1, 0, 0), 90);
 
     }
 }

@@ -21,6 +21,8 @@ public class bgChar_script : MonoBehaviour
 
     void Start() { 
         mAnimator = GetComponent<Animator>();
+        var state = mAnimator.GetCurrentAnimatorStateInfo(0);
+        mAnimator.Play(state.fullPathHash, 0 ,Random.Range(0f, 1f));
 
         // Προσθήκη των hash (id) των trigger στον πίνακα)
         for (int i = 0; i < totalRandomAnimations; i++) {
@@ -66,28 +68,28 @@ public class bgChar_script : MonoBehaviour
         // Ελέγχει αν είναι active χαρακτήρας και αν παίζει ήδη κάποιο animation
         float sliderValue = Sliderscript.publicSliderValue;
 
-        if (teamLeft) { // [5,10}
-            if (sliderValue > 7){
-                mAnimator.SetBool(winTriggerHash, true);
-            }
-            if (sliderValue < 3){
-                mAnimator.SetBool(looseTriggerHash, true);   
-            }
-            return; // Λόγο αυτου δεν επιτρέπεται να παίξει άλλο animation
-        }
-        if (teamRight) { // {0,5]
-            if (sliderValue < 3){
-                mAnimator.SetBool(winTriggerHash, true);
-            }
-            if (sliderValue > 7){
-                mAnimator.SetBool(looseTriggerHash, true);   
-            }
-            return;
-        }
 
         if ((activeAnim == 1)){
-            // Debug.Log("playing Anim");
-            mAnimator.SetBool(selectRandomAnimation(), true);
+            // Αν φτάνει κοντα στα άκρα η τιμή τότε παίζει μόνο win/loose animations
+            if (sliderValue > 7){
+                if (teamLeft) { // [5,10}
+                    mAnimator.SetBool(winTriggerHash, true);                
+                }
+                if (teamRight) { // {0,5]
+                    mAnimator.SetBool(looseTriggerHash, true);   
+                }
+            }
+            else if (sliderValue < 3){
+                if (teamLeft) {
+                    mAnimator.SetBool(looseTriggerHash, true);                
+                }
+                if (teamRight) {
+                    mAnimator.SetBool(winTriggerHash, true);   
+                }   
+            }
+            else{
+                mAnimator.SetBool(selectRandomAnimation(), true);
+            }    
         } 
 
 

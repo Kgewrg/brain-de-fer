@@ -184,8 +184,6 @@
       },
       "url": "https://packages.unity.com"
     },
-<<<<<<< HEAD
-=======
     "com.unity.progrids": {
       "version": "3.0.3-preview.6",
       "depth": 0,
@@ -195,7 +193,6 @@
       },
       "url": "https://packages.unity.com"
     },
->>>>>>> ba8de21916320738785328920982708667b64a6e
     "com.unity.render-pipelines.core": {
       "version": "12.1.10",
       "depth": 1,
