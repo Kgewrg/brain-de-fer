@@ -12,7 +12,7 @@ def main():
     path2=os.path.dirname(__file__)+"\muse_dataset\\subject3_relaxed.csv"
     path3=os.path.dirname(__file__)+"\muse_dataset\\subject4_focused.csv"
     path4=os.path.dirname(__file__)+"\muse_dataset\\subject4_relaxed.csv"
-    pathArray=[path1,path2,path3,path4]
+    pathArray=[path1,path2]
     for i in pathArray:
         name= ""
         for j in i[::-1]:
@@ -30,18 +30,18 @@ def main():
 
         Alpha,Beta,Gamma=computeRythms(dataset)
 
-        # Alpha=removeOddValues(Alpha)
-        # Beta=removeOddValues(Beta)
-        # Gamma=removeOddValues(Gamma)
+        Alpha=removeOddValues(Alpha,8,12)
+        Beta=removeOddValues(Beta,13,30)
+        Gamma=removeOddValues(Gamma,31,50)
 
-        a=int(np.sqrt(findMeanOfChannel(Alpha)))
-        b=int(np.sqrt(findMeanOfChannel(Beta)))
-        g=int(np.sqrt(findMeanOfChannel(Gamma)))
-        ena=a/b
-        duo=a/g
+        # a=int(np.sqrt(findMeanOfChannel(Alpha)))
+        # b=int(np.sqrt(findMeanOfChannel(Beta)))
+        # g=int(np.sqrt(findMeanOfChannel(Gamma)))
+        # ena=a/b
+        # duo=a/g
         #print("-----------------")
-        print("%.3f" % ena)
-        print("%.3f" % duo)
+        # print("%.3f" % ena)
+        # print("%.3f" % duo)
 
         # spectrumΕnergy(Alpha)
         # spectrumΕnergy(Beta)
@@ -56,15 +56,15 @@ def computeRythms(dataset):
     AF8=dataset[:,2]
     TP10=dataset[:,3]
 
-    TP9=bandPassFilter(TP9,9,45)
-    AF7=bandPassFilter(AF7,9,45)
-    AF8=bandPassFilter(AF8,9,45)
-    TP10=bandPassFilter(TP10,9,45)
+    TP9=bandPassFilter(TP9,8,50)
+    AF7=bandPassFilter(AF7,8,50)
+    AF8=bandPassFilter(AF8,8,50)
+    TP10=bandPassFilter(TP10,8,50)
 
-    Alpha1=lowpass_filter(TP9,13)
-    Alpha2=lowpass_filter(AF7,13)
-    Alpha3=lowpass_filter(AF8,13)
-    Alpha4=lowpass_filter(TP10,13)
+    Alpha1=lowpass_filter(TP9,12)
+    Alpha2=lowpass_filter(AF7,12)
+    Alpha3=lowpass_filter(AF8,12)
+    Alpha4=lowpass_filter(TP10,12)
 
     AlphaArray=[Alpha1,Alpha2,Alpha3,Alpha4]
     arrayofmean=[]
@@ -84,10 +84,10 @@ def computeRythms(dataset):
     # print("Beta ",arrayofmean)
 
     
-    Gamma1=bandPassFilter(TP9,30,45)#30-40
-    Gamma2=bandPassFilter(AF7,30,45)#30-40
-    Gamma3=bandPassFilter(AF8,30,45)#30-40
-    Gamma4=bandPassFilter(TP10,30,45)#30-40
+    Gamma1=bandPassFilter(TP9,31,50)#30-40
+    Gamma2=bandPassFilter(AF7,31,50)#30-40
+    Gamma3=bandPassFilter(AF8,31,50)#30-40
+    Gamma4=bandPassFilter(TP10,31,50)#30-40
     GammaArray=[Gamma1,Gamma2,Gamma3,Gamma4]
     arrayofmean=[]
     # for i in range(len(AlphaArray[:])):
@@ -116,27 +116,20 @@ def spectrumΕnergy(rythm):
     specEn=specEn/length
     print("The energy is :" ,specEn)
 
-def findMeanOfChannel(rythm):
-    rythm=fft(rythm)
-    rythm=np.abs(rythm)**2
-    meanofrythm=np.mean(rythm)
-    sum=0
-    counter=0
-    for i in range(len(rythm)):
-        if(rythm[i] > 10000):
-            sum+=rythm[i]
-            counter+=1
-    mymean=sum/counter
-    return mymean
-
-def removeOddValues(rythm):
-    mymean=findMeanOfChannel(rythm)
+def removeOddValues(rythm,low,high):
+    #---compute the fft of rythm and remove the complex numbers ---#
+    length=len(rythm)
     rythm=fft(rythm)
     conjrythm=np.conj(rythm)
     rythm=rythm * conjrythm
-    for i in range(len(rythm)):
-        if rythm[i] > 13*mymean:
-            rythm[i]=0
+    #--- find the mean of the given frequency range ---#
+    freqs = 256 * np.arange(0, int(length/2)) / length
+    freq_range = np.where((freqs >= low) & (freqs <= high))
+    mymean = np.mean(rythm[freq_range])
+    #--- normalize any value bigger than 8 time the mean of rythm ---#
+    for i in range(length):
+        if rythm[i] > 8*mymean:
+            rythm[i]=mymean
     rythm=rythm/conjrythm
     rythm=scipy.fft.ifft(rythm)
     return rythm
