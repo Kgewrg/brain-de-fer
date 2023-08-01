@@ -15,7 +15,6 @@ def main():
     Model=joblib.load("naiveBayes.pkl")
     now = time.time()
     future = now + 60 * testtime
-    tempArray=[]
         
     while time.time() < future:
         measurements=[]

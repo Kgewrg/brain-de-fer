@@ -2,39 +2,52 @@ import pandas as pd
 import numpy as np
 #ΤΑ PATHS ΓΑΜΩ ΤΑ PATHS
 def main():
-    path="C:/Users/Dounas P/Desktop/brain-de-fair"
-    museMerge()
-    # focus=path+"/Pal_focused.csv"
-    # relaxed=path+"/Pal_relaxed.csv"
-
-    # datasetfocused = pd.read_csv (focus)
-    # datasetfocused=datasetfocused.iloc[:,:].values
-
-    # datasetrelaxed = pd.read_csv (relaxed)
-    # datasetrelaxed=datasetrelaxed.iloc[:,:].values
-
-    
-    # focused=focused.iloc[:,:].values
-    # unfocused=unfocused.iloc[:,:].values
-    # focused=np.delete(focused,0,1)
-    # unfocused=np.delete(unfocused,0,1)
-
+    # path="C:/Users/Dounas P/Desktop/brain-de-fair"
+    # path="C:/Users/Nikos/Desktop/brain-de-fair/MindwaveDataSet.csv"
+    # array=pd.read_csv(path)
+    # array=array.iloc[:,:].values
+    # removeDoubles(array)
+    mindwaveMerge()
+    #museMerge()
     
 
-    #create a sizeofarray column  filled with 1 for focused and 0 for unfocused
-    # column_one=np.full((len(datasetfocused), 1) ,1)
-    # column_zero=np.full((len(datasetrelaxed), 1), 0)
+def mindwaveMerge():#sunarthsh pou enonei ola ta datasets tou mindwave kai diagrafei diplotipes times
+    focusarray,unfocusarray=merge_ALL()
+    mergedfile=[[0,0,0,0,0,0,0,0,0,0,0,0]]
     
+    for i in focusarray:
+        i=i.iloc[:,:].values
+        column_one=np.full((len(i), 1) ,1)#dimiourgw ena pinaka me 1 oso to length tou prwtou dataset
+        i= np.column_stack((i, column_one))#to kollaw ston kurio pinaka
+        mergedfile=np.concatenate((mergedfile,i),axis=0)#prosthetw to epejergasmeno dataset sto kurio arxeio
 
-    #add column 1 to focused and column 2 to unfocused
-    # datasetfocused= np.column_stack((datasetfocused, column_one))
-    # datasetrelaxed= np.column_stack((datasetrelaxed, column_zero))
-    # merged_file=[]
-    # # merged_file=np.concatenate((mergedfile,mergedfile2),axis=0)
-    # merged_file=pd.DataFrame(mergedfile)
+    for i in unfocusarray:
+        i=i.iloc[:,:].values
+        column_zero=np.full((len(i), 1), 0)
+        i= np.column_stack((i, column_zero))
+        mergedfile=np.concatenate((mergedfile,i),axis=0)
     
-    # merged_file.to_csv("C:/Users/Dounas P/Desktop/brain-de-fair/MuseALL.csv", index=False)
-    
+    mergedfile=removeDoubles(mergedfile)
+    mergedfile=pd.DataFrame(mergedfile)
+    mergedfile.to_csv("C:/Users/Nikos/Desktop/brain-de-fair/mindwaveDataSet2.csv", index=False)
+    print(len(mergedfile))
+
+def removeDoubles(dataset):#diagrafei tis sunexomenes diples times mindwave
+    startlength=len(dataset)
+    arraytemp=[]
+    temp=10000
+
+    for i in range(len(dataset)-1,-1,-1):
+        if dataset[i][8] == temp :
+            arraytemp.append(1)
+            dataset=np.delete(dataset,i, axis=0)
+            continue
+        temp=dataset[i][8]
+
+    endlength=len(dataset)
+    print(endlength)
+    print("ελεγχος μεγεθους πινακα ",startlength-len(arraytemp))
+    return dataset
 
 def museMerge():
     focusarray,unfocusarray=merge_ALL()
@@ -75,7 +88,7 @@ def removeNoise(dataset):#diagrafw opoia seira exei estw kai mia timh megaluterh
     return dataset
 
 def merge_ALL():
-    path="C:/Users/Dounas P/Desktop/brain-de-fair/python_side/Muse_signal_analyze/muse_dataset/"
+    path="C:/Users/Nikos/Desktop/brain-de-fair/python_side/mindwave_dataset/"
     focused1=pd.read_csv(path+"subject1_focused.csv")
     unfocused1=pd.read_csv(path+"subject1_relaxed.csv")
     
@@ -106,8 +119,10 @@ def merge_ALL():
     focused10=pd.read_csv(path+"subject10_focused.csv")
     unfocused10=pd.read_csv(path+"subject10_relaxed.csv")
 
+    unfocused11=pd.read_csv(path+"noise.csv")
+
     focusarray=[focused1,focused2,focused3,focused4,focused5,focused6,focused7,focused8,focused9,focused10]
-    unfocusarray=[unfocused1,unfocused2,unfocused3,unfocused4,unfocused5,unfocused6,unfocused8,unfocused7,unfocused9,unfocused10]
+    unfocusarray=[unfocused1,unfocused2,unfocused3,unfocused4,unfocused5,unfocused6,unfocused8,unfocused7,unfocused9,unfocused10,unfocused11]
     
 
     return focusarray,unfocusarray
