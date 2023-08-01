@@ -2,11 +2,6 @@ import pandas as pd
 import numpy as np
 #ΤΑ PATHS ΓΑΜΩ ΤΑ PATHS
 def main():
-    # path="C:/Users/Dounas P/Desktop/brain-de-fair"
-    # path="C:/Users/Nikos/Desktop/brain-de-fair/MindwaveDataSet.csv"
-    # array=pd.read_csv(path)
-    # array=array.iloc[:,:].values
-    # removeDoubles(array)
     mindwaveMerge()
     #museMerge()
     
