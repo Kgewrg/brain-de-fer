@@ -137,6 +137,7 @@ def removeOddValues(rythm,low,high):
 def plotSpecEnergy(Alpha,Beta,Gamma,name):
     length=len(Alpha)
     fs=256
+    T=fs*length
     Alpha=fft(Alpha)
     Beta=fft(Beta)
     Gamma=fft(Gamma)
@@ -148,17 +149,17 @@ def plotSpecEnergy(Alpha,Beta,Gamma,name):
 
     fig,ax= plt.subplots(2,2)
     fig.suptitle(name)
-    ax[0,0].plot(f,(np.abs(Alpha)**2)/length)
+    ax[0,0].plot(f,(np.abs(Alpha)**2)/T)
     ax[0,0].grid()
     ax[0,0].legend(["Alpha"],loc="upper right")
     ax[0,0].set_xlabel('(Hz)',fontweight='bold'),
     ax[0,0].set_ylabel('Power energy spectrum (Joules)',fontweight='bold')
-    ax[0,1].plot(f,(np.abs(Beta)**2)/length)
+    ax[0,1].plot(f,(np.abs(Beta)**2)/T)
     ax[0,1].grid()
     ax[0,1].legend(["Beta"],loc="upper right")
     ax[0,1].set_xlabel('(Hz)',fontweight='bold'),
     ax[0,1].set_ylabel('(Joules)',fontweight='bold')
-    ax[1,0].plot(f,(np.abs(Gamma)**2)/length)
+    ax[1,0].plot(f,(np.abs(Gamma)**2)/T)
     ax[1,0].grid()
     ax[1,0].legend(["Gamma"],loc="upper right")
     ax[1,0].set_xlabel('(Hz)',fontweight='bold'),

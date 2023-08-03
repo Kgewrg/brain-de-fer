@@ -22,9 +22,10 @@ def mindwaveMerge():#sunarthsh pou enonei ola ta datasets tou mindwave kai diagr
         i= np.column_stack((i, column_zero))
         mergedfile=np.concatenate((mergedfile,i),axis=0)
     
-    mergedfile=removeDoubles(mergedfile)
+    
     mergedfile=pd.DataFrame(mergedfile)
-    mergedfile.to_csv("C:/Users/Nikos/Desktop/brain-de-fair/mindwaveDataSet2.csv", index=False)
+    mergedfile=mergedfile.drop_duplicates()
+    mergedfile.to_csv("C:/Users/Dounas P/Desktop/brain-de-fair/mindwavealldata.csv", index=False)
     print(len(mergedfile))
 
 def removeDoubles(dataset):#diagrafei tis sunexomenes diples times mindwave
@@ -83,7 +84,7 @@ def removeNoise(dataset):#diagrafw opoia seira exei estw kai mia timh megaluterh
     return dataset
 
 def merge_ALL():
-    path="C:/Users/Nikos/Desktop/brain-de-fair/python_side/mindwave_dataset/"
+    path="C:/Users/Dounas P/Desktop/brain-de-fair/python_side/mindwave_dataset/"
     focused1=pd.read_csv(path+"subject1_focused.csv")
     unfocused1=pd.read_csv(path+"subject1_relaxed.csv")
     
