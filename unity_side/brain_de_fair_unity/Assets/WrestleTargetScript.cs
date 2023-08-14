@@ -5,13 +5,13 @@ using UnityEngine;
 public class WrestleTargetScript : MonoBehaviour
 {
     public GameObject pivotPoint;
-    // public GameObject target; 
-    [Range(-60, 60)]
-    public float angle; 
+
+    private float angle = 0; 
 
     private float radius;
     private float pX, pY, pZ;
     private float x, y, z;
+    float sliderValue;
 
     void Start() {
         pX = pivotPoint.transform.position.x;
@@ -25,7 +25,9 @@ public class WrestleTargetScript : MonoBehaviour
     }
 
     void Update() {
-
+        sliderValue = Sliderscript.publicSliderValue;
+        angle = Remap(sliderValue, 0, 10, -60, 60);
+        
         x = pX + Remap(angle, -60.0f, 60.0f, -0.05f, 0.05f);
         y = pY + (radius * Mathf.Cos(Mathf.Deg2Rad * angle));
         z = pZ + (radius * Mathf.Sin(Mathf.Deg2Rad * angle));

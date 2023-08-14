@@ -30,7 +30,7 @@ public class bgSpawner : MonoBehaviour
         spawnY = centerPoint.transform.position.y - 1.1f;           // Σε τι ύψος
                 
         spawnCirc(1.8f);
-        spawnCirc(2.2f);
+        spawnCirc(2.4f);
         spawnCirc(3f);
 
         // spawnLine(4);
