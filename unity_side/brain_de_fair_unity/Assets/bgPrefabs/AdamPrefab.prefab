@@ -1736,7 +1736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbaaab6006e48b49877238b2fd2a447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalRandomAnimations: 3
+  totalRandomAnimations: 6
   activeAnim: 0
   teamLeft: 0
   teamRight: 0

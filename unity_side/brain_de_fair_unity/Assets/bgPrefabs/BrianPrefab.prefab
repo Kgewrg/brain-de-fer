@@ -1542,7 +1542,7 @@ Animator:
   m_GameObject: {fileID: 5472203878521211314}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3c8a2556c06b4a74c90b3f8bcfdda135, type: 3}
-  m_Controller: {fileID: 9100000, guid: f8817c6ea8687b448be28dd04207d7d0, type: 2}
+  m_Controller: {fileID: 9100000, guid: f1245945417e138438599b82ae7df6f0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1564,7 +1564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbaaab6006e48b49877238b2fd2a447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalRandomAnimations: 3
+  totalRandomAnimations: 6
   activeAnim: 0
   teamLeft: 0
   teamRight: 0

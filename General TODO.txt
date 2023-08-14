@@ -1,0 +1,11 @@
+άλλαξε τα screenshots στο κείμενο για τα anim controllers 
+
+ίσως δούλεψε τα χέρια λίγο
+
+παίξε με τα ποσοστά active και τα timings
+
+Quality settings (fps counter, Anti aliasing)
+
+Difficualty settings
+
+Beta testing

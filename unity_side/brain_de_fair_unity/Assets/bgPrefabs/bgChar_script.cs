@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class bgChar_script : MonoBehaviour
 {
-    public int totalRandomAnimations = 3;
+    public int totalRandomAnimations = 6;
     public int activeAnim = 0; // Καθορίζει αν θα κάνει κάποιο animation
     public bool teamLeft;  // Καθορίζει σε ποια ομάδα θα είναι (plater1, πρωτη τιμή, [5,10})
     public bool teamRight; // (plater2, Δευτερη τιμή, {0,5])
