@@ -15,15 +15,15 @@ import scipy
 
 def main():
     # dataset
-    datasets_names="C:/Users/Dounas P/Desktop/brain-de-fair/MuseALL.csv"
+    datasets_names="C:/Users/Dounas P/Desktop/brain-de-fair/mindwavealldata.csv"
     dataset = pd.read_csv(datasets_names)
     dataset=dataset.iloc[:,:].values
     DatasetX=dataset[:,:-1]
     DatasetY=dataset[:,-1]
-    #splitMethod(DatasetX,DatasetY)
     
     #splitMethod(DatasetX,DatasetY)
-    crossVal(DatasetX,DatasetY)
+    for i in range(10):
+        crossVal(DatasetX,DatasetY)
     
 
 def crossVal(X_dataset,Y_dataset):
@@ -31,7 +31,7 @@ def crossVal(X_dataset,Y_dataset):
     #models-----------------------------------
     KNN =  KNeighborsClassifier(n_neighbors=11)
     naiveBayes =  GaussianNB()
-    rForest = RandomForestClassifier(n_estimators=150, max_depth=10)
+    rForest = RandomForestClassifier(n_estimators=100, max_depth=12)
     SVM =svm.SVC(cache_size=1000)
     MLP = MLPClassifier(hidden_layer_sizes=(64), activation='relu', solver='adam',max_iter=600)
     #-----------------------------------------
@@ -58,37 +58,39 @@ def splitMethod(X_dataset,Y_dataset):
     x_train, x_test, y_train, y_test = train_test_split(X_dataset, Y_dataset, test_size=20, random_state=None,shuffle=True)  
     array=[] 
 
-    # #initialize the KNN classifier
-    # KNN =  KNeighborsClassifier(n_neighbors=11)
-    # KNN.fit(x_train,y_train)
-    # y_pred=KNN.predict(x_test)
-    # array.append(accuracy_score(y_test,y_pred)*100)
-    # print("----KNN Complete----")
+    #initialize the KNN classifier
+    KNN =  KNeighborsClassifier(n_neighbors=11)
+    KNN.fit(x_train,y_train)
+    y_pred=KNN.predict(x_test)
+    array.append(accuracy_score(y_test,y_pred)*100)
+    print("----KNN Complete----")
 
-    # #initialize the ΝaiveBayes classifier
-    # naiveBayes =  GaussianNB()
-    # naiveBayes.fit(x_train,y_train)
-    # # joblib.dump(naiveBayes,"naiveBayes.pkl")
-    # y_pred=naiveBayes.predict(x_test)
-    # array.append(accuracy_score(y_test,y_pred)*100)
-    # print("----Gaussian Bayes Complete----")
+    #initialize the ΝaiveBayes classifier
+    naiveBayes =  GaussianNB()
+    naiveBayes.fit(x_train,y_train)
+    # joblib.dump(naiveBayes,"naiveBayes.pkl")
+    y_pred=naiveBayes.predict(x_test)
+    array.append(accuracy_score(y_test,y_pred)*100)
+    print("----Gaussian Bayes Complete----")
     
-    # #initialize the RandomForest classifier
-    # rForest = RandomForestClassifier(n_estimators=100, max_depth=12)
-    # rForest.fit(x_train,y_train)
-    # # joblib.dump(rForest,"RandomForestModel.pkl")
-    # y_pred=rForest.predict(x_test)
-    # array.append(accuracy_score(y_test,y_pred)*100)
-    # print("----Randomforest Complete----")
-    # print(array)
-    # #initialize the SVM classifier
-    # # SVM =svm.SVC(cache_size=1000)#SVC->classification SVR->Regression
-    # # SVM.fit(X_train,y_train)
-    # # # joblib.dump(SVM,"SVMModel.pkl")
-    # # y_pred=SVM.predict(X_test)
-    # # array.append(accuracy_score(Y_test,y_pred)*100)
-    # # print("----SVM Complete----")
+    #initialize the RandomForest classifier
+    rForest = RandomForestClassifier(n_estimators=100, max_depth=12)
+    rForest.fit(x_train,y_train)
+    # joblib.dump(rForest,"RandomForestModel.pkl")
+    y_pred=rForest.predict(x_test)
+    array.append(accuracy_score(y_test,y_pred)*100)
+    print("----Randomforest Complete----")
+    print(array)
 
+    #initialize the SVM classifier
+    SVM =svm.SVC(cache_size=1000)#SVC->classification SVR->Regression
+    SVM.fit(x_train,y_train)
+    # joblib.dump(SVM,"SVMModel.pkl")
+    y_pred=SVM.predict(x_test)
+    array.append(accuracy_score(y_test,y_pred)*100)
+    print("----SVM Complete----")
+
+    #initialize the MultiLayerPerceptron classifier
     mlp = MLPClassifier(hidden_layer_sizes=(64), activation='relu', solver='adam',max_iter=600)
     mlp.fit(x_train, y_train)
     y_pred = mlp.predict(x_test)

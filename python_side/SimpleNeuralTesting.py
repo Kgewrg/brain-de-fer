@@ -57,19 +57,20 @@ def main():
 
 def crossVal(X_dataset,Y_dataset):
     cross_validator=KFold(n_splits=10,shuffle=False)
+
     #models-----------------------------------
     KNN =  KNeighborsClassifier(n_neighbors=11)
     naiveBayes =  GaussianNB()
     rForest = RandomForestClassifier(n_estimators=150, max_depth=10)
     mlp = MLPClassifier(hidden_layer_sizes=(64), activation='relu', solver='adam',max_iter=600)
-    #SVM =svm.SVC(cache_size=1000)
+    SVM =svm.SVC(cache_size=1000)
     #-----------------------------------------
     scoresKNN = cross_val_score(KNN, X_dataset, Y_dataset, cv=cross_validator)
     scoresNaive = cross_val_score(naiveBayes, X_dataset, Y_dataset, cv=cross_validator)
     scoresForest = cross_val_score(rForest, X_dataset, Y_dataset, cv=cross_validator)
     scoresMLP = cross_val_score(mlp , X_dataset, Y_dataset, cv=cross_validator)
-    #scoresSVM = cross_val_score(SVM, X_dataset, Y_dataset, cv=cross_validator)
-    # Calculate and print the mean accuracy across all folds
+    scoresSVM = cross_val_score(SVM, X_dataset, Y_dataset, cv=cross_validator)
+    #Calculate and print the mean accuracy across all folds
     
     mean_accuracy = scoresKNN.mean()
     print(f"KNN: {mean_accuracy*100}")
@@ -79,8 +80,8 @@ def crossVal(X_dataset,Y_dataset):
     print(f"Forest: {mean_accuracy*100}")
     mean_accuracy = scoresMLP.mean()
     print(f"MLP: {mean_accuracy*100}")
-    # mean_accuracy = scoresSVM.mean()
-    # print(f"SVM: {mean_accuracy*100}")
+    mean_accuracy = scoresSVM.mean()
+    print(f"SVM: {mean_accuracy*100}")
     
 
 
