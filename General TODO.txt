@@ -9,3 +9,11 @@ Quality settings (fps counter, Anti aliasing)
 ναι δοκιμαστούν τιμές των δυσκολιών
 
 Beta testing
+
+Φτιάξε λίγο καλύτερα το "pause menu" στο LogicScript
+    κάνε κανονικό pause menu δλδ, για να αλλάζεις εύκολα τα settings
+
+Βαλε debug panel, να βλέπεις το gameMode, difficultyLevel, και ότι άλλο
+    προκίψει
+
+

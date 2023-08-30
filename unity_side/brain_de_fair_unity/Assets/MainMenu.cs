@@ -9,7 +9,6 @@ public class MainMenu : MonoBehaviour
     static public int publicDifficultyLevel;    
     static public int publicGameMode;
 
-
     public void PlayGame()
     {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
