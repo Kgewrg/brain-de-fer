@@ -6,6 +6,6 @@
 
 Quality settings (fps counter, Anti aliasing)
 
-Difficualty settings
+ναι δοκιμαστούν τιμές των δυσκολιών
 
 Beta testing

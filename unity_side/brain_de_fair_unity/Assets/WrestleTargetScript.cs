@@ -27,6 +27,7 @@ public class WrestleTargetScript : MonoBehaviour
     void Update() {
         sliderValue = Sliderscript.publicSliderValue;
         angle = Remap(sliderValue, 0, 10, -60, 60);
+
         
         x = pX + Remap(angle, -60.0f, 60.0f, -0.05f, 0.05f);
         y = pY + (radius * Mathf.Cos(Mathf.Deg2Rad * angle));

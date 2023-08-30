@@ -20563,7 +20563,7 @@ GameObject:
   - component: {fileID: 1951414193}
   - component: {fileID: 1951414192}
   m_Layer: 0
-  m_Name: 'X Bot Left '
+  m_Name: X Bot Left - Player 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20752,7 +20752,7 @@ GameObject:
   - component: {fileID: 1964811904}
   - component: {fileID: 1964811903}
   m_Layer: 0
-  m_Name: X Bot Right
+  m_Name: X Bot Right - Player 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

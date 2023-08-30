@@ -35,17 +35,26 @@ public class Sliderscript : MonoBehaviour
         {
             try
             {
+                // Read value from csv
                 string[] lines = File.ReadAllLines(filePath);//χωρίζω το csv σε ενα πίνακα που κάθε στήλη είναι ένας αριθμός(ποσοστό)
                 lines=lines[0].Split(',');                  
 
                 player1 = float.Parse(lines[0]);
-                player2 = float.Parse(lines[1]);
+                
+                // Check για game mode και δυσκολία
+                if (MainMenu.publicGameMode == 0){
+                    player2 = float.Parse(lines[1]);
+                }                
+                else if (MainMenu.publicGameMode == 1){
+                    player2 = Bot(MainMenu.publicDifficultyLevel);
+                }
                 // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
                 
                 if( player1 > player2 )
                 {
                     mainslider.value = mainslider.value + Time.deltaTime;
                     publicSliderValue = mainslider.value;
+    
                 }
                 else if(player1 < player2)
                 {
@@ -71,6 +80,36 @@ public class Sliderscript : MonoBehaviour
             }
 
         }
+    }
+
+    float Bot(int difficultyLevel){
+        int min, max;
+
+        if (difficultyLevel == 0){ // Easy
+            min = 30;
+            max = 100;
+        }
+        else if (difficultyLevel == 1){ // Normal
+            min = 50;
+            max = 100;
+        }
+        else if (difficultyLevel == 2){ // Hard
+            min = 70;
+            max = 100;
+        }
+        else { 
+            // Για την περίπτωση που δεν μπεί σωστή τιμή, παίζει στο esay
+            // Πιο σωστό θα ήταν να έβγαζε error, αλλα είναι λίγο περίπλοκο 
+            // να διαχειριστεί και δεν θα συμβαίνει εκτως development
+            Debug.LogWarning("sliderScript: Wrong difficulty value, playing on easy");
+            
+            min = 30;
+            max = 100;
+             
+        }
+
+        return Random.Range(min, max);
+
     }
     
 }

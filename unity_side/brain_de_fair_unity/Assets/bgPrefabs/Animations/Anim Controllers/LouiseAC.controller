@@ -609,7 +609,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Idle
+  m_Name: Louise Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -777,7 +777,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fffcdc83d04d1194da8fa5ed50f6cfe6, type: 2}
+  m_Motion: {fileID: 7400000, guid: 95e4a39a8f1697a4eb577a66da882eba, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
