@@ -10,9 +10,3 @@ Quality settings (fps counter, Anti aliasing)
 
 Beta testing
 
-Τεσταρε ανα δουλευεί η αλλαγή pve -> pvp κατα την διάρκεια του παιχνιδιού 
-
-Βαλε debug panel, να βλέπεις το gameMode, difficultyLevel, και ότι άλλο
-    προκίψει
-
-
