@@ -12,6 +12,7 @@ public class Sliderscript : MonoBehaviour
     private float player1,starttime,endtime,Finaltime,player2,maxValue;
     private string row,filePath;
     private bool gameover;
+    private int gameMode;
 
     static public float publicSliderValue;    
 
@@ -40,13 +41,17 @@ public class Sliderscript : MonoBehaviour
                 lines=lines[0].Split(',');                  
 
                 player1 = float.Parse(lines[0]);
-                
+
                 // Check για game mode και δυσκολία
-                if (MainMenu.publicGameMode == 0){
+                int gameMode = PlayerPrefs.GetInt("gameMode", -1);
+                if (gameMode == 0){
                     player2 = float.Parse(lines[1]);
                 }                
-                else if (MainMenu.publicGameMode == 1){
-                    player2 = Bot(MainMenu.publicDifficultyLevel);
+                else if (gameMode == 1){
+                    player2 = Bot(PlayerPrefs.GetInt("botDifficulty", -1));
+                }
+                else {
+                    Debug.LogError("Error while fetching game mode");
                 }
                 // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
                 

@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
 
-    static public int publicDifficultyLevel;    
-    static public int publicGameMode;
+    
 
     public void PlayGame()
     {
@@ -22,12 +21,13 @@ public class MainMenu : MonoBehaviour
 
     public void BotDifficulty(int difficultyIndex){
         // difficultyIndex: 0 Easy, 1 Medium, 2 Hard
-        publicDifficultyLevel = difficultyIndex;
+        PlayerPrefs.SetInt("botDifficulty", difficultyIndex);
     }
 
-    public void GameMode(int gameModeValue){
+    public void GameMode(int gameModeIndex){
         // gameModeValue: 0 PvP, 1 PvE
-        publicGameMode = gameModeValue;
+        PlayerPrefs.SetInt("gameMode", gameModeIndex);
+
 
 
     }

@@ -10,8 +10,7 @@ Quality settings (fps counter, Anti aliasing)
 
 Beta testing
 
-Φτιάξε λίγο καλύτερα το "pause menu" στο LogicScript
-    κάνε κανονικό pause menu δλδ, για να αλλάζεις εύκολα τα settings
+Τεσταρε ανα δουλευεί η αλλαγή pve -> pvp κατα την διάρκεια του παιχνιδιού 
 
 Βαλε debug panel, να βλέπεις το gameMode, difficultyLevel, και ότι άλλο
     προκίψει

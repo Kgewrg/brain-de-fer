@@ -6,11 +6,9 @@ using UnityEngine.UI;
 
 public class LogicScript : MonoBehaviour
 {
-    public GameObject optionsMenu;
     public GameObject Button;
     public GameObject particle;
 
-    private int inMenu = 0; // 1 οταν είναι στο menu
     public void restartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -27,16 +25,6 @@ public class LogicScript : MonoBehaviour
     }
 
     void Update() {
-        // If escape is pressed, make the game object active
-        if (Input.GetKeyDown(KeyCode.Escape)){
-            if (inMenu == 0){
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-                inMenu = 1;
-            }
-            else if (inMenu == 1){
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                inMenu = 0;
-            }
-        }
+   
     }
 }
