@@ -39,7 +39,7 @@ public class pauseMenuScript : MonoBehaviour
         Time.timeScale = 1f;
         pauseFlag = false;
     }
-    void pause(){
+    public void pause(){
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         pauseFlag = true;
@@ -47,14 +47,12 @@ public class pauseMenuScript : MonoBehaviour
 
     public void BotDifficulty(int difficultyIndex){
         // difficultyIndex: 0 Easy, 1 Medium, 2 Hard
-        // --> Needs Testing
         PlayerPrefs.SetInt("botDifficulty", difficultyIndex);
 
     }
 
     public void GameMode(int gameModeIndex){
         // gameModeValue: 0 PvP, 1 PvE
-        // --> Needs Testing
         PlayerPrefs.SetInt("gameMode", gameModeIndex);
     }
 
@@ -63,7 +61,7 @@ public class pauseMenuScript : MonoBehaviour
         Debug.Log("Quit!");
         Application.Quit();
     }
-    public void restartGame()
+    public void RestartGame()
     {
         resume();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

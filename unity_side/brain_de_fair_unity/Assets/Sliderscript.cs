@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Unity.VisualScripting;
 
 
 public class Sliderscript : MonoBehaviour
 {
     public Slider mainslider;
+    public Slider focusBar;
     public LogicScript logic;
     private float player1,starttime,endtime,Finaltime,player2,maxValue;
     private string row,filePath;
@@ -15,6 +17,9 @@ public class Sliderscript : MonoBehaviour
     private int gameMode;
 
     static public float publicSliderValue;    
+
+    public pauseMenuScript pauseMenu;
+
 
 
     // Start is called before the first frame update
@@ -27,6 +32,8 @@ public class Sliderscript : MonoBehaviour
         publicSliderValue = mainslider.value;
         filePath="C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv";
         // filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
+
+        focusBar.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -41,14 +48,18 @@ public class Sliderscript : MonoBehaviour
                 lines=lines[0].Split(',');                  
 
                 player1 = float.Parse(lines[0]);
+                UserInterfaceSricpt.P1_EggConStatus = int.Parse(lines[2]);
 
                 // Check για game mode και δυσκολία
                 int gameMode = PlayerPrefs.GetInt("gameMode", -1);
                 if (gameMode == 0){
+                    focusBar.gameObject.SetActive(false);
                     player2 = float.Parse(lines[1]);
                 }                
                 else if (gameMode == 1){
-                    player2 = Bot(PlayerPrefs.GetInt("botDifficulty", -1));
+                    focusBar.gameObject.SetActive(true);
+                    focusBar.value = player1/100;
+                    player2 = Bot(PlayerPrefs.GetInt("botDifficulty", -1)) * int.Parse(lines[2]);
                 }
                 else {
                     Debug.LogError("Error while fetching game mode");

@@ -10,3 +10,9 @@ Quality settings (fps counter, Anti aliasing)
 
 Beta testing
 
+
+Φτιαξε τα παράθυρα και τα menus σε full screen
+
+ίσως κάνε κάτι για τα paths
+
+μουσική

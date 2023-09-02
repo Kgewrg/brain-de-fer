@@ -1,28 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LogicScript : MonoBehaviour
 {
-    public GameObject Button;
-    public GameObject particle;
+    public GameObject gameOverPanel;
+    public pauseMenuScript pauseMenu;
 
-    public void restartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    void Start(){
+        pauseMenu = GameObject.FindGameObjectWithTag("pauseTag").GetComponent<pauseMenuScript>();
     }
     
-    public bool GameOverPlayer(string message)
-    {   
+    public bool GameOverPlayer(string message) {
+        Time.timeScale = 0f;
+        gameOverPanel.SetActive(true);
         
-        Text buttonText = Button.GetComponentInChildren<Text>();
-        buttonText.text=message;
-        Button.SetActive(true);
-        particle.GetComponent<ParticleSystem>().Stop();
+        // βαζει το text
+        TMP_Text winnerTextBox = gameOverPanel.GetComponentInChildren<TMP_Text>();
+        winnerTextBox.text = message;
+
         return true;
     }
+
+    public void button(){
+        pauseMenu.RestartGame();
+    }
+
+
 
     void Update() {
    
