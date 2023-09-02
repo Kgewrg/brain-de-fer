@@ -48,15 +48,21 @@ public class Sliderscript : MonoBehaviour
                 lines=lines[0].Split(',');                  
 
                 player1 = float.Parse(lines[0]);
+
+                // Ενημερώνει για την κατάταση της σύνδεσης της συκευής
                 UserInterfaceSricpt.P1_EggConStatus = int.Parse(lines[2]);
 
                 // Check για game mode και δυσκολία
-                int gameMode = PlayerPrefs.GetInt("gameMode", -1);
+                gameMode = PlayerPrefs.GetInt("gameMode", -1);
                 if (gameMode == 0){
+                    // Παίχτης vs Παίχτης
                     focusBar.gameObject.SetActive(false);
                     player2 = float.Parse(lines[1]);
+                    UserInterfaceSricpt.P2_EggConStatus = int.Parse(lines[3]);
+
                 }                
                 else if (gameMode == 1){
+                    // Παίχτης vs Υπολογιστής
                     focusBar.gameObject.SetActive(true);
                     focusBar.value = player1/100;
                     player2 = Bot(PlayerPrefs.GetInt("botDifficulty", -1)) * int.Parse(lines[2]);
@@ -66,6 +72,7 @@ public class Sliderscript : MonoBehaviour
                 }
                 // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
                 
+                // Υπολογισμός του score και δημοσίευσή του 
                 if( player1 > player2 )
                 {
                     mainslider.value = mainslider.value + Time.deltaTime;
@@ -81,6 +88,8 @@ public class Sliderscript : MonoBehaviour
             catch (IOException){
                 // Debug.Log("File was opened, skipping");
             }
+
+            // Έλεγχος τερματισμού του παιχνιδιού
             if( mainslider.value == mainslider.maxValue )
             {
                 gameover = logic.GameOverPlayer("Player 1 wins");
@@ -99,6 +108,7 @@ public class Sliderscript : MonoBehaviour
     }
 
     float Bot(int difficultyLevel){
+        // Ρύθμισεις δυσκολίας του bot
         int min, max;
 
         if (difficultyLevel == 0){ // Easy

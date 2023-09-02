@@ -12,10 +12,11 @@ public class LogicScript : MonoBehaviour
     }
     
     public bool GameOverPlayer(string message) {
+        // Φαίνεται οτι είναι paused το παιχνίδι
         Time.timeScale = 0f;
+
         gameOverPanel.SetActive(true);
         
-        // βαζει το text
         TMP_Text winnerTextBox = gameOverPanel.GetComponentInChildren<TMP_Text>();
         winnerTextBox.text = message;
 
@@ -23,6 +24,7 @@ public class LogicScript : MonoBehaviour
     }
 
     public void button(){
+        // Καλεί την συνάρτηση απο το pausMenu
         pauseMenu.RestartGame();
     }
 

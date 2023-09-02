@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class eggConnectionScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    // TODO: Να μπορείς να διαλέξεις recoderd (μέσο player prefs)
     private string pythonPath = "C:\\Users\\tsarosDesktop\\AppData\\Local\\Microsoft\\WindowsApps\\python3.10.exe";
     private string scriptPath = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\python_side\\recorderOriginal.py";
     Process pyProcess = new Process();
@@ -14,7 +15,8 @@ public class eggConnectionScript : MonoBehaviour
     static eggConnectionScript instance;    
 
     void Awake() {
-
+        
+        // Για να μην διαγράφεται στο reload
         if (instance != null){
             Destroy(gameObject);
         }
@@ -38,6 +40,7 @@ public class eggConnectionScript : MonoBehaviour
 
 
     void OnDestroy(){
+        // Κλείνει το python όταν σταματάει το παιχνίδι 
         if (pyProcess != null && !pyProcess.HasExited) {
             pyProcess.Kill();
             pyProcess.Close();
