@@ -1,0 +1,53 @@
+
+
+easy 30:100 norm 50:100 hard 70:100
+easy 22s l
+easy 19s l
+Norm 9s l
+Norm 8s l
+hard 6s l
+hard 6s l
+hard 5s l
+
+easy 10 l
+easy 8 w 
+norm 7 l 
+norm 20 l
+hard 5 l
+hard 9 l 
+hard 7 l
+
+easy 30:70 norm 40:80 hard 60:100
+easy 13s l
+easy 13s w (διαβασμα)
+Norm 5s w (διαβασμα)
+Norm 7s w (reading) 
+hard 17s l
+hard 17s l
+hard 26s l
+
+easy 12 l
+easy 20 w
+norm 7 w 
+norm 10 w
+hard 6 6
+hard 6 l 
+hard 6 l
+
+
+
+notes: 
+να αλαχθεί λίγο το πως γίνετια το scoring, μιας και κάθε δευτερόλεπτο δίνεται στον παίχτη ευκαρία να νικήσει 
+
+κάποιο countdown πριν ξεκινήσει το round 
+
+λίγο τα setting, μπορεί στο main menu να είναι easy αλλα στο game είναι hard 
+
+ίσως πιο έξυπνη διαχείριση δυσκολία
+
+
+
+
+
+
+
