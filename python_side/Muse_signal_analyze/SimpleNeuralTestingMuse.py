@@ -11,23 +11,23 @@ import joblib
 import pandas as pd
 import numpy as np
 import scipy
+from tqdm import tqdm
 
 
 def main():
     # dataset
-    datasets_names="C:/Users/Dounas P/Desktop/brain-de-fair/mindwavealldata.csv"
+    datasets_names="C:/Users/Nikos/Desktop/brain-de-fair/mindwavealldata.csv"
     dataset = pd.read_csv(datasets_names)
     dataset=dataset.iloc[:,:].values
     DatasetX=dataset[:,:-1]
     DatasetY=dataset[:,-1]
     
     #splitMethod(DatasetX,DatasetY)
-    for i in range(10):
-        crossVal(DatasetX,DatasetY)
+    crossVal(DatasetX,DatasetY)
     
 
 def crossVal(X_dataset,Y_dataset):
-    cross_validator=KFold(n_splits=10,shuffle=True)
+    cross_validator=KFold(n_splits=10,shuffle=False)
     #models-----------------------------------
     KNN =  KNeighborsClassifier(n_neighbors=11)
     naiveBayes =  GaussianNB()
