@@ -34,19 +34,6 @@ def main():
         Beta=removeOddValues(Beta,13,30)
         Gamma=removeOddValues(Gamma,31,50)
 
-        # a=int(np.sqrt(findMeanOfChannel(Alpha)))
-        # b=int(np.sqrt(findMeanOfChannel(Beta)))
-        # g=int(np.sqrt(findMeanOfChannel(Gamma)))
-        # ena=a/b
-        # duo=a/g
-        #print("-----------------")
-        # print("%.3f" % ena)
-        # print("%.3f" % duo)
-
-        # spectrumΕnergy(Alpha)
-        # spectrumΕnergy(Beta)
-        # spectrumΕnergy(Gamma)
-
         plotSpecEnergy(Alpha,Beta,Gamma,name)
         
 def computeRythms(dataset):
@@ -65,43 +52,21 @@ def computeRythms(dataset):
     Alpha2=lowpass_filter(AF7,12)
     Alpha3=lowpass_filter(AF8,12)
     Alpha4=lowpass_filter(TP10,12)
-
-    AlphaArray=[Alpha1,Alpha2,Alpha3,Alpha4]
-    arrayofmean=[]
-    # for i in range(len(AlphaArray[:])):
-    #     arrayofmean.append(int(np.sqrt(findMeanOfChannel(AlphaArray[i]))))
-    # print("Alpha ",arrayofmean)
-        
     
     Beta1=bandPassFilter(TP9,13,30)
     Beta2=bandPassFilter(AF7,13,30)
     Beta3=bandPassFilter(AF8,13,30)
     Beta4=bandPassFilter(TP10,13,30)
-    BetaArray=[Beta1,Beta2,Beta3,Beta4]
-    arrayofmean=[]
-    # for i in range(len(AlphaArray[:])):
-    #     arrayofmean.append(int(np.sqrt(findMeanOfChannel(BetaArray[i]))))
-    # print("Beta ",arrayofmean)
 
-    
     Gamma1=bandPassFilter(TP9,31,50)#30-40
     Gamma2=bandPassFilter(AF7,31,50)#30-40
     Gamma3=bandPassFilter(AF8,31,50)#30-40
     Gamma4=bandPassFilter(TP10,31,50)#30-40
-    GammaArray=[Gamma1,Gamma2,Gamma3,Gamma4]
-    arrayofmean=[]
-    # for i in range(len(AlphaArray[:])):
-    #     arrayofmean.append(int(np.sqrt(findMeanOfChannel(GammaArray[i]))))
-    # print("Gamma ",arrayofmean)
-
-    
 
     Alpha=(Alpha1+Alpha2+Alpha3+Alpha4)
     Beta=(Beta1+Beta2+Beta3+Beta4)
     Gamma=(Gamma1+Gamma2+Gamma3+Gamma4)
-    
 
-    
     return Alpha,Beta,Gamma
 
 #Function that cumputes the specturm energy
@@ -128,7 +93,7 @@ def removeOddValues(rythm,low,high):
     mymean = np.mean(rythm[freq_range])
     #--- normalize any value bigger than 8 time the mean of rythm ---#
     for i in range(length):
-        if rythm[i] > 8*mymean:
+        if rythm[i] > 5*mymean:
             rythm[i]=mymean
     rythm=rythm/conjrythm
     rythm=scipy.fft.ifft(rythm)
@@ -153,7 +118,7 @@ def plotSpecEnergy(Alpha,Beta,Gamma,name):
     ax[0,0].grid()
     ax[0,0].legend(["Alpha"],loc="upper right")
     ax[0,0].set_xlabel('(Hz)',fontweight='bold'),
-    ax[0,0].set_ylabel('Power energy spectrum (Joules)',fontweight='bold')
+    ax[0,0].set_ylabel('Power Spectral Density (Joules)',fontweight='bold')
     ax[0,1].plot(f,(np.abs(Beta)**2)/T)
     ax[0,1].grid()
     ax[0,1].legend(["Beta"],loc="upper right")
