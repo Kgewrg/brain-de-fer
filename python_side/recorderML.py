@@ -3,8 +3,8 @@ import numpy as np
 import joblib
 
 
+# filePath = "C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv"
 filePath = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv"
-
 
 def main():
     # Αρχικοποίηση του αρχείου σε αρχικές τιμές
@@ -15,7 +15,7 @@ def main():
 
 
 
-    print('Connected, waiting 10 seconds for data to start streaming')
+    print('Connected, waiting 3 seconds for data to start streaming')
     time.sleep(5)
 
     testtime=100000 #minutes
@@ -35,7 +35,7 @@ def main():
         print(player1,"  poor ",headset.poor_signal)
         while 0==0:#sunglasses cool bruh?
             try:
-                with open("C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv", "w") as f :
+                with open(filePath, "w") as f :
                     f.write(str(player1)+",0,1,1")
                     break
             except (PermissionError):

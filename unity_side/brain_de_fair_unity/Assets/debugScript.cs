@@ -11,15 +11,16 @@ public class debugScript : MonoBehaviour
     private bool debguIsVisible = false;
 
     public TMP_Text gameModeField;
-    
     public int gameMode = -1 ;
     private readonly string[] gameModeStrings = {"pvp", "pve"};
 
-    public TMP_Text difficultyField;
-    
+    public TMP_Text difficultyField; 
     public int difficultyLevel = -1;
-
     private readonly string[] difficultyStrings = {"easy", "medium", "hard"};
+
+    public TMP_Text classifierField;
+    public int cliassifierValue = -1;
+    private readonly string[] classifierStrings = {"device", "ML"};
     void Start()
     {
         
@@ -39,7 +40,10 @@ public class debugScript : MonoBehaviour
         gameModeField.SetText(gameMode + "("+gameModeStrings[gameMode]+")");
 
         difficultyLevel = PlayerPrefs.GetInt("botDifficulty", -1);
-        difficultyField.SetText(difficultyLevel +"("+difficultyStrings[difficultyLevel]+")");
+        difficultyField.SetText(difficultyLevel + "("+difficultyStrings[difficultyLevel]+")");
+
+        cliassifierValue = PlayerPrefs.GetInt("classifier", -1);
+        classifierField.SetText(cliassifierValue + "("+classifierStrings[cliassifierValue]+")");
     }
     void showDebug(){
         debugPanel.SetActive(true);

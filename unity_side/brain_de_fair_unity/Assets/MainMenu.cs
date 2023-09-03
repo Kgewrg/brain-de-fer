@@ -27,8 +27,9 @@ public class MainMenu : MonoBehaviour
     public void GameMode(int gameModeIndex){
         // gameModeValue: 0 PvP, 1 PvE
         PlayerPrefs.SetInt("gameMode", gameModeIndex);
+    }
 
-
-
+    public void classifierSelector(int classifierIndex){
+        PlayerPrefs.SetInt("classifier", classifierIndex);
     }
 }

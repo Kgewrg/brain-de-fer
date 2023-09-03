@@ -11,11 +11,9 @@ Quality settings (fps counter, Anti aliasing)
 Beta testing
 
 
-Φτιαξε τα παράθυρα και τα menus σε full screen
+ίσως κάνε κάτι για τα paths (ένα json απο το οποίο θα τα διαβάζει)
 
-ίσως κάνε κάτι για τα paths
-
-επιλογή recoder
+επιλογή recoder (testare το)
 
 
 μουσική
