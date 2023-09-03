@@ -21,7 +21,7 @@ def main():
     #datasets_names="C:/Users/Nikos/Desktop/KNN/mindwavealldata.csv"
 
     #Train dataset
-    datasets_names="C:/Users/Dounas P/Desktop/brain-de-fair/mindwavealldata.csv"
+    datasets_names="C:/Users/Nikos/Desktop/brain-de-fair/MindwaveDataset.csv"
     dataset = pd.read_csv (datasets_names)
     dataset=dataset.iloc[:,:].values
     np.random.shuffle(dataset)
@@ -30,7 +30,7 @@ def main():
     y_train_or=dataset[:,-1]
 
     #Test dataset
-    path="C:/Users/Dounas P/Desktop/brain-de-fair/python_side/mindwaveTest.csv"
+    path="C:/Users/Nikos/Desktop/brain-de-fair/python_side/mindwaveTest.csv"
     Test = pd.read_csv(path)
     Test=Test.iloc[:,:].values
     np.random.shuffle(Test)
