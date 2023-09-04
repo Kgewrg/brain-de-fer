@@ -21,6 +21,10 @@ public class debugScript : MonoBehaviour
     public TMP_Text classifierField;
     public int cliassifierValue = -1;
     private readonly string[] classifierStrings = {"device", "ML"};
+
+    public TMP_Text focusField;
+
+
     void Start()
     {
         
@@ -44,6 +48,8 @@ public class debugScript : MonoBehaviour
 
         cliassifierValue = PlayerPrefs.GetInt("classifier", -1);
         classifierField.SetText(cliassifierValue + "("+classifierStrings[cliassifierValue]+")");
+
+        focusField.SetText(Sliderscript.player1 + "|" + Sliderscript.player2);            
     }
     void showDebug(){
         debugPanel.SetActive(true);

@@ -11,7 +11,8 @@ public class Sliderscript : MonoBehaviour
     public Slider mainslider;
     public Slider focusBar;
     public LogicScript logic;
-    public float player1,starttime,endtime,Finaltime,player2,maxValue;
+    public static float player1, player2;
+    private float starttime,endtime,Finaltime,maxValue;
     private string row,filePath;
     private bool gameover;
     private int gameMode;
@@ -59,14 +60,12 @@ public class Sliderscript : MonoBehaviour
                     focusBar.gameObject.SetActive(false);
                     player2 = float.Parse(lines[1]);
                     UserInterfaceSricpt.P2_EggConStatus = int.Parse(lines[3]);
-
                 }                
                 else if (gameMode == 1){
                     // Παίχτης vs Υπολογιστής
                     focusBar.gameObject.SetActive(true);
                     focusBar.value = player1/100;
                     player2 = Bot(PlayerPrefs.GetInt("botDifficulty", -1)) * int.Parse(lines[2]);
-                    Debug.Log(player2);
                 }
                 else {
                     Debug.LogError("Error while fetching game mode");

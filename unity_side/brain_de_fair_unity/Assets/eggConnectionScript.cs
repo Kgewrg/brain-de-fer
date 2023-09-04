@@ -55,7 +55,7 @@ public class eggConnectionScript : MonoBehaviour
 
 
     void OnDestroy(){
-        // Κλείνει το python όταν σταματάει το παιχνίδι 
+        // Κλείνει την python όταν σταματάει το παιχνίδι 
         if (pyProcess != null && !pyProcess.HasExited) {
             pyProcess.Kill();
             pyProcess.Close();
