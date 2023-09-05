@@ -18,12 +18,12 @@ def main():
 
     future = time.time() + 60 * testtime
 
-    
+
     while time.time() < future:    
         print(headset.attention,"  poor ",headset.poor_signal)
         try:
             with open(filePath, "w") as f :
-                f.write(str(headset.attention)+"0,1,1") 
+                f.write(str(headset.attention)+",0,1,1") 
                 # θα πρέπει να γίνει κάτι πιο σωστό για την δευτερη συσκευή
             print("wrote to file:", headset.attention)
             time.sleep(1)

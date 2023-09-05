@@ -10,12 +10,14 @@ Quality settings (fps counter, Anti aliasing)
 
 Beta testing
 
+focus τιμές στο Debug
 
-Φτιαξε τα παράθυρα και τα menus σε full screen
-
-ίσως κάνε κάτι για τα paths
-
-επιλογή recoder
-
+ίσως κάνε κάτι για τα paths (ένα json απο το οποίο θα τα διαβάζει)
 
 μουσική
+
+
+επιλογή recoder 
+    (Χρησιμοιποιεί το σωστό script αλλα δεν παίζει (γιατι δεν δουλεύει το script))
+
+more TODOs @ betaTesting.txt

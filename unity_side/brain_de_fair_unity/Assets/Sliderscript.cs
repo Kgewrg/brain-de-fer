@@ -11,7 +11,8 @@ public class Sliderscript : MonoBehaviour
     public Slider mainslider;
     public Slider focusBar;
     public LogicScript logic;
-    private float player1,starttime,endtime,Finaltime,player2,maxValue;
+    public static float player1, player2;
+    private float starttime,endtime,Finaltime,maxValue;
     private string row,filePath;
     private bool gameover;
     private int gameMode;
@@ -59,7 +60,6 @@ public class Sliderscript : MonoBehaviour
                     focusBar.gameObject.SetActive(false);
                     player2 = float.Parse(lines[1]);
                     UserInterfaceSricpt.P2_EggConStatus = int.Parse(lines[3]);
-
                 }                
                 else if (gameMode == 1){
                     // Παίχτης vs Υπολογιστής
@@ -95,13 +95,14 @@ public class Sliderscript : MonoBehaviour
                 gameover = logic.GameOverPlayer("Player 1 wins");
                 endtime=Time.time;
                 Finaltime=starttime-endtime;
-                
+                Debug.Log(Finaltime);                
             }
             else if ( mainslider.value == mainslider.minValue)
             {
                 gameover = logic.GameOverPlayer("Player 2 wins");
                 endtime=Time.time;
                 Finaltime=starttime-endtime;
+                Debug.Log(Finaltime);                
             }
 
         }
@@ -113,14 +114,14 @@ public class Sliderscript : MonoBehaviour
 
         if (difficultyLevel == 0){ // Easy
             min = 30;
-            max = 100;
+            max = 70;
         }
         else if (difficultyLevel == 1){ // Normal
-            min = 50;
-            max = 100;
+            min = 40;
+            max = 80;
         }
         else if (difficultyLevel == 2){ // Hard
-            min = 70;
+            min = 60;
             max = 100;
         }
         else { 
@@ -130,7 +131,7 @@ public class Sliderscript : MonoBehaviour
             Debug.LogWarning("sliderScript: Wrong difficulty value, playing on easy");
             
             min = 30;
-            max = 100;
+            max = 70;
              
         }
 
