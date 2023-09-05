@@ -13,8 +13,6 @@ def main():
     print('Connecting to Mindwave...')
     headset = mindwave.Headset('COM3')
 
-
-
     print('Connected, waiting 10 seconds for data to start streaming')
     time.sleep(5)
 

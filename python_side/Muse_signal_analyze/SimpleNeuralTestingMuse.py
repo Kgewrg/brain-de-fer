@@ -22,8 +22,8 @@ def main():
     DatasetX=dataset[:,:-1]
     DatasetY=dataset[:,-1]
     
-    #splitMethod(DatasetX,DatasetY)
-    crossVal(DatasetX,DatasetY)
+    splitMethod(DatasetX,DatasetY)
+    #crossVal(DatasetX,DatasetY)
     
 
 def crossVal(X_dataset,Y_dataset):
