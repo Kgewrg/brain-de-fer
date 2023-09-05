@@ -21,8 +21,8 @@ import scipy
 
 def main():
     #Train dataset
-    train="C:/Users/Nikos/Desktop/brain-de-fair/mindwavealldata - Copy.csv"
-    test="C:/Users/Nikos/Desktop/brain-de-fair/TestData - Copy.csv"
+    train="C:/Users/Nikos/Desktop/brain-de-fair/mindwavealldata - copy.csv"
+    test="C:/Users/Nikos/Desktop/brain-de-fair/TestData - copy.csv"
     #things
     trainSet = pd.read_csv(train)
     trainSet=trainSet.iloc[:,:].values
@@ -40,12 +40,25 @@ def main():
     y_test=testSet[:,-1]
     
     #crossVal(x_train,y_train)
-    coef=logcoef(x_train,y_train)    
+    # coef=logcoef(x_train,y_train)    
     
     # x_train=newFeatures(coef,x_train)
     # x_test=newFeatures(coef,x_test)
-    #crossVal(x_train,y_train)
-    #splitMethod(x_train,y_train,x_test,y_test)
+    repeats=1
+    ScoreKnn=0
+    ScoreNaive=0
+    ScoreForest=0
+    # for i in range(repeats):
+    #     Knn,Naive,Rforest =crossVal(x_train,y_train)
+    #     ScoreKnn = ScoreKnn + Knn
+    #     ScoreNaive = ScoreNaive + Naive
+    #     ScoreForest = ScoreForest + Rforest
+    # print("KNN: ",ScoreKnn * 100 /repeats)
+    # print("Naive: ",ScoreNaive * 100 /repeats)
+    # print("Forest: ",ScoreForest * 100 /repeats)
+
+
+    # splitMethod(x_train,y_train,x_test,y_test)
     splitMethod2(x_train,y_train,x_test,y_test)
     #logcoef(x_train,y_train)
 
@@ -60,9 +73,9 @@ def newFeatures(coef,x_train):
 def crossVal(X_dataset,Y_dataset):
     cross_validator=KFold(n_splits=10,shuffle=True)
     #models-----------------------------------
-    KNN =  KNeighborsClassifier(n_neighbors=13)
+    KNN =  KNeighborsClassifier(n_neighbors=9)
     naiveBayes =  GaussianNB()
-    rForest = RandomForestClassifier(n_estimators=300, max_depth=3)
+    rForest = RandomForestClassifier(n_estimators=100, max_depth=20)
     # mlp = MLPClassifier(hidden_layer_sizes=(64), activation='relu5', solver='adam',max_iter=600)
     # SVM =svm.SVC(cache_size=1000)
     #-----------------------------------------
@@ -73,17 +86,19 @@ def crossVal(X_dataset,Y_dataset):
     # scoresSVM = cross_val_score(SVM, X_dataset, Y_dataset, cv=cross_validator)
     #Calculate and print the mean accuracy across all folds
     
-    mean_accuracy = scoresKNN.mean()
-    print(f"KNN: {mean_accuracy*100}")
-    mean_accuracy = scoresNaive.mean()
-    print(f"Naive: {mean_accuracy*100}")
-    mean_accuracy = scoresForest.mean()
-    print(f"Forest: {mean_accuracy*100}")
+    KnnAcc = scoresKNN.mean()
+    # print(f"KNN: {KnnAcc*100}")
+    NaiveAcc = scoresNaive.mean()
+    # print(f"Naive: {NaiveAcc*100}")
+    ForestAcc = scoresForest.mean()
+    # print(f"Forest: {ForestAcc*100}")
     # mean_accuracy = scoresMLP.mean()
     # print(f"MLP: {mean_accuracy*100}")
     # mean_accuracy = scoresSVM.mean()
     # print(f"SVM: {mean_accuracy*100}")
-    
+
+    return KnnAcc ,NaiveAcc, ForestAcc
+
 def logcoef(x_train,y_train):
     reg=LogisticRegression().fit(x_train,y_train)
     coef=reg.coef_
@@ -105,43 +120,7 @@ def linearcoef(x_train,y_train):
         print(names[i]," : ",coef[i])
     return coef
 
-def splitMethod(x_train,y_train,x_test,y_test):
-    #initialize the KNN classifier
-    
-    KNN =  KNeighborsClassifier(n_neighbors=11)
-    KNN.fit(x_train,y_train)
-    print("----KNN Complete----")
 
-    #initialize the naiveBayes classifier
-    naiveBayes =  GaussianNB()
-    naiveBayes.fit(x_train,y_train)
-    # joblib.dump(naiveBayes,"naiveBayes.pkl")
-    y_pred=naiveBayes.predict(x_test)
-    print("\n----Gaussian Bayes Complete----")
-    
-    
-    #initialize the RandomForest classifier
-    rForest = RandomForestClassifier(n_estimators=100, max_depth=8)
-    rForest.fit(x_train,y_train)
-    # joblib.dump(rForest,"RandomForestModel.pkl")
-    y_pred=rForest.predict(x_test)
-    print("\n----Randomforest Complete----")
-    
-    return accuracy_score(y_test,y_pred)*100
-    # #initialize the SVM classifier
-    # SVM =svm.SVC(cache_size=1000)#SVC->classification SVR->Regression
-    # SVM.fit(x_train,y_train)
-    # # joblib.dump(SVM,"SVMModel.pkl")
-    # y_pred=SVM.predict(X)
-    # array.append(accuracy_score(Y,y_pred)*100)
-    # print("\n----SVM Complete----")
-    
-    # mlp = MLPClassifier(hidden_layer_sizes=(64), activation='relu', solver='adam',max_iter=1200)
-    # mlp.fit(x_train, y_train)
-    # y_pred = mlp.predict(x_test)
-    # print("\n----MLP Complete----")
-    # print(accuracy_score(y_test,y_pred)*100)
-    # print("Recall: ",recall_score(y_test,y_pred,average=avg)*100)
 
 def splitMethod2(X_dataset,Y_dataset,x_test,y_test):
     
@@ -167,7 +146,7 @@ def splitMethod2(X_dataset,Y_dataset,x_test,y_test):
     #initialize the RandomForest classifier
     rForest = RandomForestClassifier(n_estimators=300, max_depth=7)
     rForest.fit(x_train,y_train)
-    # joblib.dump(rForest,"RandomForestModel.pkl")
+    joblib.dump(rForest,"RandomForestModel.pkl")
     y_pred=rForest.predict(xTest)
     array.append(accuracy_score(yTest,y_pred)*100)
     print("----Randomforest Complete----")
