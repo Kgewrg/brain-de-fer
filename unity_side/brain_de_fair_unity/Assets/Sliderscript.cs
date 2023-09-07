@@ -21,6 +21,12 @@ public class Sliderscript : MonoBehaviour
 
     public pauseMenuScript pauseMenu;
 
+    private string leftPlayerGameOverText; 
+    private string rightPlayerGameOverText; 
+
+    // Πόσες τιμες να σκιπαρει πριν αρχίσει να μετράει score
+    private int skipCounter = 3;
+    private float player1_previous;
 
 
     // Start is called before the first frame update
@@ -35,6 +41,8 @@ public class Sliderscript : MonoBehaviour
         // filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
 
         focusBar.gameObject.SetActive(false);
+
+        player1 = player1_previous = 0;
     }
 
     // Update is called once per frame
@@ -48,7 +56,18 @@ public class Sliderscript : MonoBehaviour
                 string[] lines = File.ReadAllLines(filePath);//χωρίζω το csv σε ενα πίνακα που κάθε στήλη είναι ένας αριθμός(ποσοστό)
                 lines=lines[0].Split(',');                  
 
+                player1_previous = player1;
                 player1 = float.Parse(lines[0]);
+                
+                // Change detector
+                if ((player1_previous != player1) && (skipCounter > 0)){
+                    skipCounter -= 1; 
+                }
+
+                // Δεν επιτρέπει να τρέξει όσο το counter δεν έχε τελειώσει
+                if (skipCounter > 0){
+                    return;
+                }
 
                 // Ενημερώνει για την κατάταση της σύνδεσης της συκευής
                 UserInterfaceSricpt.P1_EggConStatus = int.Parse(lines[2]);
@@ -89,22 +108,31 @@ public class Sliderscript : MonoBehaviour
                 // Debug.Log("File was opened, skipping");
             }
 
+            // Αλλαγή του μυνήματος με βάση το gamemode 
+            if (PlayerPrefs.GetInt("gameMode", -1) == 0){
+                leftPlayerGameOverText = "Left player wins!";
+                rightPlayerGameOverText = "Right player wins!";
+            } else {
+                leftPlayerGameOverText = "Player wins!";
+                rightPlayerGameOverText = "Bot wins!";
+            }
+
+
             // Έλεγχος τερματισμού του παιχνιδιού
             if( mainslider.value == mainslider.maxValue )
             {
-                gameover = logic.GameOverPlayer("Player 1 wins");
+                gameover = logic.GameOverPlayer(leftPlayerGameOverText);
                 endtime=Time.time;
                 Finaltime=starttime-endtime;
                 Debug.Log(Finaltime);                
             }
             else if ( mainslider.value == mainslider.minValue)
             {
-                gameover = logic.GameOverPlayer("Player 2 wins");
+                gameover = logic.GameOverPlayer(rightPlayerGameOverText);
                 endtime=Time.time;
                 Finaltime=starttime-endtime;
                 Debug.Log(Finaltime);                
             }
-
         }
     }
 

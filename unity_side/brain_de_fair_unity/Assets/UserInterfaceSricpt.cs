@@ -12,7 +12,8 @@ public class UserInterfaceSricpt : MonoBehaviour
     public GameObject conStatusMessage_container;
     // public TMP_Text P2_EGG_text;
 
-    public TMP_Text rightP_TextBox;
+    public TMP_Text rightPlayerTextbox;
+    public TMP_Text leftPlayerTextbox;
 
     public Slider LeftPlayerHealth;
     public Slider RightPlayerHealth;
@@ -46,18 +47,17 @@ public class UserInterfaceSricpt : MonoBehaviour
 
 
         if (PlayerPrefs.GetInt("gameMode", -1) == 1){
-            rightP_TextBox.SetText("Bot's health");
+            rightPlayerTextbox.SetText("Bot's health");
+            leftPlayerTextbox.SetText("Player's health");
         }
         else {
-            rightP_TextBox.SetText("right player's health");
+            rightPlayerTextbox.SetText("right player's health");
+            leftPlayerTextbox.SetText("Left player's health");
         }
 
         sliderValue = Sliderscript.publicSliderValue - 5;
         LeftPlayerHealth.value = Remap(sliderValue, 0, -5, 0, 1);
         RightPlayerHealth.value = Remap(sliderValue, 0, 5, 0, 1); 
-
-
-
 
                       
     }
