@@ -40,7 +40,7 @@ def main():
     y_test=testSet[:,-1]
     
     #crossVal(x_train,y_train)
-    # coef=logcoef(x_train,y_train)    
+    coef=linearcoef(x_train,y_train)    
     
     # x_train=newFeatures(coef,x_train)
     # x_test=newFeatures(coef,x_test)
@@ -48,18 +48,23 @@ def main():
     ScoreKnn=0
     ScoreNaive=0
     ScoreForest=0
-    # for i in range(repeats):
-    #     Knn,Naive,Rforest =crossVal(x_train,y_train)
-    #     ScoreKnn = ScoreKnn + Knn
-    #     ScoreNaive = ScoreNaive + Naive
-    #     ScoreForest = ScoreForest + Rforest
-    # print("KNN: ",ScoreKnn * 100 /repeats)
-    # print("Naive: ",ScoreNaive * 100 /repeats)
-    # print("Forest: ",ScoreForest * 100 /repeats)
-
+    ScoreMLP=0
+    ScoreSVM=0
+    for i in range(repeats):
+        Knn,Naive,Rforest,Mlp,Svm =crossVal(x_train,y_train)
+        ScoreKnn = ScoreKnn + Knn
+        ScoreNaive = ScoreNaive + Naive
+        ScoreForest = ScoreForest + Rforest
+        ScoreMLP = ScoreMLP + Mlp
+        ScoreSVM = ScoreSVM + Svm
+    print("KNN: ",ScoreKnn * 100 /repeats)
+    print("Naive: ",ScoreNaive * 100 /repeats)
+    print("Forest: ",ScoreForest * 100 /repeats)
+    print("MLP: ",ScoreMLP * 100 /repeats)
+    print("SVM: ",ScoreSVM* 100 /repeats)
 
     # splitMethod(x_train,y_train,x_test,y_test)
-    splitMethod2(x_train,y_train,x_test,y_test)
+    # splitMethod2(x_train,y_train,x_test,y_test)
     #logcoef(x_train,y_train)
 
 
@@ -73,17 +78,17 @@ def newFeatures(coef,x_train):
 def crossVal(X_dataset,Y_dataset):
     cross_validator=KFold(n_splits=10,shuffle=True)
     #models-----------------------------------
-    KNN =  KNeighborsClassifier(n_neighbors=9)
+    Knn =  KNeighborsClassifier(n_neighbors=9)
     naiveBayes =  GaussianNB()
     rForest = RandomForestClassifier(n_estimators=100, max_depth=20)
-    # mlp = MLPClassifier(hidden_layer_sizes=(64), activation='relu5', solver='adam',max_iter=600)
-    # SVM =svm.SVC(cache_size=1000)
+    mlp = MLPClassifier(hidden_layer_sizes=(64), activation='relu', solver='adam',max_iter=600)
+    Svm =svm.SVC(cache_size=1000)
     #-----------------------------------------
-    scoresKNN = cross_val_score(KNN, X_dataset, Y_dataset, cv=cross_validator)
+    scoresKNN = cross_val_score(Knn, X_dataset, Y_dataset, cv=cross_validator)
     scoresNaive = cross_val_score(naiveBayes, X_dataset, Y_dataset, cv=cross_validator)
     scoresForest = cross_val_score(rForest, X_dataset, Y_dataset, cv=cross_validator)
     # scoresMLP = cross_val_score(mlp , X_dataset, Y_dataset, cv=cross_validator)
-    # scoresSVM = cross_val_score(SVM, X_dataset, Y_dataset, cv=cross_validator)
+    scoresSVM = cross_val_score(Svm, X_dataset, Y_dataset, cv=cross_validator)
     #Calculate and print the mean accuracy across all folds
     
     KnnAcc = scoresKNN.mean()
@@ -92,12 +97,13 @@ def crossVal(X_dataset,Y_dataset):
     # print(f"Naive: {NaiveAcc*100}")
     ForestAcc = scoresForest.mean()
     # print(f"Forest: {ForestAcc*100}")
-    # mean_accuracy = scoresMLP.mean()
+    # MLPAcc = scoresMLP.mean()
+    MLPAcc=1
     # print(f"MLP: {mean_accuracy*100}")
-    # mean_accuracy = scoresSVM.mean()
+    SVMAcc = scoresSVM.mean()
     # print(f"SVM: {mean_accuracy*100}")
 
-    return KnnAcc ,NaiveAcc, ForestAcc
+    return KnnAcc, NaiveAcc, ForestAcc, MLPAcc, SVMAcc
 
 def logcoef(x_train,y_train):
     reg=LogisticRegression().fit(x_train,y_train)
@@ -146,7 +152,7 @@ def splitMethod2(X_dataset,Y_dataset,x_test,y_test):
     #initialize the RandomForest classifier
     rForest = RandomForestClassifier(n_estimators=300, max_depth=7)
     rForest.fit(x_train,y_train)
-    joblib.dump(rForest,"RandomForestModel.pkl")
+    # joblib.dump(rForest,"RandomForestModel.pkl")
     y_pred=rForest.predict(xTest)
     array.append(accuracy_score(yTest,y_pred)*100)
     print("----Randomforest Complete----")

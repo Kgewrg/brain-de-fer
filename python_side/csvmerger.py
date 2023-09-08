@@ -23,8 +23,8 @@ def mindwaveMerge():#sunarthsh pou enonei ola ta datasets tou mindwave kai diagr
         mergedfile=np.concatenate((mergedfile,i),axis=0)
     
     mergedfile=pd.DataFrame(mergedfile)
-    # mergedfile=mergedfile.drop_duplicates()
-    mergedfile.to_csv("C:/Users/Nikos/Desktop/brain-de-fair/mindwaveWithDup.csv", index=False)
+    mergedfile=mergedfile.drop_duplicates()
+    mergedfile.to_csv("C:/Users/Nikos/Desktop/brain-de-fair/mindwavealldata.csv", index=False)
     print(len(mergedfile))
 
 def removeDoubles(dataset):#diagrafei tis sunexomenes diples times mindwave
