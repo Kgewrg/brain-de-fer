@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class eggConnectionScript : MonoBehaviour
 {
-
     // TODO: Να μπορείς να διαλέξεις recoderd (μέσο player prefs)
     // 
-    private string interpeterPath = "C:\\Users\\tsarosDesktop\\AppData\\Local\\Microsoft\\WindowsApps\\python3.10.exe";
-    
+    //private string interpeterPath = "C:\\Users\\tsarosDesktop\\AppData\\Local\\Microsoft\\WindowsApps\\python3.10.exe";
+    private string interpeterPath ="C:\\Users\\Nikos\\AppData\\Local\\Programs\\Python\\Python39\\python.exe";
     public static int classifierSelector = 0; // 0: device classifier, 1: ML classifier
-    private string deviceClassifier = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\python_side\\recorderOriginal.py";
-    private string ML_classifier = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\python_side\\recorderML.py";
+    private string deviceClassifier ="C:\\Users\\Nikos\\Desktop\\brain-de-fair\\python_side\\recorderOriginal.py";
+    private string ML_classifier ="C:\\Users\\Nikos\\Desktop\\brain-de-fair\\python_side\\recorderML.py";
+    //private string deviceClassifier = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\python_side\\recorderOriginal.py";
+    //private string ML_classifier = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\python_side\\recorderML.py";
 
     private string scriptPath;
     Process pyProcess = new Process();

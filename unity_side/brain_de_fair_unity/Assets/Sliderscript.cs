@@ -37,8 +37,8 @@ public class Sliderscript : MonoBehaviour
         maxValue=mainslider.maxValue;
         mainslider.value=maxValue/2;
         publicSliderValue = mainslider.value;
-        filePath="C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv";
-        // filePath="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
+        //filePath="C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv";
+        filePath="C:\\Users\\Nikos\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
 
         focusBar.gameObject.SetActive(false);
 
@@ -89,7 +89,7 @@ public class Sliderscript : MonoBehaviour
                 else {
                     Debug.LogError("Error while fetching game mode");
                 }
-                // Debug.Log("Current value of player1 : "+ player1+" Value of Player2 : "+player2);
+                Debug.Log("Poor left : "+int.Parse(lines[4])+" Value of Player2 : "+int.Parse(lines[5]));
                 
                 // Υπολογισμός του score και δημοσίευσή του 
                 if( player1 > player2 )

@@ -66,7 +66,6 @@ public class pauseMenuScript : MonoBehaviour
         resume();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
     public void changeQuality(int qualityIndex){
         QualitySettings.SetQualityLevel(qualityIndex);
     }
