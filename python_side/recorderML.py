@@ -28,7 +28,8 @@ def main():
         measurements=[]
         temp=time.time()
         while( time.time() < temp + 1 ):
-            temparray = np.array([(headset.attention),(headset.meditation),(headset.waves['low-alpha']),(headset.waves['high-alpha']),(headset.waves['low-beta']),(headset.waves['high-beta']),(headset.waves['low-gamma']),(headset.waves['mid-gamma']),(headset.raw_value),(headset.waves['delta']),(headset.waves['theta'])])
+            temparray = np.array([(headset.attention),(headset.meditation),(headset.raw_value)])
+            #temparray = np.array([(headset.attention),(headset.meditation),(headset.waves['low-alpha']),(headset.waves['high-alpha']),(headset.waves['low-beta']),(headset.waves['high-beta']),(headset.waves['low-gamma']),(headset.waves['mid-gamma']),(headset.raw_value),(headset.waves['delta']),(headset.waves['theta'])])
             measurements.append(temparray)
             time.sleep(1/128)
         player1=calculate_percentage(measurements,Model) 

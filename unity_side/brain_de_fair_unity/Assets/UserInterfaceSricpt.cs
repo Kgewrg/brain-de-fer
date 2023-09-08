@@ -27,9 +27,9 @@ public class UserInterfaceSricpt : MonoBehaviour
 
         // Gia 2 paixtes
         // if ((P1_EggConStatus == 0) || P2_EggConStatus == 0){
-        //     P1_EGG_obj.SetActive(true);
+        //     conStatusMessage_container.SetActive(true);
         // }else{
-        //     P1_EGG_obj.SetActive(false);
+        //     conStatusMessage_container.SetActive(false);
 
         // }
                       

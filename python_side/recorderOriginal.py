@@ -8,7 +8,7 @@ def main():
     open(filePath, "w").write("0,0,0,0")
 
     print('Connecting to Mindwave...')
-    headset = mindwave.Headset('COM3')
+    headset1 = mindwave.Headset('COM3')
 
     print('Connected, waiting 5 seconds for data to start streaming')
     time.sleep(5)
@@ -20,13 +20,13 @@ def main():
 
 
     while time.time() < future:    
-        print(headset.attention,"  poor ",headset.poor_signal)
+        print(headset1.attention,"  poor ",headset1.poor_signal)
         try:
             with open(filePath, "w") as f :
-                f.write(str(headset.attention)+",0,1,1") 
+                f.write(str(headset1.attention)+",0,1,1") 
                 # θα πρέπει να γίνει κάτι πιο σωστό για την δευτερη συσκευή
-            print("wrote to file:", headset.attention)
-            time.sleep(1)
+            print("wrote to file:", headset1.attention)
+            time.sleep(0.9)
      
         except PermissionError as PE:
             print("File was not opened: skiping")
