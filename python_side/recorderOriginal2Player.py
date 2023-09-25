@@ -1,12 +1,11 @@
 import mindwave, time
 
 
-filePath = "C:\\Users\\Nikos\\Desktop\\brain-de-fair\\data.csv"
+filePath = "C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv"
 #filePath = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv"
 def main():
     # Αρχικοποίηση του αρχείου σε αρχικές τιμές
-    open(filePath, "w").write("0,0,0,0")
-
+    open(filePath, "w").write("0,0,0,0,0,0")
     print('Connecting to Mindwave...')
     headset1 = mindwave.Headset('COM4')
     headset2= mindwave.Headset("COM6")

@@ -8,10 +8,8 @@ from scipy.fft import fft
 
 
 def main():
-    path1=os.path.dirname(__file__)+"\muse_dataset\\subject3_focused.csv"
-    path2=os.path.dirname(__file__)+"\muse_dataset\\subject3_relaxed.csv"
-    path3=os.path.dirname(__file__)+"\muse_dataset\\subject4_focused.csv"
-    path4=os.path.dirname(__file__)+"\muse_dataset\\subject4_relaxed.csv"
+    path1=os.path.dirname(__file__)+"\muse_dataset\\subject5_focused.csv"
+    path2=os.path.dirname(__file__)+"\muse_dataset\\subject5_relaxed.csv"
     pathArray=[path1,path2]
     for i in pathArray:
         name= ""
@@ -26,15 +24,14 @@ def main():
         dataset = pd.read_csv(i)
         dataset=dataset.values# np array with dataset 9-40 hz
         dataset=np.delete(dataset,0,1)
-        
-
+    
         Alpha,Beta,Gamma=computeRythms(dataset)
 
         Alpha=removeOddValues(Alpha,8,12)
         Beta=removeOddValues(Beta,13,30)
         Gamma=removeOddValues(Gamma,31,50)
 
-        plotSpecEnergy(Alpha,Beta,Gamma,name)
+        plotPSD(Alpha,Beta,Gamma,name)
         
 def computeRythms(dataset):
 
@@ -99,7 +96,7 @@ def removeOddValues(rythm,low,high):
     rythm=scipy.fft.ifft(rythm)
     return rythm
 
-def plotSpecEnergy(Alpha,Beta,Gamma,name):
+def plotPSD(Alpha,Beta,Gamma,name):
     length=len(Alpha)
     fs=256
     T=fs*length
@@ -112,23 +109,37 @@ def plotSpecEnergy(Alpha,Beta,Gamma,name):
     Beta=Beta[0:int(length/2)]
     Gamma=Gamma[0:int(length/2)]
 
-    fig,ax= plt.subplots(2,2)
-    fig.suptitle(name)
-    ax[0,0].plot(f,(np.abs(Alpha)**2)/T)
-    ax[0,0].grid()
-    ax[0,0].legend(["Alpha"],loc="upper right")
-    ax[0,0].set_xlabel('(Hz)',fontweight='bold'),
-    ax[0,0].set_ylabel('Power Spectral Density (Joules)',fontweight='bold')
-    ax[0,1].plot(f,(np.abs(Beta)**2)/T)
-    ax[0,1].grid()
-    ax[0,1].legend(["Beta"],loc="upper right")
-    ax[0,1].set_xlabel('(Hz)',fontweight='bold'),
-    ax[0,1].set_ylabel('(Joules)',fontweight='bold')
-    ax[1,0].plot(f,(np.abs(Gamma)**2)/T)
-    ax[1,0].grid()
-    ax[1,0].legend(["Gamma"],loc="upper right")
-    ax[1,0].set_xlabel('(Hz)',fontweight='bold'),
-    ax[1,0].set_ylabel('(Joules)',fontweight='bold')
+
+    fig, ax = plt.subplots()
+
+    # Plot the data on the single set of axes
+    ax.plot(f, (np.abs(Alpha)**2)/T, label="Alpha")
+    ax.plot(f, (np.abs(Beta)**2)/T, label="Beta")
+    ax.plot(f, (np.abs(Gamma)**2)/T, label="Gamma")
+
+    ax.grid()
+    ax.legend(loc="upper right")
+    ax.set_xlabel('(Hz)', fontweight='bold')
+    ax.set_ylabel('Power Spectral Density (Joules)', fontweight='bold')
+    ax.set_title(name)  
+
+    # fig,ax= plt.subplots(2,2)
+    # fig.suptitle(name)
+    # ax[0,0].plot(f,(np.abs(Alpha)**2)/T)
+    # ax[0,0].grid()
+    # ax[0,0].legend(["Alpha"],loc="upper right")
+    # ax[0,0].set_xlabel('(Hz)',fontweight='bold'),
+    # ax[0,0].set_ylabel('Power Spectral Density (Joules)',fontweight='bold')
+    # ax[0,1].plot(f,(np.abs(Beta)**2)/T)
+    # ax[0,1].grid()
+    # ax[0,1].legend(["Beta"],loc="upper right")
+    # ax[0,1].set_xlabel('(Hz)',fontweight='bold'),
+    # ax[0,1].set_ylabel('(Joules)',fontweight='bold')
+    # ax[1,0].plot(f,(np.abs(Gamma)**2)/T)
+    # ax[1,0].grid()
+    # ax[1,0].legend(["Gamma"],loc="upper right")
+    # ax[1,0].set_xlabel('(Hz)',fontweight='bold'),
+    # ax[1,0].set_ylabel('(Joules)',fontweight='bold')
     plt.show()
 
 def bandPassFilter(signal, lowcut, highpass):

@@ -10,11 +10,9 @@ testtime=1 #minutes
 
 now = time.time()
 future = now + 60 * testtime
-    # text = str(headset.poor_signal) + "," + str(headset.raw_value) + "," + str(headset.attention) + "," + str(headset.meditation) 
-    #f.write("poor_signal , raw,attention , meditation\n")
 
-# with open("C:/Users/Nikos/Desktop/brain-de-fair/python_side/mindwave_dataset/pal_focused.csv", "w") as f :
-with open("C:/Users/tsarosDesktop/Documents/repositories/brain-de-fair/python_side/mindwave_dataset/noise.csv", "w") as f :
+with open("C:/Users/Nikos/Desktop/brain-de-fair/python_side/mindwave_dataset/pal_focused.csv", "w") as f :
+# with open("C:/Users/tsarosDesktop/Documents/repositories/brain-de-fair/python_side/mindwave_dataset/noise.csv", "w") as f :
 # attention , meditation, low-alpha , high alpha , low-beta, high-beta , low gamma, mid-gamma, raw_value, delta , theta
     while time.time() < future:
         # temp=" "

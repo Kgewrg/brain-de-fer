@@ -3,8 +3,8 @@ import numpy as np
 import joblib
 
 
-# filePath = "C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv"
-filePath = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv"
+filePath = "C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data.csv"
+#filePath = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv"
 
 def main():
     # Αρχικοποίηση του αρχείου σε αρχικές τιμές
@@ -13,14 +13,12 @@ def main():
     print('Connecting to Mindwave...')
     headset = mindwave.Headset('COM3')
 
-
-
-    print('Connected, waiting 3 seconds for data to start streaming')
+    print('Connected, waiting 5 seconds for data to start streaming')
     time.sleep(5)
 
     testtime=100000 #minutes
 
-    Model=joblib.load("naiveBayes.pkl")
+    Model=joblib.load("RandomForestModel.pkl")
     now = time.time()
     future = now + 60 * testtime
         
@@ -37,7 +35,7 @@ def main():
         while 0==0:#sunglasses cool bruh?
             try:
                 with open(filePath, "w") as f :
-                    f.write(str(player1)+",0,1,1")
+                    f.write(str(player1)+",0,1,1,"+str(headset.poor_signal)+",300")
                     break
             except (PermissionError):
                 print("File was not opened: skiping")
