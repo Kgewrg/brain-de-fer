@@ -8,8 +8,8 @@ from scipy.fft import fft
 
 
 def main():
-    path1=os.path.dirname(__file__)+"\muse_dataset\\subject5_focused.csv"
-    path2=os.path.dirname(__file__)+"\muse_dataset\\subject5_relaxed.csv"
+    path1=os.path.dirname(__file__)+"\muse_dataset\\subject1_focused.csv"
+    path2=os.path.dirname(__file__)+"\muse_dataset\\subject1_relaxed.csv"
     pathArray=[path1,path2]
     for i in pathArray:
         name= ""
@@ -27,9 +27,9 @@ def main():
     
         Alpha,Beta,Gamma=computeRythms(dataset)
 
-        Alpha=removeOddValues(Alpha,8,12)
+        Alpha=removeOddValues(Alpha,8,13)
         Beta=removeOddValues(Beta,13,30)
-        Gamma=removeOddValues(Gamma,31,50)
+        Gamma=removeOddValues(Gamma,30,50)
 
         plotPSD(Alpha,Beta,Gamma,name)
         
