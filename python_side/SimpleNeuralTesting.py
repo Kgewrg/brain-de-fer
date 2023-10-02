@@ -21,30 +21,18 @@ import scipy
 
 def main():
     #Train dataset
-    train="C:/Users/Nikos/Desktop/brain-de-fair/mindwavealldata - copy.csv"
-    test="C:/Users/Nikos/Desktop/brain-de-fair/TestData - copy.csv"
-    #things
+    train="C:/Users/Dounas P/Desktop/brain-de-fair/mindwavealldata.csv"
+    
     trainSet = pd.read_csv(train)
     trainSet=trainSet.iloc[:,:].values
-    #np.random.shuffle(trainSet)
     N=len(trainSet[0])-1 #the columns of the dataset exlcuding the category
-    x_train=trainSet[:,0:N]#original
+    x_train=trainSet[:,0:N]
     y_train=trainSet[:,-1]
-
-    #test dataset
-    testSet = pd.read_csv(test)
-    testSet=testSet.drop_duplicates()
-    testSet=testSet.iloc[:,:].values
-    # np.random.shuffle(testSet)
-    x_test=testSet[:,0:N]
-    y_test=testSet[:,-1]
     
     #crossVal(x_train,y_train)
     coef=linearcoef(x_train,y_train)    
-    
-    # x_train=newFeatures(coef,x_train)
-    # x_test=newFeatures(coef,x_test)
-    repeats=1
+
+    repeats=10
     ScoreKnn=0
     ScoreNaive=0
     ScoreForest=0
@@ -87,7 +75,7 @@ def crossVal(X_dataset,Y_dataset):
     scoresKNN = cross_val_score(Knn, X_dataset, Y_dataset, cv=cross_validator)
     scoresNaive = cross_val_score(naiveBayes, X_dataset, Y_dataset, cv=cross_validator)
     scoresForest = cross_val_score(rForest, X_dataset, Y_dataset, cv=cross_validator)
-    # scoresMLP = cross_val_score(mlp , X_dataset, Y_dataset, cv=cross_validator)
+    scoresMLP = cross_val_score(mlp , X_dataset, Y_dataset, cv=cross_validator)
     scoresSVM = cross_val_score(Svm, X_dataset, Y_dataset, cv=cross_validator)
     #Calculate and print the mean accuracy across all folds
     
@@ -97,8 +85,7 @@ def crossVal(X_dataset,Y_dataset):
     # print(f"Naive: {NaiveAcc*100}")
     ForestAcc = scoresForest.mean()
     # print(f"Forest: {ForestAcc*100}")
-    # MLPAcc = scoresMLP.mean()
-    MLPAcc=1
+    MLPAcc = scoresMLP.mean()
     # print(f"MLP: {mean_accuracy*100}")
     SVMAcc = scoresSVM.mean()
     # print(f"SVM: {mean_accuracy*100}")
@@ -130,7 +117,7 @@ def linearcoef(x_train,y_train):
 
 def splitMethod2(X_dataset,Y_dataset,x_test,y_test):
     
-    x_train, xTest, y_train, yTest = train_test_split(X_dataset, Y_dataset, test_size=20, random_state=None,shuffle=True)  
+    x_train, xTest, y_train, yTest = train_test_split(X_dataset, Y_dataset, test_size=10, random_state=None,shuffle=True)  
     array=[] 
     avg="binary"
     
@@ -152,7 +139,7 @@ def splitMethod2(X_dataset,Y_dataset,x_test,y_test):
     #initialize the RandomForest classifier
     rForest = RandomForestClassifier(n_estimators=300, max_depth=7)
     rForest.fit(x_train,y_train)
-    # joblib.dump(rForest,"RandomForestModel.pkl")
+    joblib.dump(rForest,"RandomForestModel.pkl")
     y_pred=rForest.predict(xTest)
     array.append(accuracy_score(yTest,y_pred)*100)
     print("----Randomforest Complete----")
