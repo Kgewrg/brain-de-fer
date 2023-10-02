@@ -37,11 +37,17 @@ public class Sliderscript : MonoBehaviour
         maxValue=mainslider.maxValue;
         mainslider.value=maxValue/2;
         publicSliderValue = mainslider.value;
-        //filePath="C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv";
-        filePath="C:\\Users\\Nikos\\Desktop\\brain-de-fair\\data.csv";//βάλτο σε σχόλιο όταν δεν το χρησιμοποιείς
+        filePath=Application.dataPath+"/PythonScripts/data.csv";
+        if (File.Exists(filePath))  
+        {
+            Debug.Log("YES");
 
+        }
+        else
+        {
+            Debug.Log("NO");
+        }
         focusBar.gameObject.SetActive(false);
-
         player1 = player1_previous = 0;
     }
 
@@ -153,7 +159,7 @@ public class Sliderscript : MonoBehaviour
             max = 100;
         }
         else { 
-            // Για την περίπτωση που δεν μπεί σωστή τιμή, παίζει στο esay
+            // Για την περίπτωση που δεν μπεί σωστή τιμή, παίζει στο easy
             // Πιο σωστό θα ήταν να έβγαζε error, αλλα είναι λίγο περίπλοκο 
             // να διαχειριστεί και δεν θα συμβαίνει εκτως development
             Debug.LogWarning("sliderScript: Wrong difficulty value, playing on easy");

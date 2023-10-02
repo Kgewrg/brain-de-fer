@@ -23,8 +23,6 @@ public class UserInterfaceSricpt : MonoBehaviour
     void Start() {
         conStatusMessage_container.SetActive(false);
 
-        
-
     }
 
     void Update() {
@@ -34,7 +32,6 @@ public class UserInterfaceSricpt : MonoBehaviour
             conStatusMessage_container.SetActive(true);
         }else{
             conStatusMessage_container.SetActive(false);
-
         }
 
         // Gia 2 paixtes

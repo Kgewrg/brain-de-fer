@@ -19,9 +19,7 @@ public class Svrio: MonoBehaviour
         pZ = pivotPoint.transform.position.z;
         
         radius = Vector3.Distance(pivotPoint.transform.position, transform.position);
-        
-        
-        
+
     }
 
     void Update() {
@@ -31,12 +29,6 @@ public class Svrio: MonoBehaviour
         z = pZ + (radius * Mathf.Sin(Mathf.Deg2Rad * angle));
 
         transform.position = new Vector3(x, y, z);
-
-
-
-
-
-        
 
     }
 

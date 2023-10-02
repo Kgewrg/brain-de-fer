@@ -9,8 +9,7 @@ public class updater : MonoBehaviour
     
     // Start is called before the first frame update
     void Start() {
-        filePath = Application.dataPath + "value.txt";
-        
+        filePath = Application.dataPath + "value.txt"; 
     }
 
     // Update is called once per frame
