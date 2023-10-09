@@ -31,7 +31,7 @@ def main():
             time.sleep(1/128)
         player1=calculate_percentage(measurements,Model) 
         print(player1,"  poor ",headset.poor_signal)
-        while 0==0:#sunglasses cool bruh?
+        while 0==0:#cool sunglasses bruh?
             try:
                 with open(filePath, "w") as f :
                     f.write(str(player1)+",0,1,1,"+str(headset.poor_signal)+",300")
