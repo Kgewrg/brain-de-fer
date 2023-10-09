@@ -3,7 +3,7 @@ import numpy as np
 import joblib
 
 
-filePath2 ="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\data2.csv"
+filePath2 ="C:\\Users\\Dounas P\\Desktop\\brain-de-fair\\egw2_focused.csv"
 #filePath = "C:\\Users\\tsarosDesktop\\Documents\\repositories\\brain-de-fair\\data.csv"
 
 def main():
@@ -33,7 +33,7 @@ def main():
                 measurements.append(temparray)
                 time.sleep(1/128)
             player1=calculate_percentage(measurements,Model)
-            print(len(measurements))
+            print(headset.poor_signal)
             f.write(str(player1) + "," + str(headset.attention) +"\n")
             print("wrote to file:", player1,"   Mindwave: ",headset.attention)
 
