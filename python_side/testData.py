@@ -7,7 +7,7 @@ import os
 
 # focused
 def main():
-    path="C:/Users/Dounas P/Desktop/brain-de-fair/python_side/mindwave_dataset/"
+    path="C:/Users/Nikos/Desktop/brain-de-fair/python_side/mindwave_dataset/"
     subject="egw2"
     pathfoc=path + subject +"_focused.csv"
     pathnotfoc=path + subject +"_relaxed.csv"
