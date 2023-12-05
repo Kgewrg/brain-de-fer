@@ -1,15 +1,19 @@
-import mindwave, time
+import mindwave, time, os
 
-filePath = "data.csv"
 
 def main():
+
+    # Find the current dir and add the data.csv file
+    filePath = os.path.dirname(__file__) + "\\"+ "data.csv" 
+    print("Path of data file:", filePath)
+
     # Αρχικοποίηση του αρχείου σε αρχικές τιμές
     open(filePath, "w").write("0,0,0,0,0,0")
 
     print('Connecting to Mindwave...')
-    headset1 = mindwave.Headset('COM3')
+    headset1 = mindwave.Headset('COM4')
     print('Connected, waiting 5 seconds for data to start streaming')
-    time.sleep(9)
+    time.sleep(3)
        
 
     testtime=100000 #minutes

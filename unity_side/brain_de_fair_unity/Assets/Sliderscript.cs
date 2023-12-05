@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms;
 
 
 public class Sliderscript : MonoBehaviour
@@ -25,11 +26,15 @@ public class Sliderscript : MonoBehaviour
     private string rightPlayerGameOverText; 
 
     // Πόσες τιμες να σκιπαρει πριν αρχίσει να μετράει score
-    private int skipCounter = 3;
+    private int skipCounter = 3; 
     private float player1_previous;
 
+    // Variables for checking if the attention values are updating in game
+    private int failedToUpdateCounter = 2;
+    private float localPlayer1_previous = 0;    
+    private float localPlayer2_previous = 0;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         starttime=Time.time;
@@ -38,20 +43,18 @@ public class Sliderscript : MonoBehaviour
         mainslider.value=maxValue/2;
         publicSliderValue = mainslider.value;
         filePath=Application.dataPath+"/PythonScripts/data.csv";
-        if (File.Exists(filePath))  
-        {
-            Debug.Log("YES");
-
-        }
-        else
-        {
-            Debug.Log("NO");
-        }
+        if (! File.Exists(filePath)){
+            Debug.LogError("Could not find data file");
+        } 
         focusBar.gameObject.SetActive(false);
         player1 = player1_previous = 0;
+        
+
+
+        InvokeRepeating("checkIfValuesUpdated", 0f, 1f); // Calls this func every second
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if(gameover == false) 
@@ -59,7 +62,7 @@ public class Sliderscript : MonoBehaviour
             try
             {
                 // Read value from csv
-                string[] lines = File.ReadAllLines(filePath);//χωρίζω το csv σε ενα πίνακα που κάθε στήλη είναι ένας αριθμός(ποσοστό)
+                string[] lines = File.ReadAllLines(filePath); //χωρίζω το csv σε ενα πίνακα που κάθε στήλη είναι ένας αριθμός(ποσοστό)
                 lines=lines[0].Split(',');                  
 
                 player1_previous = player1;
@@ -69,11 +72,12 @@ public class Sliderscript : MonoBehaviour
                 if ((player1_previous != player1) && (skipCounter > 0)){
                     skipCounter -= 1; 
                 }
-
+                
                 // Δεν επιτρέπει να τρέξει όσο το counter δεν έχε τελειώσει
                 if (skipCounter > 0){
                     return;
                 }
+                
 
                 // Ενημερώνει για την κατάταση της σύνδεσης της συκευής
                 UserInterfaceSricpt.P1_EggConStatus = int.Parse(lines[2]);
@@ -82,20 +86,24 @@ public class Sliderscript : MonoBehaviour
                 gameMode = PlayerPrefs.GetInt("gameMode", -1);
                 if (gameMode == 0){
                     // Παίχτης vs Παίχτης
-                    focusBar.gameObject.SetActive(false);
+                    focusBar.gameObject.SetActive(false);                    
+                    // player2_previous = player2;
                     player2 = float.Parse(lines[1]);
-                    UserInterfaceSricpt.P2_EggConStatus = int.Parse(lines[3]);
+
+                                             
+
                 }                
                 else if (gameMode == 1){
                     // Παίχτης vs Υπολογιστής
                     focusBar.gameObject.SetActive(true);
                     focusBar.value = player1/100;
                     player2 = Bot(PlayerPrefs.GetInt("botDifficulty", -1)) * int.Parse(lines[2]);
+      
                 }
                 else {
                     Debug.LogError("Error while fetching game mode");
                 }
-                Debug.Log("Poor left : "+int.Parse(lines[4])+" Value of Player2 : "+int.Parse(lines[5]));
+                // Debug.Log("Poor left : "+int.Parse(lines[4])+" Value of Player2 : "+int.Parse(lines[5]));
                 
                 // Υπολογισμός του score και δημοσίευσή του 
                 if( player1 > player2 )
@@ -141,6 +149,34 @@ public class Sliderscript : MonoBehaviour
             }
         }
     }
+    
+    void checkIfValuesUpdated(){
+        // Checks if the attention values did not update
+        
+        // Debug.Log("left player:" + localPlayer1_previous + " " + player1);
+        // Debug.Log("right player:" + localPlayer2_previous + " " + player2);
+        if (skipCounter > 0){
+            return;
+        }
+        
+        if ((localPlayer1_previous == player1) || (localPlayer2_previous == player2)){
+            failedToUpdateCounter -= 1;
+        }
+        else { 
+            failedToUpdateCounter = 2; 
+            UserInterfaceSricpt.DevicesDisconected = false;
+        }
+        
+        if (failedToUpdateCounter <= 0){
+            // Debug.LogError("Attention Values are not updating");
+            UserInterfaceSricpt.DevicesDisconected = true;
+        }
+
+        localPlayer1_previous = player1;
+        localPlayer2_previous = player2;
+
+    }
+
 
     float Bot(int difficultyLevel){
         // Ρύθμισεις δυσκολίας του bot

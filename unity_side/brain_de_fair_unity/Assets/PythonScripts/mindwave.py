@@ -62,6 +62,7 @@ class Headset(object):
                 s.applySettingsDict(d)
 
             while self.headset.running:
+                if ( not self.headset.running): break
                 # Begin listening for packets
                 try:
                     if s.read() == SYNC and s.read() == SYNC:

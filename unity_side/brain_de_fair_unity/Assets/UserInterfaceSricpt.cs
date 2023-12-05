@@ -8,9 +8,11 @@ using UnityEngine.UI;
 public class UserInterfaceSricpt : MonoBehaviour
 {
     public static int P1_EggConStatus;
-    public static int P2_EggConStatus;
     public GameObject conStatusMessage_container;
     // public TMP_Text P2_EGG_text;
+    public static bool DevicesDisconected = false;
+    public GameObject DevDC_container;
+
 
     public TMP_Text rightPlayerTextbox;
     public TMP_Text leftPlayerTextbox;
@@ -22,7 +24,6 @@ public class UserInterfaceSricpt : MonoBehaviour
 
     void Start() {
         conStatusMessage_container.SetActive(false);
-
     }
 
     void Update() {
@@ -33,6 +34,15 @@ public class UserInterfaceSricpt : MonoBehaviour
         }else{
             conStatusMessage_container.SetActive(false);
         }
+
+        if (DevicesDisconected == true){
+            DevDC_container.SetActive(true);
+
+        }else {
+            DevDC_container.SetActive(false);
+        }
+
+
 
         // Gia 2 paixtes
         // if ((P1_EggConStatus == 0) || P2_EggConStatus == 0){

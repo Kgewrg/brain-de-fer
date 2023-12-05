@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public void Start(){
+        // For the first start of the game 
+        PlayerPrefs.SetInt("botDifficulty", 0);
+        PlayerPrefs.SetInt("gameMode", 0);
+        PlayerPrefs.SetInt("classifier", 0);
+    }
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

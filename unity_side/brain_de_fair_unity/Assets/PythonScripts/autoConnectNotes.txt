@@ -1,0 +1,16 @@
+con errors: 
+	serial.serialutil.SerialException: could not open port 'COM4': OSError(22, 'The semaphore timeout period has expired.', None, 121)
+	-
+	δεν ξέρεις τι το προκαλεί
+	
+	
+	could not open port 'COM3': PermissionError(13, 'Access is denied.', None, 5)
+	-
+	κάτι άλλο χρησιμοποιεί την πόρτα
+	
+	
+αλλιώς: 
+	poor error codes: 	
+		255 - την γάμησες
+		80 - έρχεται μετα απο μερικά 255 - κάτι πάει να γίνιε
+		200 - όλα κομπλέ.

@@ -19,6 +19,7 @@ public class pauseMenuScript : MonoBehaviour
         // Παίρνει τις ρυθμίσεις απο το main manu και τις βάζει στο pause menu
         gameModeDropdown.value = PlayerPrefs.GetInt("gameMode", -1);
         difficultyDropdown.value = PlayerPrefs.GetInt("botDifficulty", -1);
+
     }
 
     // Update is called once per frame
