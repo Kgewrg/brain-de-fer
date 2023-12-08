@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using Unity.VisualScripting;
-using UnityEngine.SocialPlatforms;
+
 
 
 public class Sliderscript : MonoBehaviour
@@ -42,7 +41,8 @@ public class Sliderscript : MonoBehaviour
         maxValue=mainslider.maxValue;
         mainslider.value=maxValue/2;
         publicSliderValue = mainslider.value;
-        filePath=Application.dataPath+"/PythonScripts/data.csv";
+        filePath = Path.Combine(Application.dataPath, "data.csv"); // Το data path ειναι στα assets τωρα πια, για λόγους μετα του build
+
         if (! File.Exists(filePath)){
             Debug.LogError("Could not find data file");
         } 

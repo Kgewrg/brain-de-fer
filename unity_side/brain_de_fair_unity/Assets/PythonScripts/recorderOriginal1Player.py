@@ -4,11 +4,13 @@ import mindwave, time, os
 def main():
 
     # Find the current dir and add the data.csv file
-    filePath = os.path.dirname(__file__) + "\\"+ "data.csv" 
-    print("Path of data file:", filePath)
+    execPath = os.path.dirname(__file__)  
+    dataFilePath = os.path.join(os.path.dirname(execPath), "data.csv")
+
+    print("Path of data file:", dataFilePath)
 
     # Αρχικοποίηση του αρχείου σε αρχικές τιμές
-    open(filePath, "w").write("0,0,0,0,0,0")
+    open(dataFilePath, "w").write("0,0,0,0,0,0")
 
     print('Connecting to Mindwave...')
     headset1 = mindwave.Headset('COM4')
@@ -24,7 +26,7 @@ def main():
     while time.time() < future:    
         print("1st poor  ",headset1.poor_signal)
         try:
-            with open(filePath, "w") as f :
+            with open(dataFilePath, "w") as f :
                 f.write(str(headset1.attention)+","+"0"+",1,1,"+str(headset1.poor_signal)+","+"300") 
                 # θα πρέπει να γίνει κάτι πιο σωστό για την δευτερη συσκευή
             print("wrote to file:", headset1.attention)

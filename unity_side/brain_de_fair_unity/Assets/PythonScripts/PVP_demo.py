@@ -5,17 +5,21 @@ import os
 
 def main():
     # Find the current dir and add the data.csv file
-    filePath = os.path.dirname(__file__) + "\\"+ "data.csv" 
-    print("Path of data file:", filePath)
+    execPath = os.path.dirname(__file__)  
+    dataFilePath = os.path.join(os.path.dirname(execPath), "data.csv")
+
+     
+    print("Path of data file:", dataFilePath)
+
 
     # Αρχικοποίηση του αρχείου σε αρχικές τιμές
-    open(filePath, "w").write("0,0,0,0,0,0")
+    open(dataFilePath, "w").write("0,0,0,0,0,0")
 
     while True:    
         leftValue = random.randint(0, 100)
         rightValue = random.randint(0, 100)
         try:
-            with open(filePath, "w") as f :
+            with open(dataFilePath, "w") as f :
                 f.write(str(leftValue)+","+str(rightValue)+",1,1,"+str(0)+","+str(0))  # str(0) is for poor
                 print("Wrote to file: (Left player:)", leftValue, "(Right player:)", rightValue)
             time.sleep(0.9)
