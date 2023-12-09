@@ -72,7 +72,7 @@ for port in available_ports:
     strPortList.append(port.name)
     portQueue = makeQueue(strPortList)
 
-deviceCount = 2
+deviceCount = 1
 print("Searching for", deviceCount, "device(s)")
 connectedDevices = [[0, 0, 0] for i in range(deviceCount)]
 connectedDevicesCount = 0
