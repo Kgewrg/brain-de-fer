@@ -34,7 +34,7 @@ def checkPoor():
 
         elif  (poorStatus == 200):
             print ("-- Connected")
-            connStatus = 1
+            connStatus = 0 # linux style return code
             break 
         
         else:
@@ -130,7 +130,7 @@ while True:
         headset.stop()
         continue
 
-    elif (connStatus == 1):
+    elif (connStatus == 0):
         connectedDevicesCount += 1
         print("Found the correct port: ", currentPort, "for device:", connectedDevicesCount)
         connectedDevices[connectedDevicesCount - 1] = [1, currentPort, headset.headset_id]

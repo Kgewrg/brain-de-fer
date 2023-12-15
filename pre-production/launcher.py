@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import Scrollbar
 import os
 import subprocess
 import time
@@ -19,12 +20,12 @@ bridgeArray = [PVE, PVP, PVP_demo]
 
 
 def writeToTextbox(text: str):
-    """ Clear the texbox and writes to it the new text """
+    timestamp = "["+ time.strftime("%H:%M:%S") + "]: "
+    text = timestamp + text + "\n"
 
-    textbox.delete("0", tk.END)
-    textbox.insert(tk.END, text)
-
-
+    logBox.config(state="normal") # enables the widget to write
+    logBox.insert(tk.END, text)
+    logBox.config(state="disabled") # disbles is afterwards
 
 
 def checkIfConnectorISRunning():
@@ -49,8 +50,6 @@ def checkIfConnectorISRunning():
 
     return running    
 
-
-
     
 def on_closing():
     
@@ -58,7 +57,6 @@ def on_closing():
         bridgeProcess.kill() # Kill the subprocess
 
     root.destroy()  # Destroy the Tkinter window
-
 
 
 def startGameButton():
@@ -77,11 +75,11 @@ def startGameButton():
         writeToTextbox("Starting Game")
 
         os.startfile(gamePath)
-        
-        label.config(text="Button 1 Clicked - Application Launched")
 
     except Exception as e:
-        label.config(text=f"Error: {str(e)}")
+        writeToTextbox(f"Error: {str(e)}")
+        return 
+
 
 def startConnectorButton():
     global bridgeProcess
@@ -94,13 +92,11 @@ def startConnectorButton():
     bridgeProcess = subprocess.Popen(["python", runningBridgePath], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
-def button3_click():
+def checkConnectorButton():
     if (not checkIfConnectorISRunning()):
         writeToTextbox("Connector is NOT running")
     else:
         writeToTextbox("Connector is running")
-
-
 
 
 def on_dropdown_change(*args):
@@ -120,8 +116,8 @@ root = tk.Tk()
 root.title("Brain de fer Launcer")
 
 # Create a label
-label = tk.Label(root, text="Press a button.")
-label.pack(pady=10)
+# label = tk.Label(root, text="Press a button.")
+# label.pack(pady=10)
 
 # Register the function to be called when the window is closed
 root.protocol("WM_DELETE_WINDOW", on_closing)
@@ -137,23 +133,29 @@ selectedBridge = bridgeArray[0]
 
 
 dropdown = tk.OptionMenu(root, dropdown_var, *options)
-dropdown.pack(pady=10)
+dropdown.grid(row=0, column=0, pady=10)
 dropdown_var.trace_add("write", on_dropdown_change)
 
 
 # Create three larger buttons
 button1 = tk.Button(root, text="Start Game", command=startGameButton, width=15, height=2)
-button1.pack(pady=5)
+button1.grid(row=2, column=0, pady=10)
 
 button2 = tk.Button(root, text="Launch Connector", command=startConnectorButton, width=15, height=2)
-button2.pack(pady=5)
+button2.grid(row=3, column=0, pady=10)
 
-button3 = tk.Button(root, text="Check Connector", command=button3_click, width=15, height=2)
-button3.pack(pady=5)
+button3 = tk.Button(root, text="Check Connector", command=checkConnectorButton, width=15, height=2)
+button3.grid(row=4, column=0, pady=10)
 
-# Create a textbox
-textbox = tk.Entry(root, width=100)
-textbox.pack(pady=10)
+# Create a Text widget for the log
+logBox = tk.Text(root, width=50, height=10, wrap=tk.WORD)
+logBox.grid(row=5, column=0, pady=10)
+# logBox.config(state="disabled")
+
+# Create a Scrollbar for the Text widget
+scrollbar = Scrollbar(root, command=logBox.yview)
+scrollbar.grid(row=5, column=1, pady=10)
+logBox.config(yscrollcommand=scrollbar.set)
 
 
 # Start the Tkinter event loop

@@ -1,0 +1,4 @@
+
+
+could not open port 'COM4': OSError(22, 'The semaphore timeout period has expired.', None, 121)
+Κατα πάσα πιθανότητα σωστή πόρτα αλλά θέλει restart η συσκευή
