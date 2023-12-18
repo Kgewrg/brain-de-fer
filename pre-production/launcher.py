@@ -3,6 +3,12 @@ from tkinter import Scrollbar
 import os
 import subprocess
 import time
+import extraScripts.mindwave
+import os
+import random
+
+
+
 
 gamePath = os.path.join(os.path.dirname(__file__), "brain_de_fair_unity.exe")
 bridgePath = os.path.join(os.path.dirname(__file__), "PythonScripts")
@@ -88,7 +94,6 @@ def startConnectorButton():
     if bridgeProcess != 0:
         bridgeProcess.kill() 
     
-    label.config(text="Launch Connector")
     bridgeProcess = subprocess.Popen(["python", runningBridgePath], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
@@ -105,7 +110,6 @@ def on_dropdown_change(*args):
     selected_option = dropdown_var.get()
     option_index = options.index(selected_option)
     
-    label.config(text=f"Selected Option: {selected_option}")
     selectedBridge = bridgeArray[option_index]
     runningBridgePath = os.path.join(bridgePath, bridgeArray[option_index])
     
