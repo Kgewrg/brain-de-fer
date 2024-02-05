@@ -44,7 +44,13 @@ def checkPoor(headset):
     return connStatus
         
 
-def checkPort(port: str):
+def checkPort(port: str, logbox = ""):
+
+    # --> μεσο του logbox πρινταρει στο textbox του launcher,
+    #   μπορείς να κάνεις κάτι ώστε όλα τα prints να πάνε εκεί
+    #   (ελεγχο αν το logbox is defined)
+
+
     connStatus = 0 # linux style return code (0 is good)
 
     try:
@@ -55,6 +61,7 @@ def checkPort(port: str):
         print("Error at connecting, probably non-existant port")
         print("---")
         print(e)
+        if logbox!="": logbox("could not connect to port")
         return -1
     
     print("Connected to port, testing if the port is correct")
@@ -63,12 +70,12 @@ def checkPort(port: str):
 
     if (result == -1):
         print("Wrong port")
+        if logbox!="": logbox("Wrong port")
         connStatus = -1
     
     else:
         print("Correct port found")
-
-
+        if logbox!="": logbox("Correct port found")
 
     headset.stop()
     del headset

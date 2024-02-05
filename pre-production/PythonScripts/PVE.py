@@ -13,7 +13,7 @@ def main():
     open(dataFilePath, "w").write("0,0,0,0,0,0")
 
     print('Connecting to Mindwave...')
-    headset1 = mindwave.Headset('COM7')
+    headset1 = mindwave.Headset('COM4')
     print('Connected, waiting 3 seconds for data to start streaming')
     time.sleep(3)
        
