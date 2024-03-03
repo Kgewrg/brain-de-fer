@@ -32,3 +32,5 @@
     θέλει να στήσεις box64 https://pi-apps.io/install-app/install-box64-on-nvidia-jetson/
 
     περιμένεις root κωδικό
+
+Γαμισες λίγο τον Δια με το git, πάνε φτιάξτο απο το history 

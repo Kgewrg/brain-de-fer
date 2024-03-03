@@ -96,7 +96,7 @@ def startGameButton():
 
 def startConnectorButton():
     global bridgeProcess
-
+    writeToTextbox("Laucning connector: " + runningBridgePath)
     # Kill the previus Bridge if it is already running
     if bridgeProcess != 0:
         bridgeProcess.kill() 
