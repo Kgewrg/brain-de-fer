@@ -14,6 +14,7 @@ gamePath = os.path.join(os.path.dirname(__file__), "brain_de_fair_unity.exe")
 bridgePath = os.path.join(os.path.dirname(__file__), "PythonScripts")
 dataFilePath = os.path.join(os.path.dirname(__file__), "brain_de_fair_unity_Data", "data.csv")
 
+
 runningBridgePath = ""
 selectedBridge = ""
 bridgeProcess = 0
@@ -22,10 +23,12 @@ PVE = "PVE.py"
 PVP = "PVP.py"
 PVP_demo = "PVP_demo.py"
 
+PORT1 = PORT2 = ""
+
 bridgeArray = [PVE, PVP, PVP_demo]
 
 
-def writeToTextbox(text: str):
+def writeToTextBox(text: str):
     timestamp = "["+ time.strftime("%H:%M:%S") + "]: "
     text = timestamp + text + "\n"
 
@@ -77,44 +80,48 @@ def startGameButton():
     
     try:
         print("Starting Connector: " + selectedBridge)
-        writeToTextbox("Starting Connector: " + selectedBridge)
+        writeToTextBox("Starting Connector: " + runningBridgePath)
         if bridgeProcess != 0:
             bridgeProcess.kill() 
-                
-        bridgeProcess = subprocess.Popen(["python", runningBridgePath], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        print ("Running with ports:", PORT1, PORT2)
+        bridgeProcess = subprocess.Popen(["python", runningBridgePath, PORT1, PORT2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         
+
+
         time.sleep(2)
 
-        writeToTextbox("Starting Game")
+        writeToTextBox("Starting Game")
 
         os.startfile(gamePath)
 
     except Exception as e:
-        writeToTextbox(f"Error: {str(e)}")
+        writeToTextBox(f"Error: {str(e)}")
         return 
 
 
 def startConnectorButton():
     global bridgeProcess
-    writeToTextbox("Laucning connector: " + runningBridgePath)
+    writeToTextBox("Laucning connector: " + runningBridgePath)
     # Kill the previus Bridge if it is already running
     if bridgeProcess != 0:
         bridgeProcess.kill() 
     
-    bridgeProcess = subprocess.Popen(["python", runningBridgePath], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print ("Running with ports:", PORT1, PORT2)
+    bridgeProcess = subprocess.Popen(["python", runningBridgePath, PORT1, PORT2], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
 def checkConnectorButton():
     if (not checkIfConnectorISRunning()):
-        writeToTextbox("Connector is NOT running")
+        writeToTextBox("Connector is NOT running")
     else:
-        writeToTextbox("Connector is running")
+        writeToTextBox("Connector is running")
 
 
 def on_dropdown_change(*args):
     
     global runningBridgePath, selectedBridge
-    print("gay faggot")
+
     selected_option = dropdown_var.get()
     option_index = options.index(selected_option)
     
@@ -125,35 +132,40 @@ def setSelectedPort(*args):
     global selectedPort
     selectedPort = portDropdownVar.get()
 
+def setPORT_1(*args):
+    global PORT1
+    PORT1 = port1Var.get()
+
+def setPORT_2(*args):
+    global PORT2
+    PORT2 = port2Var.get()
+
     
 def testSinglePort():
     global selectedPort
 
-    writeToTextbox("Checking port: "+ selectedPort + ", this process may take some time")
+    writeToTextBox("Checking port: "+ selectedPort + ", this process may take some time")
     
-    subPrograms.checkPort(selectedPort, writeToTextbox)
+    subPrograms.checkPort(selectedPort, writeToTextBox)
     # TODO: κάπως πρέπει να στηθεί το output, μάλλον πάσσαρε και το logbox
     # η να περαστεί η ίδια writeToTextBox
 
-
 def testAllPorts(ports: []):
 
-    # TODO: βαλε κάτι για όταν είναι σε PVP 
-    writeToTextbox("Availale ports: [" + " ".join(ports) + "]")
-    writeToTextbox("This process takes some time, please wait until you see a result on this text box\nthe launcer may appear crashed, it's fine.")
+    writeToTextBox("Availale ports: [" + " ".join(ports) + "]")
+    writeToTextBox("This process takes some time, please wait until you see a result on this text box\nthe launcer may appear crashed, it's fine.")
 
     for port in ports:
-        writeToTextbox("Checking port: " + port)
-        result = subPrograms.checkPort(port, writeToTextbox)
+        writeToTextBox("Checking port: " + port)
+        result = subPrograms.checkPort(port, writeToTextBox)
        
         if result == 0:
-            writeToTextbox("Port found! " + port )
-            return
+            writeToTextBox("Port found! " + port)
+            return port
     
-    writeToTextbox("None of the available ports are correct, try to restart the luncher \nif the problem continiues restart the headsets and bluetooth")
+    writeToTextBox("None of the available ports are correct, try to restart the luncher \nif the problem continiues restart the headsets and bluetooth")
 
 
-# TODO: τα άλλα προγράμματα να πέρνουν την σωστή πορτα (ίσως χρειαστεί να το γυρίσεις σε κλασεις)
 
 
 # Create the main window
@@ -166,7 +178,7 @@ root.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 # Create a dropdown menu
-options = ["Pkayer VS Bot", "Player VS Player", "Demo mode"]
+options = ["Player VS Bot", "Player VS Player", "Demo mode"]
 dropdown_var = tk.StringVar(root)
 dropdown_var.set(options[0])  # Set the default option
 
@@ -190,18 +202,6 @@ button3 = tk.Button(root, text="Check Connector", command=checkConnectorButton, 
 button3.grid(row=3, column=0, pady=10)
 
 
-# Search για τις comports
-portsOptions = [port.name for port in serial.tools.list_ports.comports()]
-portDropdownVar = tk.StringVar(root)
-portDropdownVar.set(portsOptions[0])
-selectedPort  = portsOptions[0]
-
-# port drowpDown
-dropdown = tk.OptionMenu(root, portDropdownVar, *portsOptions, command=setSelectedPort)
-dropdown.grid(row=0, column=1, pady=10)
-# dropdown_var.trace_add("write", onPortDropdownChange)
-
-
 # Test single port button
 testSingleButton = tk.Button(root, text="Test port", command=testSinglePort, width=15, height=2)
 testSingleButton.grid(row=1, column=1, pady=10)
@@ -212,9 +212,49 @@ testAllButton.grid(row=2, column=1, pady=10)
 
 # Create a Text widget for the log
 logBox = tk.Text(root, width=50, height=10, wrap=tk.WORD)
-logBox.grid(row=4, column=0, columnspan=2, pady=10)
+logBox.grid(row=6, column=0, columnspan=2, pady=10)
 logBox.config()
 
+
+
+# Search για τις comports
+portsOptions = [port.name for port in serial.tools.list_ports.comports()]
+portDropdownVar = tk.StringVar(root)
+if  (len(portsOptions) == 0):
+    portsOptions = ["None", "None"]
+    writeToTextBox("There are no available devices to connect to")
+    # Θα μπορούσε εδώ να κάνει disable το PVE και PVP 
+    
+portDropdownVar.set(portsOptions[0])
+selectedPort  = portsOptions[0]
+
+# port drowpDown
+dropdown = tk.OptionMenu(root, portDropdownVar, *portsOptions, command=setSelectedPort)
+dropdown.grid(row=0, column=1, pady=10)
+# dropdown_var.trace_add("write", onPortDropdownChange)
+
+
+# device1 dropdown label
+device1_lable = tk.Label(root, text="Left EEG port")
+device1_lable.grid(row=4, column=0)
+
+# device1 dropdown
+port1Var = tk.StringVar(root)
+port1Var.set(portsOptions[0])
+PORT1 = portsOptions[0]
+device1_dd  = tk.OptionMenu(root, port1Var, *portsOptions, command=setPORT_1)
+device1_dd.grid(row=5, column=0, pady=10)
+
+# device2 dropdown label
+device2_lable = tk.Label(root, text="Right EEG port")
+device2_lable.grid(row=4, column=1)
+
+# device2 dropdown
+port2Var = tk.StringVar(root)
+port2Var.set(portsOptions[1])
+PORT2 = portsOptions[1]
+device2_dd  = tk.OptionMenu(root, port2Var, *portsOptions, command=setPORT_2)
+device2_dd.grid(row=5, column=1, pady=10)
 
 # Start the Tkinter event loop
 root.mainloop()
